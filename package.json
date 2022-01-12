@@ -1,0 +1,21 @@
+{
+  "name": "silvie",
+  "version": "0.0.1",
+  "description": "A Discord bot for the Grand Archive TCG.",
+  "main": "dist/index.js",
+  "author": "James Donnelly <2203377+JamesDonnelly@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "scripts": {
+    "build": "yarn tsc --outDir ./dist",
+    "start": "node ."
+  }
+}
