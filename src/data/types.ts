@@ -4,6 +4,14 @@ export enum CardClass {
   Warrior = 'Warrior',
 }
 
+export enum CardSubclass {
+  Artifact = 'Artifact',
+  Bauble = 'Bauble',
+  Book = 'Book',
+  Sceptre = 'Sceptre',
+  Sword = 'Sword',
+}
+
 export enum CardCost {
   Memory = 'Memory',
   Reserve = 'Reserve',
@@ -24,9 +32,9 @@ export enum CardSpeed {
 }
 
 export type CardStats = {
-  attack?: Number
-  durability?: Number
-  health?: Number
+  attack: Number
+  durability: Number
+  health: Number
 }
 
 export enum CardType {
@@ -44,42 +52,51 @@ export enum CardVariant {
 }
 
 export type Card = {
-  class: CardClass
   cost: Number
   costType: CardCost
   element: CardElement
   name: String
+  notes?: String | String[]
   number?: Number | String
   variant?: CardVariant
 } & ({
+  class?: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats?: never
+  subclass?: CardSubclass
   type: Exclude<CardType, CardType.Action | CardType.Ally | CardType.Champion | CardType.RegaliaWeapon>
 } | {
+  class: CardClass
   level?: never
   lineage?: never
   speed: CardSpeed
   stats?: never
   type: CardType.Action
 } | {
+  class: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats: Pick<CardStats, 'attack' | 'health'>
+  subclass?: never
   type: CardType.Ally
 } | {
+  class: CardClass
   level: Number
   lineage: String
   speed?: never
   stats: Pick<CardStats, 'health'>
+  subclass?: never
   type: CardType.Champion
 } | {
+  class: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats: Pick<CardStats, 'attack' | 'durability'>
+  subclass: CardSubclass
   type: CardType.RegaliaWeapon
 })
 
