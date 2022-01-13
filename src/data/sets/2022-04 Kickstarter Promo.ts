@@ -1,8 +1,7 @@
-import { Card, CardClass, CardCost, CardElement, CardSubclass, CardType, CardVariant } from "../types";
+import { Card, CardCost, CardElement, CardSubtype, CardSupertype, CardType, CardVariant } from "../types";
 
 export default [
   <Card>{
-    class: CardClass.Warrior,
     cost: 1,
     costType: CardCost.Memory,
     element: CardElement.Normal,
@@ -13,24 +12,24 @@ export default [
       attack: 1,
       durability: 3,
     },
-    subclass: CardSubclass.Sword,
+    subtype: CardSubtype.Sword,
+    supertype: CardSupertype.Warrior,
     type: CardType.RegaliaWeapon,
     variant: CardVariant.Foil,
   },
   <Card>{
-    class: CardClass.Mage,
     cost: 0,
     costType: CardCost.Memory,
     element: CardElement.Normal,
     name: 'Endura, Sceptre of Ignition',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 002',
-    subclass: CardSubclass.Sceptre,
+    subtype: CardSubtype.Sceptre,
+    supertype: CardSupertype.Mage,
     type: CardType.RegaliaItem,
     variant: CardVariant.Foil,
   },
   <Card>{
-    class: CardClass.Warrior,
     cost: 2,
     costType: CardCost.Memory,
     element: CardElement.Crux,
@@ -41,7 +40,8 @@ export default [
       attack: 3,
       durability: 1,
     },
-    subclass: CardSubclass.Sword,
+    subtype: CardSubtype.Sword,
+    supertype: CardSupertype.Warrior,
     type: CardType.RegaliaWeapon,
     variant: CardVariant.Foil,
   },
@@ -52,12 +52,11 @@ export default [
     name: 'Arcanist\'s Prism',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 004',
-    subclass: CardSubclass.Artifact,
+    subtype: CardSubtype.Artifact,
     type: CardType.RegaliaItem,
     variant: CardVariant.Foil,
   },
   <Card>{
-    class: CardClass.Warrior,
     cost: 3,
     costType: CardCost.Memory,
     element: CardElement.Crux,
@@ -69,11 +68,11 @@ export default [
     stats: {
       health: 28,
     },
+    supertype: CardSupertype.Warrior,
     type: CardType.Champion,
     variant: CardVariant.Foil,
   },
   <Card>{
-    class: CardClass.Mage,
     cost: 3,
     costType: CardCost.Memory,
     element: CardElement.Arcane,
@@ -85,6 +84,7 @@ export default [
     stats: {
       health: 25,
     },
+    supertype: CardSupertype.Mage,
     type: CardType.Champion,
     variant: CardVariant.Foil,
   }

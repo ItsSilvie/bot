@@ -76,4 +76,5 @@ typings/
 .fusebox/
 
 # Bot config
+dist/config.json
 src/config.json

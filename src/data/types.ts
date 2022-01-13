@@ -1,17 +1,3 @@
-export enum CardClass {
-  Mage = 'Mage',
-  Tamer = 'Tamer',
-  Warrior = 'Warrior',
-}
-
-export enum CardSubclass {
-  Artifact = 'Artifact',
-  Bauble = 'Bauble',
-  Book = 'Book',
-  Sceptre = 'Sceptre',
-  Sword = 'Sword',
-}
-
 export enum CardCost {
   Memory = 'Memory',
   Reserve = 'Reserve',
@@ -32,9 +18,24 @@ export enum CardSpeed {
 }
 
 export type CardStats = {
-  attack: Number
-  durability: Number
-  health: Number
+  attack: number
+  durability: number
+  health: number
+}
+
+export enum CardSubtype {
+  Artifact = 'Artifact',
+  Bauble = 'Bauble',
+  Book = 'Book',
+  Sceptre = 'Sceptre',
+  Sword = 'Sword',
+}
+
+export enum CardSupertype {
+  Assassin = 'Assassin',
+  Mage = 'Mage',
+  Tamer = 'Tamer',
+  Warrior = 'Warrior',
 }
 
 export enum CardType {
@@ -52,57 +53,59 @@ export enum CardVariant {
 }
 
 export type Card = {
-  cost: Number
+  cost: number
   costType: CardCost
   element: CardElement
-  name: String
-  notes?: String | String[]
-  number?: Number | String
+  name: string
+  notes?: string | string[]
+  number?: number | string
   variant?: CardVariant
 } & ({
-  class?: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats?: never
-  subclass?: CardSubclass
+  subtype?: CardSubtype
+  supertype?: CardSupertype
   type: Exclude<CardType, CardType.Action | CardType.Ally | CardType.Champion | CardType.RegaliaWeapon>
 } | {
-  class: CardClass
   level?: never
   lineage?: never
   speed: CardSpeed
   stats?: never
+  subtype?: CardSubtype
+  supertype?: CardSupertype
   type: CardType.Action
 } | {
-  class: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats: Pick<CardStats, 'attack' | 'health'>
-  subclass?: never
+  subtype?: CardSubtype
+  supertype?: CardSupertype
   type: CardType.Ally
 } | {
-  class: CardClass
-  level: Number
-  lineage: String
+  level: number
+  lineage: string
   speed?: never
   stats: Pick<CardStats, 'health'>
-  subclass?: never
+  subtype?: never
+  supertype?: CardSupertype
   type: CardType.Champion
 } | {
-  class: CardClass
   level?: never
   lineage?: never
   speed?: never
   stats: Pick<CardStats, 'attack' | 'durability'>
-  subclass: CardSubclass
+  subtype?: CardSubtype
+  supertype?: CardSupertype
   type: CardType.RegaliaWeapon
 })
 
 export type Set = {
-  alt: String[]
-  month: Number
-  name: String
-  year: Number
+  alt: string[]
+  filename: string
+  month: number
+  name: string
+  year: number
 }
