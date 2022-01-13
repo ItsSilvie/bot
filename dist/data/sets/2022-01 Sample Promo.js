@@ -5,6 +5,9 @@ exports.default = [
     {
         cost: 3,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [types_1.CardEffect.Enter, 'You may give each opponent a gift. If you do, all players win the game.']
+        ],
         element: types_1.CardElement.Normal,
         level: 3,
         lineage: 'Lorraine',
@@ -14,6 +17,7 @@ exports.default = [
             'Handed out in giveaway competitions on Discord and through content creators'
         ],
         number: 'SAMPLE PROMO 000',
+        quote: 'Maybe it\'s alright to settle down and enjoy the festivities once in a while.',
         stats: {
             health: 25,
         },
@@ -24,12 +28,16 @@ exports.default = [
     {
         cost: 3,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [types_1.CardEffect.Enter, 'You may give each opponent a gift. If you do, all players win the game.']
+        ],
         element: types_1.CardElement.Normal,
         level: 3,
         lineage: 'Lorraine',
         name: 'Lorraine, Wandering Warrior',
         notes: 'Handed out in giveaway competitions on Discord and through content creators',
         number: 'SAMPLE PROMO 000',
+        quote: 'Maybe it\'s alright to settle down and enjoy the festivities once in a while.',
         stats: {
             health: 25,
         },

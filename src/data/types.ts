@@ -12,6 +12,32 @@ export enum CardElement {
   Wind = 'Wind',
 }
 
+export enum CardEffect {
+  Enter = 'Enter Effect',
+  Efficiency = 'Efficiency',
+  FastAttack = 'Fast Attack',
+  FloatingMemory = 'Floating Memory',
+  Glimpse = 'Glimpse LV',
+  Inherited = 'Inherited Effect',
+  Intercept = 'Intercept',
+  Lineage = 'Lineage',
+  MultiTarget = 'Multi-Target',
+  Stealth = 'Stealth',
+  SpectralShift = 'Spectral Shift',
+  TrueSight = 'True Sight',
+}
+
+export type CardEffectBody = string | {
+  isClassBonus?: boolean
+  levelRestriction?: number | string
+  text?: string
+} | undefined
+
+export type CardEffects = [
+  CardEffect | undefined,
+  CardEffectBody
+][]
+
 export enum CardSpeed {
   Fast = 'Fast',
   Slow = 'Slow',
@@ -34,6 +60,7 @@ export enum CardSubtype {
 export enum CardSupertype {
   Assassin = 'Assassin',
   Mage = 'Mage',
+  Spirit = 'Spirit',
   Tamer = 'Tamer',
   Warrior = 'Warrior',
 }
@@ -56,9 +83,12 @@ export type Card = {
   cost: number
   costType: CardCost
   element: CardElement
+  effects: CardEffects
+  image?: boolean | string
   name: string
   notes?: string | string[]
   number?: number | string
+  quote?: string
   variant?: CardVariant
 } & ({
   level?: never
@@ -86,7 +116,7 @@ export type Card = {
   type: CardType.Ally
 } | {
   level: number
-  lineage: string
+  lineage?: string
   speed?: never
   stats: Pick<CardStats, 'health'>
   subtype?: never
@@ -107,5 +137,6 @@ export type Set = {
   filename: string
   month: number
   name: string
+  notes: string | string[]
   year: number
 }

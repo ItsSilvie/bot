@@ -1,35 +1,23 @@
-import { ColorResolvable, MessageEmbed } from "discord.js";
-import { CardElement } from "../data/types";
+import { MessageEmbed } from "discord.js";
+import { getCardBody, getEmbedColorFromElement } from "../utils/card";
 import { CardEmbed } from "./types";
-
-const getEmbedColorFromElement: (element: CardElement) => ColorResolvable = (element) => {
-  switch (element) {
-    case CardElement.Arcane:
-      return '#19ABC9';
-    
-    case CardElement.Crux:
-      return '#C28FDD';
-
-    case CardElement.Fire:
-      return '#E3462A';
-
-    case CardElement.Normal:
-    default:
-      return '#111111';
-
-    case CardElement.Water:
-      return '#5FD0F8';
-
-    case CardElement.Wind:
-      return '#117C00';
-  }
-}
 
 const cardEmbed: CardEmbed = (card, set) => {
   const embed = new MessageEmbed()
     .setTitle(`${card.name}`)
-    .setDescription(`This is ${card.number ?? 'an unnumbered card'} in the ${set.year} ${set.name} set.`)
+    .setDescription(`**${set.year} ${set.name}** · ${card.number ?? 'Unnumbered'}`)
     .setColor(getEmbedColorFromElement(card.element));
+
+  if (card.image) {
+    const imageBase = `https://img.silvie.org/sets/${encodeURIComponent(set.filename)}/`;
+    const imageExtension = '.png';
+
+    embed.setThumbnail(`${imageBase}${typeof card.image === 'string' ? encodeURIComponent(card.image) : encodeURIComponent(card.name)}${imageExtension}`);
+  }
+
+  if (card.effects) {
+    embed.addField('\u200B', `${getCardBody(card)}\n\u200B`)
+  }
 
   embed.addField('Cost', `${card.cost} ${card.costType}`, true);
   embed.addField('Element', card.element, true);
@@ -53,14 +41,31 @@ const cardEmbed: CardEmbed = (card, set) => {
     embed.addField('Lineage', card.lineage ?? '-', true);
     embed.addField('\u200B', '\u200B', true);
   }
+  
+  if (card.quote) {
+    embed.addField('\u200B', `*${card.quote}*\n`);
+  }
 
+  let notes = [];
 
   if (card.notes) {
-    if (typeof card.notes === 'string') {
-      embed.addField('Notes', card.notes);
-    } else if (Array.isArray(card.notes) && card.notes.length) {
-      embed.addField('Notes', card.notes.join('\n'));
-    }
+    notes = [
+      ...notes,
+      ...(Array.isArray(card.notes) ? card.notes : [card.notes])
+    ];
+  }
+
+  if (set.notes) {
+    notes = [
+      ...notes,
+      ...(Array.isArray(set.notes) ? set.notes : [set.notes])
+    ]
+  }
+
+  if (notes.length) {
+    embed.setFooter({
+      text: notes.join('\n'),
+    });
   }
 
   return embed;

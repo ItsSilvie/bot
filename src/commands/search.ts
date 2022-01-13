@@ -2,6 +2,7 @@ import * as path from 'path';
 import sets from '../data/sets';
 import { Card } from '../data/types';
 import cardEmbed from '../embeds/card';
+import { shuffleArray } from '../utils/array';
 import { BotCommand } from './types';
 
 const command = <BotCommand>{
@@ -24,8 +25,6 @@ const command = <BotCommand>{
       .addStringOption(option => option.setName('number').setDescription('What is the card\'s number?').setRequired(false));
   },
   handler: async (interaction) => {
-    console.log(interaction);
-
     const filename = interaction.options.getString('set');
     const name = interaction.options.getString('card');
     const number = interaction.options.getString('number');
@@ -46,7 +45,7 @@ const command = <BotCommand>{
       });
     }
 
-    const matches = cards.filter(entry => entry.name.indexOf(name) !== -1);
+    const matches = cards.filter(entry => entry.name.toLowerCase().indexOf(name.toLowerCase()) !== -1);
 
     if (!matches.length) {
       return interaction.reply({
@@ -54,9 +53,16 @@ const command = <BotCommand>{
       });
     }
 
+    if (matches.length > 3) {
+      return interaction.reply({
+        embeds: shuffleArray(matches).filter((_, index) => index < 2).map(match => cardEmbed(match, set)),
+        content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'}, but I don't want to spam chat so here are 2 of them picked at random:`,
+      });
+    }
+
     return interaction.reply({
       embeds: matches.map(match => cardEmbed(match, set)),
-      content: `I found ${matches.length} cards:`,
+      content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'}:`,
     });
   },
 }

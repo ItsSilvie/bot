@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardVariant = exports.CardType = exports.CardSupertype = exports.CardSubtype = exports.CardSpeed = exports.CardElement = exports.CardCost = void 0;
+exports.CardVariant = exports.CardType = exports.CardSupertype = exports.CardSubtype = exports.CardSpeed = exports.CardEffect = exports.CardElement = exports.CardCost = void 0;
 var CardCost;
 (function (CardCost) {
     CardCost["Memory"] = "Memory";
@@ -15,6 +15,21 @@ var CardElement;
     CardElement["Water"] = "Water";
     CardElement["Wind"] = "Wind";
 })(CardElement = exports.CardElement || (exports.CardElement = {}));
+var CardEffect;
+(function (CardEffect) {
+    CardEffect["Enter"] = "Enter Effect";
+    CardEffect["Efficiency"] = "Efficiency";
+    CardEffect["FastAttack"] = "Fast Attack";
+    CardEffect["FloatingMemory"] = "Floating Memory";
+    CardEffect["Glimpse"] = "Glimpse LV";
+    CardEffect["Inherited"] = "Inherited Effect";
+    CardEffect["Intercept"] = "Intercept";
+    CardEffect["Lineage"] = "Lineage";
+    CardEffect["MultiTarget"] = "Multi-Target";
+    CardEffect["Stealth"] = "Stealth";
+    CardEffect["SpectralShift"] = "Spectral Shift";
+    CardEffect["TrueSight"] = "True Sight";
+})(CardEffect = exports.CardEffect || (exports.CardEffect = {}));
 var CardSpeed;
 (function (CardSpeed) {
     CardSpeed["Fast"] = "Fast";
@@ -32,6 +47,7 @@ var CardSupertype;
 (function (CardSupertype) {
     CardSupertype["Assassin"] = "Assassin";
     CardSupertype["Mage"] = "Mage";
+    CardSupertype["Spirit"] = "Spirit";
     CardSupertype["Tamer"] = "Tamer";
     CardSupertype["Warrior"] = "Warrior";
 })(CardSupertype = exports.CardSupertype || (exports.CardSupertype = {}));
