@@ -6,6 +6,8 @@ Silvie is a fan-made open source Grand Archive Discord Bot which provides some u
 
 Not sure what Grand Archive is? Head on over to their website: [https://www.grandarchivetcg.com](https://www.grandarchivetcg.com).
 
+![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=for-the-badge)
+
 ## Contents
 
 - [Add Silvie to your Discord server](#add-silvie-to-your-discord-server)
