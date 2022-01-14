@@ -2,9 +2,23 @@
 
 Silvie is a fan-made open source Grand Archive Discord Bot which provides some useful chat commands.
 
-![Silvie](https://i.imgur.com/mmf3DMR.png)
+![Silvie](https://i.imgur.com/KUzh2dC.png)
 
 Not sure what Grand Archive is? Head on over to their website: [https://www.grandarchivetcg.com](https://www.grandarchivetcg.com).
+
+## Contents
+
+- [Add Silvie to your Discord server](#add-silvie-to-your-discord-server)
+- [Commands](#commands)
+  - [Card search](#card-search)
+  - [Gameplay help](#gameplay-help)
+- [Development](#development)
+  - [Create your own Discord bot](#create-your-own-discord-bot)
+  - [Create a Discord server to test the bot in](#create-a-discord-server-to-test-the-bot-in)
+  - [Invite your bot to your server](#invite-your-bot-to-your-server)
+  - [Set up the dev environment](#set-up-the-dev-environment)
+  - [Building and running Silvie locally](#building-and-running-silvie-locally)
+- [Deployment](#deployment)
 
 ## Add Silvie to your Discord server
 
@@ -22,7 +36,11 @@ Subcommands are the way to then request different things. These are phrases plac
 
 Below are the commands Silvie supports:
 
-### `search [set] [card]`
+### Card search
+
+```
+/silvie search [set] [card]
+```
 
 Reveal information about a given card in a given set.
 
@@ -43,9 +61,15 @@ If an image is available it will also a thumbnail for the card in the response, 
 
 Silvie will display a maximum of 3 cards as embeds. To prevent spam, if more than 3 cards are found it will pick 2 of those at random to display.
 
-### `help [topic]`
+### Gameplay help
+
+```
+/silvie help [topic]
+```
 
 Reveal quick FAQ-style help about a specific topic, such as Class Bonuses or Intercepting.
+
+![Help command in action](https://i.imgur.com/eYogbcb.png)
 
 ## Development
 
