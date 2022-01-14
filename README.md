@@ -108,7 +108,7 @@ Some helper types and enums exist to make this process a bit easier:
 - The `CardSubtype` enum denotes the different subtypes (e.g. Bauble);
 - The `CardSupertype` enum denotes the different supertypes (e.g. Warrior);
 - The `CardType` enum denotes the different card types (e.g. Champion);
-- The `CardVariant` enum denotes special variants (e.g. Foil)
+- The `CardVariant` enum denotes special variants (e.g. Foil).
 
 #### Adding card effects to cards
 
@@ -149,19 +149,31 @@ These enum values and properties are handled by the `getCardBody` function in `u
 
 > **Intercept** *(When your champion becomes a target of an attack, you may redirect that attack to this ally.)*
 
-##### Example 3: A level-restricted class bonus
+##### Example 3: A level restriction and a class bonus with some additional text
 
 ```
 [
   [undefined, {
     isClassBonus: true,
     levelRestriction: '2+',
-    text: 'Some text here'
+    text: 'Some text here',
   }]
 ]
 ```
 
-> `[Class Bonus]` `[Level 2+]` Some text here
+> `Class Bonus` `Level 2+` Some text here
+
+##### Example 4: A single Flux effect with a focus restriction
+
+```
+[
+  [CardEffect.Flux, {
+    isFocus: true,
+  }]
+]
+```
+
+> `Focus` **Flux** *(Discard your hand at end of turn.)*
 
 ## Development
 
