@@ -49,15 +49,15 @@ Reveal information about a given card in a given set.
 
 This displays full card text and attributes, along with an expandable image of the card (if present).
 
-![Search: Selecting a set](https://i.imgur.com/LEDPefF.png)
+![Search: Selecting a set](https://i.imgur.com/QGRkxuQ.png)
 
-![Search: Typing a partial card's name](https://i.imgur.com/5ITdgIa.png)
+![Search: Typing a partial card's name](https://i.imgur.com/NI14j8g.png)
 
-![Search: Result](https://i.imgur.com/w7Er0Ti.png)
+![Search: Result](https://i.imgur.com/vRCUe69.png)
 
 If an image is available it will also a thumbnail for the card in the response, as seen above. When clicked, this reveals the full image:
 
-![Search: Result image](https://i.imgur.com/fnu1472.png)
+![Search: Result image](https://i.imgur.com/xvGxLiH.png)
 
 Silvie will display a maximum of 3 cards as embeds. To prevent spam, if more than 3 cards are found it will pick 2 of those at random to display.
 
