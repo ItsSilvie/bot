@@ -25,4 +25,4 @@ This displays full card text and attributes, along with an expandable image of t
 
 ![Search: Result](https://i.imgur.com/cKGRjPF.png)
 
-The bot will display up to 3 cards. If more than 3 cards are found it will pick 2 of those at random to display.
+Silvie will display up to 3 cards as embeds. If more than 3 cards are found it will pick 2 of those at random to display.
