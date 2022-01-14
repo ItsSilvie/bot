@@ -1,11 +1,15 @@
 {
-  "name": "silvie",
+  "name": "silvie-bot",
   "version": "0.0.1",
   "description": "A Discord bot for the Grand Archive TCG.",
   "main": "dist/index.js",
   "author": "James Donnelly <2203377+JamesDonnelly@users.noreply.github.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "17.x",
+    "yarn": "1.x"
+  },
   "dependencies": {
     "@discordjs/rest": "^0.2.0-canary.0",
     "discord-api-types": "^0.26.1",
@@ -17,5 +21,13 @@
   "scripts": {
     "build": "yarn tsc --outDir ./dist & node ./dist/deploy-commands.js",
     "start": "node ."
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ItsSilvie/bot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsSilvie/bot.git"
+  },
+  "homepage": "https://silvie.org"
 }
