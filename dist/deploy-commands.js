@@ -19,6 +19,15 @@ const commands = [
     main
 ].map(command => command.toJSON());
 const rest = new rest_1.REST({ version: '9' }).setToken(process.env.TOKEN);
-rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
-    .then(() => console.log('Successfully registered application commands.'))
-    .catch(console.error);
+if (process.env.GUILD_ID) {
+    // For local development, stick a GUILD_ID in your .env file.
+    // This is the ID of the server you want to test on.
+    rest.put(v9_1.Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: commands })
+        .then(() => console.log('Successfully registered application commands.'))
+        .catch(console.error);
+}
+else {
+    rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
+        .then(() => console.log('Successfully registered application commands.'))
+        .catch(console.error);
+}
