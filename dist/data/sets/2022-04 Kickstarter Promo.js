@@ -5,10 +5,17 @@ exports.default = [
     {
         cost: 1,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [undefined, {
+                    isClassBonus: true,
+                    text: '**Remove a durability counter from Clarent:** Prevent the next 1 damage target action would deal to units you control.',
+                }],
+        ],
         element: types_1.CardElement.Normal,
         name: 'Clarent, Sword of Peace',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 001',
+        quote: 'A magical sword that is disenchanted by bloodshed.',
         stats: {
             attack: 1,
             durability: 3,
@@ -33,6 +40,12 @@ exports.default = [
     {
         cost: 2,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [types_1.CardEffect.Enter, {
+                    isClassBonus: true,
+                    text: 'Each player reveals all cards from their memory. If a Fire card was revealed, choose a unit and deal 3 damage to it. If a Water card was revealed, draw a card. If a Wind card was revealed, target opponent banishes a card at random from their memory.',
+                }]
+        ],
         element: types_1.CardElement.Crux,
         name: 'Prismatic Edge',
         notes: 'Given to all Kickstarter backers receiving a shipment',
@@ -60,12 +73,18 @@ exports.default = [
     {
         cost: 3,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [types_1.CardEffect.Lineage, undefined],
+            [undefined, '*(Crux element is enabled)*'],
+            [undefined, 'Lorraine\'s attacks gain +1 attack for each Regalia weapon card in your banishment.']
+        ],
         element: types_1.CardElement.Crux,
         level: 3,
         lineage: 'Lorraine',
         name: 'Lorraine, Crux Knight',
         notes: 'Game Store 1 and 2 tier Kickstarter backers received 1 for each Starter Deck ordered',
         number: 'KS PROMO 005',
+        quote: '"Majestic Spirit, answer my call!"',
         stats: {
             health: 28,
         },
