@@ -12,7 +12,7 @@ You can add Silvie to your own Discord server with the URL below:
 
 ### **[Get Silvie](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)**
 
-If you'd rather preview Silvie in action first, join the Silvie Bot Discord server: https://discord.gg/KrPepDcBRh.
+If you'd rather preview Silvie in action first, join the [Silvie Bot Discord server](https://discord.gg/KrPepDcBRh).
 
 ## Commands
 
