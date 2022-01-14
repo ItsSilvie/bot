@@ -1,8 +1,11 @@
 import { Client, Intents } from 'discord.js';
-import { token } from './config.json';
+import * as dotenv from 'dotenv';
 
 // Subcommand handlers.
 import * as subcommands from './commands';
+
+// For local development, make sure the .env file is set up in the root dir.
+dotenv.config();
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -32,4 +35,4 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Login to Discord with your client's token
-client.login(token);
+client.login(process.env.TOKEN);

@@ -1,10 +1,13 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
-import { clientId, guildId, token } from './config.json';
+import * as dotenv from 'dotenv';
 
 // Subcommand generators.
 import * as subcommands from './commands';
+
+// For local development, make sure the .env file is set up in the root dir.
+dotenv.config();
 
 const main = new SlashCommandBuilder()
 	.setName('silvie')
@@ -19,8 +22,8 @@ const commands = [
 	main
 ].map(command => command.toJSON());
 
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: commands })
 	.then(() => console.log('Successfully registered application commands.'))
 	.catch(console.error);
