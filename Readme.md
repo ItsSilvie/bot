@@ -24,3 +24,5 @@ This displays full card text and attributes, along with an expandable image of t
 ![Search: Typing a partial card's name](https://i.imgur.com/5ITdgIa.png)
 
 ![Search: Result](https://i.imgur.com/cKGRjPF.png)
+
+The bot will display up to 3 cards. If more than 3 cards are found it will pick 2 of those at random to display.
