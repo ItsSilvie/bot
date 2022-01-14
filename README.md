@@ -44,18 +44,23 @@ Below are the commands Silvie supports:
 
 Reveal information about a given card in a given set.
 
-- `set` - The name of a set (prompted by Discord);
+- `set` - The name of a set;
 - `card` - The full or partial name of a card within that set.
 
-This displays full card text and attributes, along with an expandable image of the card (if present).
+
+Set names are prompted by Silvie:
 
 ![Search: Selecting a set](https://i.imgur.com/QGRkxuQ.png)
 
+Card names can be full or partial:
+
 ![Search: Typing a partial card's name](https://i.imgur.com/NI14j8g.png)
+
+The result is an embed with the full card text and attributes, along with an expandable image of the card (if present):
 
 ![Search: Result](https://i.imgur.com/vRCUe69.png)
 
-If an image is available it will also a thumbnail for the card in the response, as seen above. When clicked, this reveals the full image:
+Clicking on a thumbnail reveals the full card image:
 
 ![Search: Result image](https://i.imgur.com/xvGxLiH.png)
 
