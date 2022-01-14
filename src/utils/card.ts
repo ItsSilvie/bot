@@ -11,6 +11,9 @@ export const getCardBody: (card: Card) => string = (card) => {
 
   const formatText: (effect: CardEffect | undefined, text?: string) => string = (effect, text) => {
     switch (effect) {
+      case CardEffect.Banish:
+        return `**Banish ${name}**${text ? ` ${text}` : ''}`
+
       case CardEffect.Efficiency:
         return `**Efficiency** *(This card costs **LV** less to activate. **LV** refers to your champion's level.)*`;
 
@@ -22,6 +25,9 @@ export const getCardBody: (card: Card) => string = (card) => {
 
       case CardEffect.FloatingMemory:
         return `**Floating Memory** *(While paying for a memory cost, you may banish this card from your graveyard to pay for 1 of that cost.)*`;
+
+      case CardEffect.Flux:
+        return `**Flux** *(Discard your hand at end of turn.)*`;
 
       case CardEffect.Glimpse:
         return `**Glimpse LV**${text ? `. ${text}` : ''} *(To **glimpse**, look at that may cards from the top of your deck. Put any of those cards back on top or on the bottom of your deck in any order.)*`
@@ -63,8 +69,16 @@ export const getCardBody: (card: Card) => string = (card) => {
 
     let output = formatText(effect, entry.text);
 
+    if (entry.isRestedUponUse) {
+      output = `\`Rest\` ${output}`;
+    }
+
     if (entry.levelRestriction) {
       output = `\`Level ${entry.levelRestriction}\` ${output}`;
+    }
+
+    if (entry.isFocus) {
+      output = `\`Focus\` ${output}`;
     }
 
     if (entry.isClassBonus) {

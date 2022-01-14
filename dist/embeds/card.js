@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const types_1 = require("../data/types");
 const card_1 = require("../utils/card");
 const cardEmbed = (card, set) => {
     const embed = new discord_js_1.MessageEmbed()
@@ -15,7 +16,8 @@ const cardEmbed = (card, set) => {
     if (card.effects) {
         embed.addField('\u200B', `${(0, card_1.getCardBody)(card)}\n\u200B`);
     }
-    embed.addField('Cost', `${card.cost} ${card.costType}`, true);
+    const costSymbol = card.costType === types_1.CardCost.Memory ? '🔵' : '🟡';
+    embed.addField(`Cost ${costSymbol}`, `${card.cost}x ${card.costType.toLowerCase()}`, true);
     embed.addField('Element', card.element, true);
     embed.addField('Speed', card.speed ?? '-', true);
     embed.addField('Type', card.type, true);

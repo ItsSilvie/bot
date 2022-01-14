@@ -13,10 +13,12 @@ export enum CardElement {
 }
 
 export enum CardEffect {
-  Enter = 'Enter Effect',
+  Banish = 'Banish',
   Efficiency = 'Efficiency',
+  Enter = 'Enter Effect',
   FastAttack = 'Fast Attack',
   FloatingMemory = 'Floating Memory',
+  Flux = 'Flux',
   Glimpse = 'Glimpse LV',
   Inherited = 'Inherited Effect',
   Intercept = 'Intercept',
@@ -29,6 +31,8 @@ export enum CardEffect {
 
 export type CardEffectBody = string | {
   isClassBonus?: boolean
+  isFocus?: boolean
+  isRestedUponUse?: boolean
   levelRestriction?: number | string
   text?: string
 } | undefined
@@ -53,6 +57,7 @@ export enum CardSubtype {
   Artifact = 'Artifact',
   Bauble = 'Bauble',
   Book = 'Book',
+  Cleric = 'Cleric',
   Sceptre = 'Sceptre',
   Sword = 'Sword',
 }
@@ -83,7 +88,7 @@ export type Card = {
   cost: number
   costType: CardCost
   element: CardElement
-  effects: CardEffects
+  effects?: CardEffects
   image?: boolean | string
   name: string
   notes?: string | string[]

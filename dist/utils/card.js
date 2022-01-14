@@ -6,6 +6,8 @@ const getCardBody = (card) => {
     const { effects, lineage, name, quote, } = card;
     const formatText = (effect, text) => {
         switch (effect) {
+            case types_1.CardEffect.Banish:
+                return `**Banish ${name}**${text ? ` ${text}` : ''}`;
             case types_1.CardEffect.Efficiency:
                 return `**Efficiency** *(This card costs **LV** less to activate. **LV** refers to your champion's level.)*`;
             case types_1.CardEffect.Enter:
@@ -14,6 +16,8 @@ const getCardBody = (card) => {
                 return `**Fast Attack** *(This attack card may be activated at Fast speed.)*`;
             case types_1.CardEffect.FloatingMemory:
                 return `**Floating Memory** *(While paying for a memory cost, you may banish this card from your graveyard to pay for 1 of that cost.)*`;
+            case types_1.CardEffect.Flux:
+                return `**Flux** *(Discard your hand at end of turn.)*`;
             case types_1.CardEffect.Glimpse:
                 return `**Glimpse LV**${text ? `. ${text}` : ''} *(To **glimpse**, look at that may cards from the top of your deck. Put any of those cards back on top or on the bottom of your deck in any order.)*`;
             case types_1.CardEffect.Inherited:
@@ -42,8 +46,14 @@ const getCardBody = (card) => {
             return formatText(effect, entry);
         }
         let output = formatText(effect, entry.text);
+        if (entry.isRestedUponUse) {
+            output = `\`Rest\` ${output}`;
+        }
         if (entry.levelRestriction) {
             output = `\`Level ${entry.levelRestriction}\` ${output}`;
+        }
+        if (entry.isFocus) {
+            output = `\`Focus\` ${output}`;
         }
         if (entry.isClassBonus) {
             output = `\`Class Bonus\` ${output}`;

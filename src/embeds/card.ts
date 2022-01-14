@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { CardCost } from "../data/types";
 import { getCardBody, getEmbedColorFromElement } from "../utils/card";
 import { CardEmbed } from "./types";
 
@@ -19,7 +20,9 @@ const cardEmbed: CardEmbed = (card, set) => {
     embed.addField('\u200B', `${getCardBody(card)}\n\u200B`)
   }
 
-  embed.addField('Cost', `${card.cost} ${card.costType}`, true);
+  const costSymbol = card.costType === CardCost.Memory ? '🔵' : '🟡';
+
+  embed.addField(`Cost ${costSymbol}`, `${card.cost}x ${card.costType.toLowerCase()}`, true);
   embed.addField('Element', card.element, true);
   embed.addField('Speed', card.speed ?? '-', true);
 
