@@ -12,6 +12,13 @@ const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GU
 client.once('ready', () => {
     console.log('Ready!');
 });
+client.on('ready', () => {
+    client.user.setActivity('Grand Archive', {
+        name: 'Grand Archive TCG',
+        type: 'PLAYING',
+        url: 'https://grandarchivetcg.com'
+    });
+});
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand())
         return;

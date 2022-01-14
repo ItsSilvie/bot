@@ -1,4 +1,4 @@
-import { Client, Intents } from 'discord.js';
+import { ActivityOptions, Client, Intents } from 'discord.js';
 import * as dotenv from 'dotenv';
 
 // Subcommand handlers.
@@ -13,6 +13,14 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
 	console.log('Ready!');
+});
+
+client.on('ready', () => {
+	client.user.setActivity('Grand Archive', {
+		name: 'Grand Archive TCG',
+		type: 'PLAYING',
+		url: 'https://grandarchivetcg.com'
+	});
 });
 
 client.on('interactionCreate', async interaction => {

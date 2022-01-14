@@ -20,7 +20,7 @@ If you'd rather preview Silvie in action first, join the [Silvie Bot Discord ser
 
 Subcommands are the way to then request different things. These are phrases placed after the `/silvie` command, e.g. `/silvie help`.
 
-Below are all of the commands Silvie supports:
+Below are the commands Silvie supports:
 
 ### `search [set] [card]`
 
@@ -35,9 +35,17 @@ This displays full card text and attributes, along with an expandable image of t
 
 ![Search: Typing a partial card's name](https://i.imgur.com/5ITdgIa.png)
 
-![Search: Result](https://i.imgur.com/cKGRjPF.png)
+![Search: Result](https://i.imgur.com/w7Er0Ti.png)
 
-Silvie will display up to 3 cards as embeds. If more than 3 cards are found it will pick 2 of those at random to display.
+If an image is available it will also a thumbnail for the card in the response, as seen above. When clicked, this reveals the full image:
+
+![Search: Result image](https://i.imgur.com/fnu1472.png)
+
+Silvie will display a maximum of 3 cards as embeds. To prevent spam, if more than 3 cards are found it will pick 2 of those at random to display.
+
+### `help [topic]`
+
+Reveal quick FAQ-style help about a specific topic, such as Class Bonuses or Intercepting.
 
 ## Development
 

@@ -137,6 +137,11 @@ export type Card = {
   type: CardType.RegaliaWeapon
 })
 
+export type Help = {
+  name: string
+  description: string
+}
+
 export type Set = {
   alt: string[]
   filename: string
