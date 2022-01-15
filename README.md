@@ -10,11 +10,13 @@ Not sure what Grand Archive is? Head on over to their website: [https://www.gran
 
 ## Add Silvie to your Discord server
 
-You can add Silvie to your own Discord server with the URL below:
+[![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)
 
-### **[Get Silvie](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)**
+[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
 
-If you'd rather preview Silvie in action first, join the [Silvie Bot Discord server](https://discord.gg/KrPepDcBRh).
+You can add Silvie to your own Discord server by clicking on the _Materialize_ image above.
+
+If you'd rather preview Silvie in action first, clicking the _Live Preview_ image will invite you into a test server where Silvie is running. You can also use that server to report bugs or suggestions.
 
 ## Contents
 
