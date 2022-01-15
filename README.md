@@ -10,9 +10,7 @@ Not sure what Grand Archive is? Head on over to their website: [https://www.gran
 
 ## Add Silvie to your Discord server
 
-[![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)
-
-[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
+[![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
 
 You can add Silvie to your own Discord server by clicking on the _Materialize_ image above.
 
