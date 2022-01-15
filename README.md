@@ -8,12 +8,21 @@ Not sure what Grand Archive is? Head on over to their website: [https://www.gran
 
 ![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=for-the-badge)
 
+## Add Silvie to your Discord server
+
+You can add Silvie to your own Discord server with the URL below:
+
+### **[Get Silvie](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)**
+
+If you'd rather preview Silvie in action first, join the [Silvie Bot Discord server](https://discord.gg/KrPepDcBRh).
+
 ## Contents
 
 - [Add Silvie to your Discord server](#add-silvie-to-your-discord-server)
 - [Commands](#commands)
   - [Card search](#card-search)
   - [Gameplay help](#gameplay-help)
+  - [Random card](#random-card)
 - [Data](#data)
   - [Adding new sets](#adding-new-sets)
   - [Adding cards to sets](#adding-cards-to-sets)
@@ -24,14 +33,6 @@ Not sure what Grand Archive is? Head on over to their website: [https://www.gran
   - [Set up the dev environment](#set-up-the-dev-environment)
   - [Building and running Silvie locally](#building-and-running-silvie-locally)
 - [Deployment](#deployment)
-
-## Add Silvie to your Discord server
-
-You can add Silvie to your own Discord server with the URL below:
-
-### **[Get Silvie](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)**
-
-If you'd rather preview Silvie in action first, join the [Silvie Bot Discord server](https://discord.gg/KrPepDcBRh).
 
 ## Commands
 
@@ -77,9 +78,21 @@ Silvie will display a maximum of 3 cards as embeds. To prevent spam, if more tha
 /silvie help [topic]
 ```
 
+- `topic` - A topic to get help about.
+
 Reveal quick FAQ-style help about a specific topic, such as Class Bonuses or Intercepting.
 
 ![Help command in action](https://i.imgur.com/eYogbcb.png)
+
+### Random card
+
+```
+/silvie random [set (optional)]
+```
+
+- `set` (optional) - only include cards from a specific set.
+
+Reveals a card chosen at random from a set chosen at random (unless otherwise specified).
 
 ## Data
 

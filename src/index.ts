@@ -44,7 +44,7 @@ client.on('interactionCreate', async interaction => {
 		return;
 	}
 	
-	await subcommand.handler(interaction);
+	await subcommand.handler(interaction, client);
 });
 
 // Login to Discord with your client's token

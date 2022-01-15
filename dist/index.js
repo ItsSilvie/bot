@@ -35,7 +35,7 @@ client.on('interactionCreate', async (interaction) => {
         console.log(`Subcommand ${options.getSubcommand()} not found.`);
         return;
     }
-    await subcommand.handler(interaction);
+    await subcommand.handler(interaction, client);
 });
 // Login to Discord with your client's token
 client.login(process.env.TOKEN);
