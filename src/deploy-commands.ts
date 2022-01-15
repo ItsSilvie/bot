@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import { ApplicationCommand } from 'discord.js';
 import * as dotenv from 'dotenv';
 
 // Subcommand generators.
@@ -27,11 +28,27 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 if (process.env.GUILD_ID) {
 	// For local development, stick a GUILD_ID in your .env file.
 	// This is the ID of the server you want to test on.
+	console.log('Skipping command cleanup (not required when running locally).')
 	rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: commands })
 		.then(() => console.log('Successfully registered application commands.'))
 		.catch(console.error);
 } else {
-	rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
-		.then(() => console.log('Successfully registered application commands.'))
-		.catch(console.error);
+	// Cleanup old commands.
+	rest.get(Routes.applicationCommands(process.env.CLIENT_ID))
+		.then((data: ApplicationCommand[]) => {
+				const promises = [];
+				for (const command of data) {
+						const deleteUrl = `${Routes.applicationCommands(process.env.CLIENT_ID)}/${command.id}`;
+						// @ts-ignore
+						promises.push(rest.delete(deleteUrl));
+				}
+				return Promise.all(promises);
+		})
+		.then(() => {
+			console.log('Clean up complete.');
+
+			rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
+				.then(() => console.log('Successfully registered application commands.'))
+				.catch(console.error);
+		});
 }
