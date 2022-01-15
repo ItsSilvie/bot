@@ -20,7 +20,8 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "build": "yarn tsc --outDir ./dist & node ./dist/deploy-commands.js",
+    "build": "yarn tsc --outDir ./dist & yarn deployCommands",
+    "deployCommands": "node ./dist/deploy-commands.js",
     "start": "node ."
   },
   "bugs": {

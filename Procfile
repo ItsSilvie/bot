@@ -1,2 +1,2 @@
-release: yarn build
+release: yarn deployCommands
 worker: yarn start
