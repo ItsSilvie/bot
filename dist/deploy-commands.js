@@ -29,6 +29,7 @@ if (process.env.GUILD_ID) {
 }
 else {
     // Cleanup old commands.
+    console.log('Beginning cleanup...');
     rest.get(v9_1.Routes.applicationCommands(process.env.CLIENT_ID))
         .then((data) => {
         const promises = [];
@@ -37,12 +38,12 @@ else {
             // @ts-ignore
             promises.push(rest.delete(deleteUrl));
         }
-        return Promise.all(promises);
-    })
-        .then(() => {
-        console.log('Clean up complete.');
-        rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
-            .then(() => console.log('Successfully registered application commands.'))
-            .catch(console.error);
+        return Promise.all(promises).then(() => {
+            console.log('Clean up complete.');
+            console.log('Registering updated commands...');
+            rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
+                .then(() => console.log('Successfully registered application commands.'))
+                .catch(console.error);
+        });
     });
 }
