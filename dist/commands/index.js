@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.search = exports.help = void 0;
-// export { default as elements } from './elements';
 var help_1 = require("./help");
 Object.defineProperty(exports, "help", { enumerable: true, get: function () { return help_1.default; } });
 var search_1 = require("./search");
 Object.defineProperty(exports, "search", { enumerable: true, get: function () { return search_1.default; } });
-// export { default as subtypes } from './subtypes';
-// export { default as supertypes } from './supertypes';

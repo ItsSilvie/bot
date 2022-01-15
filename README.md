@@ -205,7 +205,7 @@ In your Discord application's dashboard, head into the _OAuth2_ tab and then int
 
 Under _Scopes_, tick `bot` and `applications.commands`.
 
-Under _Bot Permissions_ tick `Read Messages/View Channels`, `Send Messages`, `Send Messages in Threads`, `Embed Links`, `Use External Emojis`, `Use External Stickers` and `Use Slash Commands`.
+Under _Bot Permissions_ tick `Read Messages/View Channels`, `Send Messages`, `Send Messages in Threads`, `Embed Links`, `Use External Emojis`, `Use External Stickers`.
 
 Now copy the generated URL into your browser's address bar. Discord will ask you which server you want to add your bot to - simply select the one you made in the step above.
 
