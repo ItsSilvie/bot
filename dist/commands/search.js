@@ -19,13 +19,11 @@ const command = {
                 .setDescription('Which set is the card part of?')
                 .setRequired(true);
         })
-            .addStringOption(option => option.setName('card').setDescription('What is the card\'s name?').setRequired(true))
-            .addStringOption(option => option.setName('number').setDescription('What is the card\'s number?').setRequired(false));
+            .addStringOption(option => option.setName('card').setDescription('What is the card\'s name?').setRequired(true));
     },
     handler: async (interaction) => {
         const filename = interaction.options.getString('set');
         const name = interaction.options.getString('card');
-        const number = interaction.options.getString('number');
         const set = sets_1.default.find(entry => entry.filename === filename);
         if (!filename || !set) {
             return interaction.reply({
