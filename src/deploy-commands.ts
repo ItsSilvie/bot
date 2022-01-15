@@ -34,6 +34,7 @@ if (process.env.GUILD_ID) {
 		.catch(console.error);
 } else {
 	// Cleanup old commands.
+	console.log('Beginning cleanup...')
 	rest.get(Routes.applicationCommands(process.env.CLIENT_ID))
 		.then((data: ApplicationCommand[]) => {
 				const promises = [];
@@ -42,13 +43,14 @@ if (process.env.GUILD_ID) {
 						// @ts-ignore
 						promises.push(rest.delete(deleteUrl));
 				}
-				return Promise.all(promises);
-		})
-		.then(() => {
-			console.log('Clean up complete.');
 
-			rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
-				.then(() => console.log('Successfully registered application commands.'))
-				.catch(console.error);
+				return Promise.all(promises).then(() => {
+					console.log('Clean up complete.');
+					console.log('Registering updated commands...')
+
+					rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
+						.then(() => console.log('Successfully registered application commands.'))
+						.catch(console.error);
+				});
 		});
 }
