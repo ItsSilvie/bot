@@ -1,4 +1,6 @@
-# Silvie, Discord Bot
+# Silvie, Discord Bot ![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=for-the-badge)
+
+[![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
 
 Silvie is a fan-made open source Grand Archive Discord Bot which provides some useful chat commands.
 
@@ -6,15 +8,11 @@ Silvie is a fan-made open source Grand Archive Discord Bot which provides some u
 
 Not sure what Grand Archive is? Head on over to their website: [https://www.grandarchivetcg.com](https://www.grandarchivetcg.com).
 
-![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=for-the-badge)
-
 ## Add Silvie to your Discord server
 
-[![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
+You can add Silvie to your own Discord server by clicking on the _Materialize_ image at the top or by clicking [here](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands).
 
-You can add Silvie to your own Discord server by clicking on the _Materialize_ image above.
-
-If you'd rather preview Silvie in action first, clicking the _Live Preview_ image will invite you into a test server where Silvie is running. You can also use that server to report bugs or suggestions.
+If you'd rather preview Silvie in action first, clicking the _Live Preview_ image at the top (or clicking [here](https://discord.gg/KrPepDcBRh)) will invite you into a test server where Silvie is running. You can also use that server to report bugs or suggestions.
 
 ## Contents
 
