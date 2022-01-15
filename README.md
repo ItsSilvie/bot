@@ -1,6 +1,10 @@
-# Silvie, Discord Bot ![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=for-the-badge)
+![Deploy badge](https://img.shields.io/github/deployments/ItsSilvie/bot/silvie?label=Build&logo=heroku&style=flat-square)
+
+---
 
 [![Invite Silvie to your server](https://i.imgur.com/ZHrhzkk.png)](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands)[![Silvie Bot Discord server](https://i.imgur.com/VmY97I7.png)](https://discord.gg/KrPepDcBRh)
+
+# Silvie, Discord Bot
 
 Silvie is a fan-made open source Grand Archive Discord Bot which provides some useful chat commands.
 
