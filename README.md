@@ -3,7 +3,7 @@
     <img src="https://i.imgur.com/ZHrhzkk.png" alt="Invite silvie to your server">
   </a>
   <br>
-  <a href="https://discord.gg/KrPepDcBRh">
+  <a href="https://discord.gg/bC6uWYvM4G">
     <img src="https://i.imgur.com/VmY97I7.png" alt="Silvie Bot Discord server">
   </a>
 </p>
@@ -20,7 +20,7 @@ Not sure what Grand Archive is? Head on over to their website: [https://www.gran
 
 You can add Silvie to your own Discord server by clicking on the _Materialize_ image at the top or by clicking [here](https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands).
 
-If you'd rather preview Silvie in action first, clicking the _Live Preview_ image at the top (or clicking [here](https://discord.gg/KrPepDcBRh)) will invite you into a test server where Silvie is running. You can also use that server to report bugs or suggestions.
+If you'd rather preview Silvie in action first, clicking the _Live Preview_ image at the top (or clicking [here](https://discord.gg/bC6uWYvM4G)) will invite you into a test server where Silvie is running. You can also use that server to report bugs or suggestions.
 
 ## Contents
 
