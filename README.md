@@ -258,9 +258,11 @@ We're now ready to build the bot...
 
 #### Build
 
-`yarn build` will compile all of the TypeScript files from `src` into `dist`. You'll need to run this every time a change is made. This also updates all of the Discord commands Silvie implements.
+`yarn build-all` will compile all of the TypeScript files from `src` into `dist`. You'll need to run this every time a change is made. This also updates all of the Discord commands Silvie implements.
 
 Note: A "Missing Access" error from Discord means that your bot hasn't been configured correctly. Check the scopes and permissions, check the `.env` variables and check that your bot is a member on your Discord server, then try again.
+
+If you only want to compile but not push up new Discord commands, you can run `yarn build` instead.
 
 #### Run
 
