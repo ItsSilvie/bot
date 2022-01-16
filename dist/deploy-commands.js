@@ -11,6 +11,7 @@ dotenv.config();
 const main = new builders_1.SlashCommandBuilder()
     .setName('silvie')
     .setDescription('Replies with card information!');
+console.log(new Date());
 // Iterate through the subcommand generators to add them to the main command.
 Object.values(subcommands)
     .sort((a, b) => a.name > b.name ? 1 : -1)
