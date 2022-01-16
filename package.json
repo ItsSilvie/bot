@@ -21,7 +21,9 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "build": "rimraf ./dist & yarn tsc --outDir ./dist & yarn deployCommands",
+    "build": "yarn clean & yarn tsc --outDir ./dist",
+    "build-all": "yarn build & yarn deployCommands",
+    "clean": "rimraf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "start": "node ."
   },
