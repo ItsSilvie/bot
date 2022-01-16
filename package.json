@@ -17,10 +17,11 @@
     "dotenv": "^11.0.0"
   },
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "build": "yarn tsc --outDir ./dist & yarn deployCommands",
+    "build": "rimraf ./dist & yarn tsc --outDir ./dist & yarn deployCommands",
     "deployCommands": "node ./dist/deploy-commands.js",
     "start": "node ."
   },
