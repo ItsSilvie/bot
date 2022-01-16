@@ -15,6 +15,8 @@ const main = new builders_1.SlashCommandBuilder()
 Object.values(subcommands)
     .sort((a, b) => a.name > b.name ? 1 : -1)
     .forEach(entry => main.addSubcommand(entry.generator));
+console.log(`Generating ${Object.values(subcommands).length} subcommands...`);
+Object.values(subcommands).forEach(entry => console.log(entry.name));
 const commands = [
     main
 ].map(command => command.toJSON());
@@ -34,9 +36,7 @@ else {
         .then((data) => {
         const promises = [];
         for (const command of data) {
-            const deleteUrl = `${v9_1.Routes.applicationCommands(process.env.CLIENT_ID)}/${command.id}`;
-            // @ts-ignore
-            promises.push(rest.delete(deleteUrl));
+            promises.push(rest.delete(`${v9_1.Routes.applicationCommands(process.env.CLIENT_ID)}/${command.id}`));
         }
         return Promise.all(promises).then(() => {
             console.log('Clean up complete.');
