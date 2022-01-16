@@ -10,7 +10,7 @@ const command = <BotCommand>{
   generator: (subcommand) => {
     return subcommand
       .setName(command.name)
-      .setDescription('Search for a card by name and set.')
+      .setDescription('Search for a Grand Archive card by name and set.')
       .addStringOption(option => {
         sets.forEach(entry => {
           option.addChoice(`${entry.year} ${entry.name}`, entry.filename)

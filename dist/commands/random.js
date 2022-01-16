@@ -8,7 +8,7 @@ const command = {
     generator: (subcommand) => {
         return subcommand
             .setName(command.name)
-            .setDescription('Reveals a card at random.')
+            .setDescription('Reveals a Grand Archive card at random.')
             .addStringOption(option => {
             sets_1.default.forEach(entry => {
                 option.addChoice(`${entry.year} ${entry.name}`, entry.filename);

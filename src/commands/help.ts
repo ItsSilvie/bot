@@ -6,7 +6,7 @@ const command = <BotCommand>{
   generator: (subcommand) => {
     return subcommand
       .setName(command.name)
-      .setDescription('Provides help for various game aspects.')
+      .setDescription('Provides help for various Grand Archive gameplay aspects.')
       .addStringOption(option => {
         help.forEach(({ name }) => {
           option.addChoice(name, name)
