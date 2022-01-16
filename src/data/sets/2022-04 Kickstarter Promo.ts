@@ -27,10 +27,17 @@ export default [
   <Card>{
     cost: 0,
     costType: CardCost.Memory,
+    effects: [
+      [undefined, {
+        isRestedUponUse: true,
+        text: '**Remove an enlighten counter from your champion:** Deal 1 damage to target unit. Activate this ability only at slow speed.'
+      }]
+    ],
     element: CardElement.Normal,
     name: 'Endura, Sceptre of Ignition',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 002',
+    quote: 'Its spark glows vibrantly in colors rarely seen. Some say, its spark originates from a distant world, one that is far more ominous than here.',
     subtype: CardSubtype.Sceptre,
     supertype: CardSupertype.Mage,
     type: CardType.RegaliaItem,
@@ -61,10 +68,14 @@ export default [
   <Card>{
     cost: 1,
     costType: CardCost.Memory,
+    effects: [
+      [undefined, 'At the beginning of your recollection phase, put all cards from your memory on the bottom of your deck in any order. Then, draw that many cards.']
+    ],
     element: CardElement.Arcane,
     name: 'Arcanist\'s Prism',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 004',
+    quote: '"Such a curious thing. It seems as though it\'s alive." - Rai Koki',
     subtype: CardSubtype.Artifact,
     type: CardType.RegaliaItem,
     variant: CardVariant.Foil,
@@ -94,6 +105,11 @@ export default [
   <Card>{
     cost: 3,
     costType: CardCost.Memory,
+    effects: [
+      [CardEffect.Lineage, undefined],
+      [undefined, '*(Arcane element is enabled.)*'],
+      [undefined, 'Rai gets +1 level for each Arcane element mage card in your banishment.']
+    ],
     element: CardElement.Arcane,
     level: 3,
     lineage: 'Rai',
