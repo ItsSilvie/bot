@@ -10,10 +10,6 @@ dotenv.config();
 const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS] });
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-    if (!process.env.GUILD_ID) {
-        // This prevents commands being duplicated after the bot rebuilds.
-        client.application.commands.set([]);
-    }
     console.log('Ready!');
 });
 client.on('ready', () => {

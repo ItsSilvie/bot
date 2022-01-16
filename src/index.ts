@@ -12,11 +12,6 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	if (!process.env.GUILD_ID) {
-		// This prevents commands being duplicated after the bot rebuilds.
-		client.application.commands.set([]);
-	}
-
 	console.log('Ready!');
 });
 

@@ -31,18 +31,18 @@ if (process.env.GUILD_ID) {
 }
 else {
     // Cleanup old commands.
-    // rest.get(Routes.applicationCommands(process.env.CLIENT_ID))
-    // 	.then((data: ApplicationCommand[]) => {
-    // 			const promises = [];
-    // 			for (const command of data) {
-    // 				promises.push(rest.delete(`${Routes.applicationCommands(process.env.CLIENT_ID)}/${command.id}`));
-    // 			}
-    // 			return Promise.all(promises).then(() => {
-    // 				console.log('Clean up complete.');
-    console.log('Registering updated commands...');
-    rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
-        .then(() => console.log('Successfully registered application commands.'))
-        .catch(console.error);
-    // });
-    // });
+    rest.get(v9_1.Routes.applicationCommands(process.env.CLIENT_ID))
+        .then((data) => {
+        const promises = [];
+        for (const command of data) {
+            promises.push(rest.delete(`${v9_1.Routes.applicationCommands(process.env.CLIENT_ID)}/${command.id}`));
+        }
+        return Promise.all(promises).then(() => {
+            console.log('Clean up complete.');
+            console.log('Registering updated commands...');
+            rest.put(v9_1.Routes.applicationCommands(process.env.CLIENT_ID), { body: commands })
+                .then(() => console.log('Successfully registered application commands.'))
+                .catch(console.error);
+        });
+    });
 }
