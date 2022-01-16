@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://discord.com/oauth2/authorize?client_id=930856109189767188&permissions=414464609280&scope=bot%20applications.commands">
+  <a href="https://discord.com/api/oauth2/authorize?client_id=930856109189767188&permissions=412317142016&scope=bot%20applications.commands">
     <img src="https://i.imgur.com/ZHrhzkk.png" alt="Invite silvie to your server">
   </a>
   <br>
