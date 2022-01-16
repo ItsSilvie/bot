@@ -28,10 +28,17 @@ exports.default = [
     {
         cost: 0,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [undefined, {
+                    isRestedUponUse: true,
+                    text: '**Remove an enlighten counter from your champion:** Deal 1 damage to target unit. Activate this ability only at slow speed.'
+                }]
+        ],
         element: types_1.CardElement.Normal,
         name: 'Endura, Sceptre of Ignition',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 002',
+        quote: 'Its spark glows vibrantly in colors rarely seen. Some say, its spark originates from a distant world, one that is far more ominous than here.',
         subtype: types_1.CardSubtype.Sceptre,
         supertype: types_1.CardSupertype.Mage,
         type: types_1.CardType.RegaliaItem,
@@ -62,10 +69,14 @@ exports.default = [
     {
         cost: 1,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [undefined, 'At the beginning of your recollection phase, put all cards from your memory on the bottom of your deck in any order. Then, draw that many cards.']
+        ],
         element: types_1.CardElement.Arcane,
         name: 'Arcanist\'s Prism',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 004',
+        quote: '"Such a curious thing. It seems as though it\'s alive." - Rai Koki',
         subtype: types_1.CardSubtype.Artifact,
         type: types_1.CardType.RegaliaItem,
         variant: types_1.CardVariant.Foil,
@@ -95,6 +106,11 @@ exports.default = [
     {
         cost: 3,
         costType: types_1.CardCost.Memory,
+        effects: [
+            [types_1.CardEffect.Lineage, undefined],
+            [undefined, '*(Arcane element is enabled.)*'],
+            [undefined, 'Rai gets +1 level for each Arcane element mage card in your banishment.']
+        ],
         element: types_1.CardElement.Arcane,
         level: 3,
         lineage: 'Rai',
