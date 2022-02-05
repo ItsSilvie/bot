@@ -10,7 +10,7 @@ export default [
     element: CardElement.Normal,
     level: 3,
     lineage: 'Lorraine',
-    name: 'Lorraine, Wandering Warrior',
+    name: 'Lorraine, Festive Night',
     notes: [
       'Given to all Champion, Grand Champion, and Designer tier Kickstarter backers + 100 random Kickstarter backers',
       'Handed out in giveaway competitions on Discord and through content creators'
@@ -33,7 +33,7 @@ export default [
     element: CardElement.Normal,
     level: 3,
     lineage: 'Lorraine',
-    name: 'Lorraine, Wandering Warrior',
+    name: 'Lorraine, Festive Night',
     notes: 'Handed out in giveaway competitions on Discord and through content creators',
     number: 'SAMPLE PROMO 000',
     quote: 'Maybe it\'s alright to settle down and enjoy the festivities once in a while.',
