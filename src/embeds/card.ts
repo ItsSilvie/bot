@@ -42,7 +42,7 @@ const cardEmbed: CardEmbed = (card, set) => {
   if (card.level !== undefined || card.lineage) {
     embed.addField('Level', `${card.level ?? '-'}`, true);
     embed.addField('Lineage', card.lineage ?? '-', true);
-    embed.addField('\u200B', '\u200B', true);
+    embed.addField('Variant', card.variant ?? '-', true);
   }
   
   if (card.quote) {
