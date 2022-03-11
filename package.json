@@ -14,17 +14,22 @@
     "@discordjs/rest": "^0.2.0-canary.0",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.1",
-    "dotenv": "^11.0.0"
+    "dotenv": "^11.0.0",
+    "node-fetch": "2",
+    "node-html-markdown": "^1.1.3",
+    "shx": "^0.3.4"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "build": "yarn clean & yarn tsc --outDir ./dist",
+    "build": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
     "build-all": "yarn build & yarn deployCommands",
+    "build-api-data": "shx cp -r ./src/api-data ./dist",
     "clean": "rimraf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
+    "scrape": "node ./dist/api-scrape.js",
     "start": "node ."
   },
   "bugs": {

@@ -68,17 +68,23 @@ exports.getCardBody = getCardBody;
 const getEmbedColorFromElement = (element) => {
     switch (element) {
         case types_1.CardElement.Arcane:
+        case types_1.IndexCardElement.ARCANE:
             return '#19ABC9';
         case types_1.CardElement.Crux:
+        case types_1.IndexCardElement.CRUX:
             return '#C28FDD';
         case types_1.CardElement.Fire:
+        case types_1.IndexCardElement.FIRE:
             return '#E3462A';
         case types_1.CardElement.Normal:
+        case types_1.IndexCardElement.NORM:
         default:
             return '#111111';
         case types_1.CardElement.Water:
+        case types_1.IndexCardElement.WATER:
             return '#5FD0F8';
         case types_1.CardElement.Wind:
+        case types_1.IndexCardElement.WIND:
             return '#117C00';
     }
 };

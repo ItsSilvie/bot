@@ -150,3 +150,84 @@ export type Set = {
   notes: string | string[]
   year: number
 }
+
+export type IndexCirculation = {
+  foil: boolean
+  name: string
+  population: number
+  population_operator: string
+  uuid: string
+}
+
+export type IndexEdition = {
+  card_id: string
+  circulationTemplates: IndexCirculation[]
+  collector_number: string
+  effect: null
+  flavor: null
+  illustrator: string
+  rarity: IndexEditionRarity
+  set: IndexSet
+  slug: string
+  uuid: string
+}
+
+export enum IndexEditionRarity {
+  Common = 1,
+  Uncommon = 2,
+  Rare = 3,
+  SuperRare = 4,
+  UltraRare = 5,
+  CollectorRare = 6,
+  PromotionalRare = 7,
+}
+
+export enum IndexEditionRarityMap {
+  Common = 'Common',
+  Uncommon = 'Uncommon',
+  Rare = 'Rare',
+  SuperRare = 'Super Rare',
+  UltraRare = 'Ultra Rare',
+  CollectorRare = 'Collector\'s Rare',
+  PromotionalRare = 'Promotional Rare',
+}
+
+export enum IndexCardElement {
+  ARCANE = 'Arcane',
+  CRUX = 'Crux',
+  FIRE = 'Fire',
+  NORM = 'Normal',
+  WATER = 'Water',
+  WIND = 'Wind',
+}
+
+export type IndexCard = {
+  attack: number | null
+  classes: string[] | null
+  cost_memory: number | null
+  cost_reserve: number | null
+  default_edition_id: string | null
+  durability: number | null
+  editions: IndexEdition[]
+  effect: string
+  effect_raw: null
+  element: keyof IndexCardElement
+  flavor: string
+  level: number | null
+  life: number | null
+  name: string
+  related_ids: null
+  result_editions: IndexEdition[]
+  rule: null
+  slug: string
+  speed: string | null
+  subtypes: string[] | null
+  types: string[] | null
+  uuid: string
+}
+
+export type IndexSet = {
+  language: string
+  name: string
+  prefix: string
+}

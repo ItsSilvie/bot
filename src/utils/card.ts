@@ -1,5 +1,5 @@
 import { ColorResolvable } from "discord.js";
-import { Card, CardEffect, CardEffectBody, CardEffects, CardElement, CardType } from "../data/types";
+import { Card, CardEffect, CardEffectBody, CardEffects, CardElement, CardType, IndexCardElement } from "../data/types";
 
 export const getCardBody: (card: Card) => string = (card) => {
   const {
@@ -96,25 +96,31 @@ export const getCardBody: (card: Card) => string = (card) => {
   return body;
 }
 
-export const getEmbedColorFromElement: (element: CardElement) => ColorResolvable = (element) => {
+export const getEmbedColorFromElement: (element: CardElement | IndexCardElement) => ColorResolvable = (element) => {
   switch (element) {
     case CardElement.Arcane:
+    case IndexCardElement.ARCANE:
       return '#19ABC9';
     
     case CardElement.Crux:
+    case IndexCardElement.CRUX:
       return '#C28FDD';
 
     case CardElement.Fire:
+    case IndexCardElement.FIRE:
       return '#E3462A';
 
     case CardElement.Normal:
+    case IndexCardElement.NORM:
     default:
       return '#111111';
 
     case CardElement.Water:
+    case IndexCardElement.WATER:
       return '#5FD0F8';
 
     case CardElement.Wind:
+    case IndexCardElement.WIND:
       return '#117C00';
   }
 }
