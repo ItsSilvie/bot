@@ -39,13 +39,13 @@ const apiScrape = async () => {
         return getAllPaginatedResults(url, response, page + 1, totalPages);
     };
     const getCardImage = async (slug, uuid) => {
-        await (0, node_fetch_1.default)(`https://index.gatcg.com:8090/images/cards/${slug}.jpg`, {
+        await (0, node_fetch_1.default)(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
             agent: httpsAgent,
         }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/api-data/${uuid}.jpg`)));
     };
     const getAllCards = async (cardSet) => {
         console.log('  ...getting cards...');
-        const response = await getAllPaginatedResults(`https://index.gatcg.com:8090/api/cards/search?prefix=${cardSet}`);
+        const response = await getAllPaginatedResults(`https://api.gatcg.com/cards/search?prefix=${cardSet}`);
         return response;
     };
     const allSets = JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'));

@@ -52,7 +52,7 @@ const apiScrape = async () => {
   }
 
   const getCardImage = async (slug: string, uuid: string) => {
-    await fetch(`https://index.gatcg.com:8090/images/cards/${slug}.jpg`, {
+    await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
       agent: httpsAgent,
     }).then(response => response.body.pipe(
       fs.createWriteStream(`../img.silvie.org/api-data/${uuid}.jpg`)
@@ -61,7 +61,7 @@ const apiScrape = async () => {
 
   const getAllCards = async (cardSet) => {
     console.log('  ...getting cards...');
-    const response = await getAllPaginatedResults(`https://index.gatcg.com:8090/api/cards/search?prefix=${cardSet}`);
+    const response = await getAllPaginatedResults(`https://api.gatcg.com/cards/search?prefix=${cardSet}`);
     return response;
   }
 
