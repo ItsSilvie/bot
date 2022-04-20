@@ -15,7 +15,7 @@
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.1",
     "dotenv": "^11.0.0",
-    "node-fetch": "2",
+    "node-fetch": "^2.6.7",
     "node-html-markdown": "^1.1.3",
     "shx": "^0.3.4"
   },
@@ -24,8 +24,10 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "build": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
+    "build": "echo \"Stop and run build-local instead if running locally.\" & yarn clean & yarn tsc --outDir ./dist & yarn build-api-data-heroku",
+    "build-local": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
     "build-all": "yarn build & yarn deployCommands",
+    "build-all-local": "yarn build-local & yarn deployCommands",
     "build-api-data": "shx cp -r ./src/api-data ./dist",
     "build-api-data-heroku": "shx cp -r ./src/api-data ./dist/api-data",
     "build-heroku": "yarn build-api-data-heroku & yarn deployCommands",
@@ -40,6 +42,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ItsSilvie/bot.git"
+  },
+  "resolutions": {
+    "minimist": "^1.2.6"
   },
   "homepage": "https://silvie.org"
 }

@@ -1,2 +1,2 @@
-release: yarn build-heroku
+release: yarn deployCommands
 worker: yarn start
