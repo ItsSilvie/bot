@@ -27,6 +27,8 @@
     "build": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
     "build-all": "yarn build & yarn deployCommands",
     "build-api-data": "shx cp -r ./src/api-data ./dist",
+    "build-api-data-heroku": "shx cp -r ./src/api-data ./dist/api-data",
+    "build-heroku": "yarn build-api-data-heroku & yarn deployCommands",
     "clean": "rimraf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
