@@ -20,14 +20,13 @@
     "shx": "^0.3.4"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
     "typescript": "^4.5.4"
   },
   "scripts": {
     "build": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
     "build-all": "yarn build & yarn deployCommands",
     "build-api-data": "shx cp -r ./src/api-data/* ./dist/api-data",
-    "clean": "rimraf ./dist",
+    "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
     "start": "node ."
