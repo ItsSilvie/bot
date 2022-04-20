@@ -25,7 +25,7 @@
   "scripts": {
     "build": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
     "build-all": "yarn build & yarn deployCommands",
-    "build-api-data": "shx cp -r ./src/api-data/* ./dist/api-data",
+    "build-api-data": "shx cp -r ./src/api-data/ ./dist/",
     "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
