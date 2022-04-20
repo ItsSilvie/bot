@@ -35,6 +35,7 @@ const command = <BotCommand>{
       });
     }
 
+    console.log(__dirname);
     const cards = await import(path.resolve(__dirname, `../api-data/${filename}.json`));
 
     if (!cards) {
