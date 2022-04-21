@@ -17,8 +17,8 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
 
   embed.setThumbnail(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
 
-  if (edition.effect || card.effect) {
-    embed.addField('\u200B', `${NodeHtmlMarkdown.translate(edition.effect || card.effect)}\n\u200B`)
+  if (edition.effect || card.effect_raw) {
+    embed.addField('\u200B', `${edition.effect ? NodeHtmlMarkdown.translate(edition.effect) : card.effect_raw}\n\u200B`)
   }
 
   const cardCostIsMemory = card.cost_memory !== null;

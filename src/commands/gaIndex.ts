@@ -43,7 +43,10 @@ const command = <BotCommand>{
       });
     }
 
-    const matches = cards.filter(entry => entry.name.toLowerCase().indexOf(name.toLowerCase()) !== -1);
+    const matches = cards.filter(entry => {
+      const nameParts = entry.name.split(' ');
+      return nameParts.some(namePart => namePart.substring(0, name.length).toLowerCase() === name.toLowerCase())
+    });
 
     if (!matches.length) {
       return interaction.reply({

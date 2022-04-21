@@ -11,8 +11,8 @@ const indexEmbed = (card, edition, circulationTemplate) => {
         .setDescription(`**${set.name}** · ${circulationTemplate.name ? `${circulationTemplate.name} ` : ''}${collector_number ?? 'Unnumbered'}`)
         .setColor((0, card_1.getEmbedColorFromElement)(types_1.IndexCardElement[card.element]));
     embed.setThumbnail(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
-    if (edition.effect || card.effect) {
-        embed.addField('\u200B', `${node_html_markdown_1.NodeHtmlMarkdown.translate(edition.effect || card.effect)}\n\u200B`);
+    if (edition.effect || card.effect_raw) {
+        embed.addField('\u200B', `${edition.effect ? node_html_markdown_1.NodeHtmlMarkdown.translate(edition.effect) : card.effect_raw}\n\u200B`);
     }
     const cardCostIsMemory = card.cost_memory !== null;
     const costSymbol = cardCostIsMemory ? '🔵' : '🟡';

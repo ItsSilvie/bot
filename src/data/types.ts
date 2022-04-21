@@ -210,7 +210,7 @@ export type IndexCard = {
   durability: number | null
   editions: IndexEdition[]
   effect: string
-  effect_raw: null
+  effect_raw: string
   element: keyof IndexCardElement
   flavor: string
   level: number | null
