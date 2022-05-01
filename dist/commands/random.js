@@ -49,7 +49,6 @@ const command = {
         else {
             set = sets[(0, array_1.shuffleArray)([...Object.keys(sets)])[0]];
         }
-        console.log(set);
         const cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${set.prefix}.json`)));
         if (!cards) {
             return interaction.reply({

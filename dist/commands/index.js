@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.search = exports.random = exports.help = exports.index = void 0;
+exports.random = exports.index = void 0;
 var gaIndex_1 = require("./gaIndex");
 Object.defineProperty(exports, "index", { enumerable: true, get: function () { return gaIndex_1.default; } });
-var help_1 = require("./help");
-Object.defineProperty(exports, "help", { enumerable: true, get: function () { return help_1.default; } });
+// export { default as help } from './help';
 var random_1 = require("./random");
 Object.defineProperty(exports, "random", { enumerable: true, get: function () { return random_1.default; } });
-var search_1 = require("./search");
-Object.defineProperty(exports, "search", { enumerable: true, get: function () { return search_1.default; } });
+// export { default as search } from './search';
