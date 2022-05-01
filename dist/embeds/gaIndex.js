@@ -37,7 +37,7 @@ const indexEmbed = (card, edition, circulationTemplate) => {
         embed.addField('\u200B', `*${edition.flavor || card.flavor}*\n`);
     }
     embed.setFooter({
-        text: 'This is from Grand Archive\'s Index Beta, available at https://index.gatcg.com.',
+        text: 'This is from Grand Archive\'s Index, available at https://index.gatcg.com.',
     });
     return embed;
 };

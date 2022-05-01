@@ -9,7 +9,7 @@ const command = {
     generator: (subcommand) => {
         return subcommand
             .setName(command.name)
-            .setDescription('Search for a card in Grand Archive\'s Index Beta by name and set.')
+            .setDescription('Search for a card in Grand Archive\'s Index by name and set.')
             .addStringOption(option => {
             Object.values(sets).forEach(({ name, prefix }) => {
                 option.addChoice(name, prefix);

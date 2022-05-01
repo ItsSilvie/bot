@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
-const sets_1 = require("../data/sets");
-const card_1 = require("../embeds/card");
+const array_1 = require("../utils/array");
+const sets = require("../api-data/sets.json");
+const gaIndex_1 = require("../embeds/gaIndex");
 const command = {
     name: 'random',
     generator: (subcommand) => {
@@ -10,8 +11,8 @@ const command = {
             .setName(command.name)
             .setDescription('Reveals a Grand Archive card at random.')
             .addStringOption(option => {
-            sets_1.default.forEach(entry => {
-                option.addChoice(`${entry.year} ${entry.name}`, entry.filename);
+            Object.values(sets).forEach(({ name, prefix }) => {
+                option.addChoice(name, prefix);
             });
             return option
                 .setName('set')
@@ -38,7 +39,7 @@ const command = {
         const filename = interaction.options.getString('set');
         let set;
         if (filename) {
-            set = sets_1.default.find(entry => entry.filename === filename);
+            set = sets[filename];
             if (!filename || !set) {
                 return interaction.reply({
                     content: 'I can\'t find that set.',
@@ -46,18 +47,21 @@ const command = {
             }
         }
         else {
-            set = sets_1.default[Math.floor(Math.random() * sets_1.default.length)];
+            set = sets[(0, array_1.shuffleArray)([...Object.keys(sets)])[0]];
         }
-        const { default: cards } = await Promise.resolve().then(() => require(path.resolve(__dirname, `../data/sets/${set.filename}.js`)));
+        console.log(set);
+        const cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${set.prefix}.json`)));
         if (!cards) {
             return interaction.reply({
                 content: 'Something went wrong, please try again!',
             });
         }
-        const match = cards[Math.floor(Math.random() * cards.length)];
+        const match = (0, array_1.shuffleArray)([...cards])[0];
+        const edition = (0, array_1.shuffleArray)([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0];
+        const circulation = (0, array_1.shuffleArray)([...edition.circulationTemplates])[0];
         return interaction.reply({
-            embeds: [(0, card_1.default)(match, set)],
-            content: messages[Math.floor(Math.random() * messages.length)],
+            embeds: [(0, gaIndex_1.default)(match, edition, circulation)],
+            content: (0, array_1.shuffleArray)([...messages])[0],
         });
     },
 };

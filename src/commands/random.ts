@@ -1,9 +1,10 @@
 import * as path from 'path';
-import sets from '../data/sets';
-import { Card } from '../data/types';
+import { Card, IndexCard, IndexCirculation, IndexEdition } from '../data/types';
 import cardEmbed from '../embeds/card';
 import { shuffleArray } from '../utils/array';
 import { BotCommand } from './types';
+import * as sets from '../api-data/sets.json';
+import indexEmbed from '../embeds/gaIndex';
 
 const command = <BotCommand>{
   name: 'random',
@@ -12,8 +13,8 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Reveals a Grand Archive card at random.')
       .addStringOption(option => {
-        sets.forEach(entry => {
-          option.addChoice(`${entry.year} ${entry.name}`, entry.filename)
+        Object.values(sets).forEach(({ name, prefix }) => {
+          option.addChoice(name, prefix)
         });
   
         return option
@@ -43,7 +44,7 @@ const command = <BotCommand>{
     let set;
 
     if (filename) {
-      set = sets.find(entry => entry.filename === filename);
+      set = sets[filename];
 
       if (!filename || !set) {
         return interaction.reply({
@@ -51,10 +52,10 @@ const command = <BotCommand>{
         });
       }
     } else {
-      set = sets[Math.floor(Math.random() * sets.length)];
+      set = sets[shuffleArray([...Object.keys(sets)])[0]];
     }
   
-    const { default: cards } = await import(path.resolve(__dirname, `../data/sets/${set.filename}.js`)) as { default: Card[] };
+    const cards = await import(path.resolve(__dirname, `../api-data/${set.prefix}.json`));
 
     if (!cards) {
       return interaction.reply({
@@ -62,11 +63,13 @@ const command = <BotCommand>{
       });
     }
 
-    const match = cards[Math.floor(Math.random() * cards.length)];
+    const match = shuffleArray([...cards])[0] as IndexCard;
+    const edition = shuffleArray([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0] as IndexEdition;
+    const circulation = shuffleArray([...edition.circulationTemplates])[0] as IndexCirculation;
 
     return interaction.reply({
-      embeds: [cardEmbed(match, set)],
-      content: messages[Math.floor(Math.random() * messages.length)],
+      embeds: [indexEmbed(match, edition, circulation)],
+      content: shuffleArray([...messages])[0],
     });
   },
 }
