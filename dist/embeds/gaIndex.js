@@ -18,7 +18,7 @@ const indexEmbed = (card, edition, circulationTemplate) => {
     const costSymbol = cardCostIsMemory ? '🔵' : '🟡';
     embed.addField(`Cost ${costSymbol}`, `${cardCostIsMemory ? card.cost_memory : card.cost_reserve}x ${cardCostIsMemory ? 'memory' : 'reserve'}`, true);
     embed.addField('Element', types_1.IndexCardElement[card.element] ?? '-', true);
-    embed.addField('Speed', card.speed ?? '-', true);
+    embed.addField('Speed', typeof card.speed === 'boolean' ? (card.speed ? 'Fast' : 'Slow') : (card.speed ?? '-'), true);
     embed.addField('Type', card.types?.join(' ') ?? '-', true);
     embed.addField('Supertype', card.classes?.join(' ') ?? '-', true);
     embed.addField('Subtype', card.subtypes.join(' ') ?? '-', true);

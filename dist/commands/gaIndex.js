@@ -19,7 +19,11 @@ const command = {
                 .setDescription('Which set is the card part of?')
                 .setRequired(true);
         })
-            .addStringOption(option => option.setName('card').setDescription('What is the card\'s name?').setRequired(true));
+            .addStringOption(option => option
+            .setName('card')
+            .setDescription('What is the card\'s name?')
+            .setRequired(true)
+            .setAutocomplete(true));
     },
     handler: async (interaction) => {
         const filename = interaction.options.getString('set');
@@ -37,6 +41,9 @@ const command = {
             });
         }
         const matches = cards.filter(entry => {
+            if (entry.name.toLowerCase() === name.toLowerCase()) {
+                return true;
+            }
             const nameParts = entry.name.split(' ');
             return nameParts.some(namePart => namePart.substring(0, name.length).toLowerCase() === name.toLowerCase());
         });
@@ -67,5 +74,28 @@ const command = {
             content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}:`,
         });
     },
+    handleAutocomplete: async (interaction) => {
+        const { options } = interaction;
+        const set = options.getString('set');
+        const card = options.getString('card');
+        if (!set || Object.keys(sets).indexOf(set) === -1) {
+            return;
+        }
+        const setData = await Promise.resolve().then(() => require(`../api-data/${set}.json`));
+        let matchCount = 0;
+        return setData.filter((entry, index) => {
+            if (!card) {
+                return index < 25;
+            }
+            if (matchCount === 25 || entry.name.toLowerCase().indexOf(card.toLowerCase()) === -1) {
+                return;
+            }
+            matchCount += 1;
+            return true;
+        }).map(entry => ({
+            name: entry.name,
+            value: entry.name,
+        }));
+    }
 };
 exports.default = command;

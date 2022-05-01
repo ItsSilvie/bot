@@ -24,7 +24,7 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+	if (!interaction.isCommand() && !interaction.isAutocomplete()) return;
 
 	const { commandName, options } = interaction;
 
@@ -36,6 +36,21 @@ client.on('interactionCreate', async interaction => {
 
 	if (!subcommand) {
 		console.log(`Subcommand ${options.getSubcommand()} not found.`);
+		return;
+	}
+
+	if (interaction.isAutocomplete()) {
+		if (typeof subcommand.handleAutocomplete !== 'function') {
+			return;
+		}
+
+		const response = await subcommand.handleAutocomplete(interaction, client);
+
+		if (!response) {
+			return;
+		}
+
+		interaction.respond(response);
 		return;
 	}
 	

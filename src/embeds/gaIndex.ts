@@ -26,7 +26,7 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
 
   embed.addField(`Cost ${costSymbol}`, `${cardCostIsMemory ? card.cost_memory : card.cost_reserve}x ${cardCostIsMemory ? 'memory' : 'reserve'}`, true);
   embed.addField('Element', IndexCardElement[card.element] ?? '-', true);
-  embed.addField('Speed', card.speed ?? '-', true);
+  embed.addField('Speed', typeof card.speed === 'boolean' ? (card.speed ? 'Fast' : 'Slow') : (card.speed ?? '-'), true);
 
   embed.addField('Type', card.types?.join(' ') ?? '-', true);
   embed.addField('Supertype', card.classes?.join(' ') ?? '-', true);
@@ -50,7 +50,7 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   }
 
   embed.setFooter({
-    text: 'This is from Grand Archive\'s Index Beta, available at https://index.gatcg.com.',
+    text: 'This is from Grand Archive\'s Index, available at https://index.gatcg.com.',
   });
 
   return embed;

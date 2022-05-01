@@ -20,7 +20,7 @@ client.on('ready', () => {
     });
 });
 client.on('interactionCreate', async (interaction) => {
-    if (!interaction.isCommand())
+    if (!interaction.isCommand() && !interaction.isAutocomplete())
         return;
     const { commandName, options } = interaction;
     if (commandName !== 'silvie') {
@@ -29,6 +29,17 @@ client.on('interactionCreate', async (interaction) => {
     const subcommand = Object.values(subcommands).find(entry => entry.name === options.getSubcommand());
     if (!subcommand) {
         console.log(`Subcommand ${options.getSubcommand()} not found.`);
+        return;
+    }
+    if (interaction.isAutocomplete()) {
+        if (typeof subcommand.handleAutocomplete !== 'function') {
+            return;
+        }
+        const response = await subcommand.handleAutocomplete(interaction, client);
+        if (!response) {
+            return;
+        }
+        interaction.respond(response);
         return;
     }
     await subcommand.handler(interaction, client);
