@@ -31,7 +31,7 @@
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
     "start": "node .",
-    "deploy": "git push heroku main",
+    "deploy": "git push heroku main"
   },
   "bugs": {
     "url": "https://github.com/ItsSilvie/bot/issues"
