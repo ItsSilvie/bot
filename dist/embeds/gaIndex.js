@@ -46,7 +46,6 @@ const indexEmbed = (card, edition, circulationTemplate) => {
             text: edition.flavor || card.flavor,
         });
     }
-    embed.setTimestamp();
     return embed;
 };
 exports.default = indexEmbed;

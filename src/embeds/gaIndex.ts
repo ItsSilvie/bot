@@ -64,8 +64,6 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
     });
   }
 
-  embed.setTimestamp()
-
   return embed;
 }
 
