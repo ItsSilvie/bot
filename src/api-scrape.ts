@@ -68,6 +68,18 @@ const apiScrape = async () => {
   const allSets = JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'));
   const updatedSetsOutput = { ...allSets };
 
+  const getOptions = async () => {
+    const response = await fetch(`https://api.gatcg.com/option/search`, {
+      agent: httpsAgent,
+    }).then(response => response.json())
+    return response;
+  }
+
+  const processOptions = async () => {
+    const options = await getOptions();
+    fs.writeFileSync('./src/api-data/options.json', JSON.stringify(options), 'utf8');
+  }
+
   const processSet = async (cardSet) => {
     const cardData = await getAllCards(cardSet);
     fs.writeFileSync(`./src/api-data/${cardSet}.json`, JSON.stringify(cardData) as string, 'utf8');
@@ -87,6 +99,8 @@ const apiScrape = async () => {
     fs.writeFileSync('./src/api-data/sets.json', JSON.stringify(updatedSetsOutput), 'utf8');
   }
 
+  await processOptions();
+
   if (!cardSetArg) {
     for (let i = 0; i < cardSets.length; i++) {
       const cardSet = cardSets[i];
@@ -98,6 +112,7 @@ const apiScrape = async () => {
   }
 
   await processSet(cardSetArg);
+  await processOptions();
 }
 
 apiScrape();

@@ -50,6 +50,16 @@ const apiScrape = async () => {
     };
     const allSets = JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'));
     const updatedSetsOutput = { ...allSets };
+    const getOptions = async () => {
+        const response = await (0, node_fetch_1.default)(`https://api.gatcg.com/option/search`, {
+            agent: httpsAgent,
+        }).then(response => response.json());
+        return response;
+    };
+    const processOptions = async () => {
+        const options = await getOptions();
+        fs.writeFileSync('./src/api-data/options.json', JSON.stringify(options), 'utf8');
+    };
     const processSet = async (cardSet) => {
         const cardData = await getAllCards(cardSet);
         fs.writeFileSync(`./src/api-data/${cardSet}.json`, JSON.stringify(cardData), 'utf8');
@@ -66,6 +76,7 @@ const apiScrape = async () => {
         updatedSetsOutput[cardSet] = cardData[0].editions.find(edition => edition.set.prefix === cardSet).set;
         fs.writeFileSync('./src/api-data/sets.json', JSON.stringify(updatedSetsOutput), 'utf8');
     };
+    await processOptions();
     if (!cardSetArg) {
         for (let i = 0; i < cardSets.length; i++) {
             const cardSet = cardSets[i];
@@ -75,5 +86,6 @@ const apiScrape = async () => {
         return;
     }
     await processSet(cardSetArg);
+    await processOptions();
 };
 apiScrape();

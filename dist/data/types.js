@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IndexCardElement = exports.IndexEditionRarityMap = exports.IndexEditionRarity = exports.CardVariant = exports.CardType = exports.CardSupertype = exports.CardSubtype = exports.CardSpeed = exports.CardEffect = exports.CardElement = exports.CardCost = void 0;
+exports.IndexCardElement = exports.CardVariant = exports.CardType = exports.CardSupertype = exports.CardSubtype = exports.CardSpeed = exports.CardEffect = exports.CardElement = exports.CardCost = void 0;
 var CardCost;
 (function (CardCost) {
     CardCost["Memory"] = "Memory";
@@ -68,26 +68,6 @@ var CardVariant;
     CardVariant["Foil"] = "Foil";
     CardVariant["StarFoil"] = "Star Foil";
 })(CardVariant = exports.CardVariant || (exports.CardVariant = {}));
-var IndexEditionRarity;
-(function (IndexEditionRarity) {
-    IndexEditionRarity[IndexEditionRarity["Common"] = 1] = "Common";
-    IndexEditionRarity[IndexEditionRarity["Uncommon"] = 2] = "Uncommon";
-    IndexEditionRarity[IndexEditionRarity["Rare"] = 3] = "Rare";
-    IndexEditionRarity[IndexEditionRarity["SuperRare"] = 4] = "SuperRare";
-    IndexEditionRarity[IndexEditionRarity["UltraRare"] = 5] = "UltraRare";
-    IndexEditionRarity[IndexEditionRarity["CollectorRare"] = 6] = "CollectorRare";
-    IndexEditionRarity[IndexEditionRarity["PromotionalRare"] = 7] = "PromotionalRare";
-})(IndexEditionRarity = exports.IndexEditionRarity || (exports.IndexEditionRarity = {}));
-var IndexEditionRarityMap;
-(function (IndexEditionRarityMap) {
-    IndexEditionRarityMap["Common"] = "Common";
-    IndexEditionRarityMap["Uncommon"] = "Uncommon";
-    IndexEditionRarityMap["Rare"] = "Rare";
-    IndexEditionRarityMap["SuperRare"] = "Super Rare";
-    IndexEditionRarityMap["UltraRare"] = "Ultra Rare";
-    IndexEditionRarityMap["CollectorRare"] = "Collector's Rare";
-    IndexEditionRarityMap["PromotionalRare"] = "Promotional Rare";
-})(IndexEditionRarityMap = exports.IndexEditionRarityMap || (exports.IndexEditionRarityMap = {}));
 var IndexCardElement;
 (function (IndexCardElement) {
     IndexCardElement["ARCANE"] = "Arcane";

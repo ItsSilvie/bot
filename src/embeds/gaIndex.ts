@@ -3,6 +3,7 @@ import { NodeHtmlMarkdown } from 'node-html-markdown'
 import { IndexCardElement } from "../data/types";
 import { getEmbedColorFromElement } from "../utils/card";
 import { IndexEmbed } from "./types";
+import * as options from '../api-data/options.json';
 
 const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   const {
@@ -12,10 +13,13 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   
   const embed = new MessageEmbed()
     .setTitle(card.name)
-    .setDescription(`**${set.name}** · ${circulationTemplate.name ? `${circulationTemplate.name} ` : ''}${collector_number ?? 'Unnumbered'}`)
+    .setURL(`https://index.gatcg.com/edition/${edition.slug}`)
+    .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${set.prefix})** · ${circulationTemplate.name ? `${circulationTemplate.name} ` : ''}${collector_number ?? 'Unnumbered'}`)
     .setColor(getEmbedColorFromElement(IndexCardElement[card.element]));
 
-  embed.setThumbnail(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
+  embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
+  embed.setThumbnail(`https://img.silvie.org/ga-logo.png`);
+  embed.setImage(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
 
   if (edition.effect || card.effect_raw) {
     embed.addField('\u200B', `${edition.effect ? NodeHtmlMarkdown.translate(edition.effect) : card.effect_raw}\n\u200B`)
@@ -28,9 +32,9 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   embed.addField('Element', IndexCardElement[card.element] ?? '-', true);
   embed.addField('Speed', typeof card.speed === 'boolean' ? (card.speed ? 'Fast' : 'Slow') : (card.speed ?? '-'), true);
 
-  embed.addField('Type', card.types?.join(' ') ?? '-', true);
-  embed.addField('Supertype', card.classes?.join(' ') ?? '-', true);
-  embed.addField('Subtype', card.subtypes.join(' ') ?? '-', true);
+  embed.addField(`Type${!card.types || card.types.length === 1 ? '' : 's'}`, card.types?.join(' ') ?? '-', true);
+  embed.addField(`Class${card.classes.length === 1 ? '' : 'es'}`, card.classes?.join(' ') ?? '-', true);
+  embed.addField(`Subtype${card.subtypes.length === 1 ? '' : 's'}`, card.subtypes.join(' ') ?? '-', true);
 
   if (card.attack || card.durability || card.life) {
     // @ts-ignore
@@ -41,17 +45,26 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
     embed.addField('Life ', `${card.life ?? '-'}`, true);
   }
 
+  embed.addField('Rarity', edition.rarity ? options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text: '-', true);
   embed.addField('Variant', circulationTemplate.foil ? 'Foil' : '-', true);
   embed.addField('Population', `${circulationTemplate.population_operator ?? ''} ${circulationTemplate.population.toLocaleString()}` ?? '-', true);
-  embed.addField('Illustrator', `${edition.illustrator ?? '-'}`, true);
+
+
+  embed.addField('Illustrator', `${edition.illustrator ? `[${edition.illustrator}](https://index.gatcg.com/cards?illustrator=${encodeURIComponent(edition.illustrator)})` : '-'}`);
+
+  if (Array.isArray(card.rule)) {
+    embed.addField('Rules', card.rule.map(({ date_added, description, title }) => (
+      `*${date_added}*${title ? ` · ${title}` : ''}\n${description}`
+    )).join('\n\n'));
+  }
   
   if (edition.flavor || card.flavor) {
-    embed.addField('\u200B', `*${edition.flavor || card.flavor}*\n`);
+    embed.setFooter({
+      text: edition.flavor || card.flavor,
+    });
   }
 
-  embed.setFooter({
-    text: 'This is from Grand Archive\'s Index, available at https://index.gatcg.com.',
-  });
+  embed.setTimestamp()
 
   return embed;
 }

@@ -65,8 +65,8 @@ const command = {
         ]), []);
         if (allVariants.length > 2) {
             return interaction.reply({
-                embeds: (0, array_1.shuffleArray)(allVariants).filter((_, index) => index < 2).map(([card, edition, circulation]) => (0, gaIndex_1.default)(card, edition, circulation)),
-                content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}, but I don't want to spam chat so here are 2 of them picked at random:`,
+                embeds: (0, array_1.shuffleArray)(allVariants)[0].map(([card, edition, circulation]) => (0, gaIndex_1.default)(card, edition, circulation)),
+                content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}, but I don't want to spam chat so here is one of them picked at random:`,
             });
         }
         return interaction.reply({

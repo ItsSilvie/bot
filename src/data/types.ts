@@ -142,6 +142,11 @@ export type Help = {
   description: string
 }
 
+export type Link = {
+  name: string
+  url: string
+}
+
 export type Set = {
   alt: string[]
   filename: string
@@ -166,30 +171,10 @@ export type IndexEdition = {
   effect: null
   flavor: null
   illustrator: string
-  rarity: IndexEditionRarity
+  rarity: number
   set: IndexSet
   slug: string
   uuid: string
-}
-
-export enum IndexEditionRarity {
-  Common = 1,
-  Uncommon = 2,
-  Rare = 3,
-  SuperRare = 4,
-  UltraRare = 5,
-  CollectorRare = 6,
-  PromotionalRare = 7,
-}
-
-export enum IndexEditionRarityMap {
-  Common = 'Common',
-  Uncommon = 'Uncommon',
-  Rare = 'Rare',
-  SuperRare = 'Super Rare',
-  UltraRare = 'Ultra Rare',
-  CollectorRare = 'Collector\'s Rare',
-  PromotionalRare = 'Promotional Rare',
 }
 
 export enum IndexCardElement {
@@ -218,12 +203,18 @@ export type IndexCard = {
   name: string
   related_ids: null
   result_editions: IndexEdition[]
-  rule: null
+  rule: IndexRule[] | null;
   slug: string
   speed: string | null
   subtypes: string[] | null
   types: string[] | null
   uuid: string
+}
+
+export type IndexRule = {
+  date_added: string
+  description: string
+  title?: string
 }
 
 export type IndexSet = {
