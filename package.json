@@ -31,7 +31,8 @@
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
     "start": "node .",
-    "deploy": "git push heroku main"
+    "deploy": "git push heroku main",
+    "generate-blog-templates": "echo \"Templates will be built in ./templates. Remember to move them once done.\" & node ./dist/blog/generate-blog-templates.js"
   },
   "bugs": {
     "url": "https://github.com/ItsSilvie/bot/issues"
