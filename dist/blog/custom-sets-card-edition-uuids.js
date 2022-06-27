@@ -322,4 +322,67 @@ exports.default = [{
             }, {
                 id: 'seHW4HxE03',
             }]
+    }, {
+        setCode: 'DEMO22',
+        filename: 'lgs-demo-deck',
+        name: 'LGS Demo Deck',
+        isDeck: true,
+        cards: [{
+                id: 'oBKuCfrxbF',
+                quantity: 1,
+            }, {
+                id: 'RWwB4PfbAT',
+                quantity: 1,
+            }, {
+                id: 'KkmMxafOcd',
+                quantity: 1,
+            }, {
+                id: 'XztBsVXFLP',
+                quantity: 1,
+            }, {
+                id: '34qZzBpnsT',
+                quantity: 1,
+            }, {
+                id: 's5z59BzvFc',
+                quantity: 1,
+            }, {
+                id: '8q9Zd4Pgdl',
+                quantity: 1,
+            }, {
+                id: 'KEpPCif67K',
+                quantity: 1,
+            }, {
+                id: 'dkNM9803HT',
+                quantity: 2,
+            }, {
+                id: '2f5KYqY3cv',
+                quantity: 3,
+            }, {
+                id: 'AvZiJFuXvZ',
+                quantity: 3,
+            }, {
+                id: 'OQOAQVzLtd',
+                quantity: 2,
+            }, {
+                id: 'L1PtqiW83n',
+                quantity: 3,
+            }, {
+                id: 'xJv8zc3tTC',
+                quantity: 2,
+            }, {
+                id: 'vpOVdHNJP2',
+                quantity: 2,
+            }, {
+                id: 'lo6bC9AWKJ',
+                quantity: 3,
+            }, {
+                id: 'VuJ9KdU8pR',
+                quantity: 2,
+            }, {
+                id: 'I04cXSLEah',
+                quantity: 2,
+            }, {
+                id: '8K31b06xIE',
+                quantity: 2,
+            }]
     }];

@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const custom_sets_card_edition_uuids_1 = require("./custom-sets-card-edition-uuids");
+const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
+const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
+const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`;
 const getRarityCodeFromRarityId = (rarityId) => {
     if (rarityId < 1 || rarityId > 7) {
         throw new Error(`Unhandled rarity ID: ${rarityId}`);
@@ -15,12 +18,12 @@ const getRarityCodeFromRarityId = (rarityId) => {
         'CR',
         'PR', // 7
     ];
-    return rarityArr[rarityId + 1];
+    return rarityArr[rarityId - 1];
 };
 const generateBlogTemplates = async () => {
     const allSets = Object.keys(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
-    if (!fs.existsSync(`./templates`)) {
-        fs.mkdirSync(`./templates`);
+    if (!fs.existsSync(blogTemplatesPath)) {
+        fs.mkdirSync(blogTemplatesPath);
     }
     for (let i = 0; i < allSets.length; i++) {
         const setCode = allSets[i];
@@ -60,14 +63,14 @@ const generateBlogTemplates = async () => {
     <figcaption>${card.name} &ndash; ${cardEditionSet.prefix} &middot; ${cardEditionSet.language}-${cardEdition.collector_number}</figcaption>
   </figure>
   <div class="card-template-stats">
-    <div class="card-template-stat">
+  ${cardEdition.effect || card.effect ? (`  <div class="card-template-stat">
       <span class="card-template-stat-heading">Effect</span>
       <span class="card-template-stat-values">
         <span class="card-template-stat-values-effect">
           ${cardEdition.effect || card.effect}
         </span>
       </span>
-    </div>
+    </div>`) : ''}
     ${card.rule ? `    <div class="card-template-stat">
       <span class="card-template-stat-heading">Rules</span>
       <span class="card-template-stat-values">${card.rule.map(rule => `<span class="card-template-stat-values-rule">${rule.date_added} &ndash; ${rule.description}</span>`).join('')}</span>
@@ -89,12 +92,25 @@ const generateBlogTemplates = async () => {
     For the full card stats, <a href="https://index.gatcg.com/edition/${cardEdition.slug}">view this card on Grand Archive Index</a>.
   </p>
 </div>`;
-                fs.writeFileSync(`./templates/${cardEdition.slug}.html`, cardTemplate, 'utf8');
+                fs.writeFileSync(`${blogTemplatesPath}/${cardEdition.slug}.html`, cardTemplate, 'utf8');
             }
         }
         const setTemplateEntries = [];
         for (let j = 0; j < setTemplateData.length; j++) {
             const setTemplateDataEntry = setTemplateData[j];
+            if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.slug}.markdown`)) {
+                fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.slug}.markdown`, (`---
+layout: card
+title:  "${setTemplateDataEntry.name} (trading card)"
+date:   2022-06-25 08:44:00 +0100
+permalink: ${setTemplateDataEntry.slug}_(card)
+incomplete: true
+---
+
+## ${setCode} &middot; ${setTemplateDataEntry.number} ${setTemplateDataEntry.rarity}
+
+{% include templates/${setTemplateDataEntry.slug}-${setCode.toLowerCase()}.html %}`), 'utf8');
+            }
             const setTemplateEntry = `<tr>
   <td style="text-align: left">
     ${setTemplateDataEntry.number}
@@ -114,7 +130,7 @@ const generateBlogTemplates = async () => {
 </tr>`;
             setTemplateEntries.push(setTemplateEntry);
         }
-        fs.writeFileSync(`./templates/${setCode}.html`, `<table>
+        fs.writeFileSync(`${blogTemplatesPath}/${setCode}.html`, `<table>
 <thead>
   <tr>
     <th style="text-align: left">Number</th>
@@ -187,7 +203,7 @@ const generateBlogTemplates = async () => {
   </tr>`;
                 customSetTemplateEntries.push(setTemplateEntry);
             }
-            fs.writeFileSync(`./templates/${setCode}-${customSet.filename}.html`, `<table class="condensed-table">
+            fs.writeFileSync(`${blogTemplatesPath}/${setCode}-${customSet.filename}.html`, `<table class="condensed-table">
       <thead>
         <tr>
           <th style="text-align: left">Number</th>
