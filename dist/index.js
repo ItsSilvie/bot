@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const dotenv = require("dotenv");
 // Subcommand handlers.
 const subcommands = require("./commands");
-const array_1 = require("./utils/array");
 // For local development, make sure the .env file is set up in the root dir.
 dotenv.config();
 // Create a new client instance
@@ -13,40 +12,40 @@ const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GU
 client.once('ready', () => {
     console.log('Ready!');
 });
-const digMessages = [
-    '*wants to play*',
-    '*runs away from Sylidar*',
-    '*looks for critters*',
-    '*pretends to be Dream Fairy*',
-    '*is hungry*',
-    'Are we there yet?',
-    '*pokes treasure chest*',
-    '*roars*',
-    'Will you be my friend?',
-    '*hehehe*',
-    'I don\'t like strangers',
-    "<:wow_silvie:918934079435583519>",
-    "<:shocked_silvie:918934079104245851>",
-    "<:cry_silvie:918934079481712690>",
-    "<:mad_silvie:985427397379776602>",
-    "<:anxious_silvie:985427396444434492>"
-];
+// const digMessages = [
+// 	'*wants to play*',
+// 	'*runs away from Sylidar*',
+// 	'*looks for critters*',
+// 	'*pretends to be Dream Fairy*',
+// 	'*is hungry*',
+// 	'Are we there yet?',
+// 	'*pokes treasure chest*',
+// 	'*roars*',
+// 	'Will you be my friend?',
+// 	'*hehehe*',
+// 	'I don\'t like strangers',
+// 	"<:wow_silvie:918934079435583519>",
+// 	"<:shocked_silvie:918934079104245851>",
+// 	"<:cry_silvie:918934079481712690>",
+// 	"<:mad_silvie:985427397379776602>",
+// 	"<:anxious_silvie:985427396444434492>"
+// ]
 client.on('ready', () => {
     client.user.setActivity('Grand Archive', {
         name: 'Grand Archive TCG',
         type: 'PLAYING',
         url: 'https://grandarchivetcg.com'
     });
-    let digCount = 0;
-    const channel = client.channels.cache.get('990852268045787216');
-    if (!channel) {
-        return;
-    }
-    setInterval(() => {
-        const digMessage = (0, array_1.shuffleArray)([...digMessages])[0];
-        digCount = digCount + 1;
-        channel.send(`${digMessage} *(${digCount.toLocaleString()})*`);
-    }, 90000);
+    // let digCount = 0;
+    // const channel = client.channels.cache.get('990852268045787216');
+    // if (!channel) {
+    // 	return;
+    // }
+    // setInterval(() => {
+    // 	const digMessage = shuffleArray([...digMessages])[0];
+    // 	digCount = digCount + 1;
+    // 	(channel as TextChannel).send(`${digMessage} *(${digCount.toLocaleString()})*`);
+    // }, 90000);
 });
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() && !interaction.isAutocomplete())
