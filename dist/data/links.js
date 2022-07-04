@@ -24,5 +24,8 @@ const links = [{
     }, {
         name: 'Twitter',
         url: 'https://twitter.com/GrandArchiveTCG',
+    }, {
+        name: 'GA Marketplace',
+        url: 'https://discord.gg/UQcCfrBFbd',
     }];
 exports.default = links;

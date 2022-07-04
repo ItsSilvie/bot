@@ -22,7 +22,7 @@ const command = {
         const match = links_1.default.find(({ name }) => name === topic);
         if (!match) {
             return interaction.reply({
-                content: 'I can\'t find that help topic.',
+                content: 'I can\'t find that link.',
             });
         }
         const { url, name, } = match;

@@ -24,6 +24,9 @@ const links = <Link[]>[{
 }, {
   name: 'Twitter',
   url: 'https://twitter.com/GrandArchiveTCG',
+}, {
+  name: 'GA Marketplace',
+  url: 'https://discord.gg/UQcCfrBFbd',
 }];
 
 export default links;

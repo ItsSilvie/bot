@@ -24,7 +24,7 @@ const command = <BotCommand>{
 
     if (!match) {
       return interaction.reply({
-        content: 'I can\'t find that help topic.',
+        content: 'I can\'t find that link.',
       });
     }
 
