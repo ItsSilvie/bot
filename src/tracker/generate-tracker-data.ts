@@ -1,8 +1,27 @@
 import * as fs from 'fs';
+import JsonToTS from 'json-to-ts';
 
 const TRACKER_REPO_LOCAL_PATH = '../silvie.org';
 
 const trackerDataPath = `${TRACKER_REPO_LOCAL_PATH}/src/data`
+
+enum Variant {
+  Foil = "Foil",
+  NonFoil = "Non-foil",
+}
+
+// https://stackoverflow.com/a/1026087/1317805
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function pascalCase(string) {
+  return string
+    .replace(/[^A-Za-z0-9]/g, '') // https://stackoverflow.com/a/32192557/1317805
+    .split(' ')
+    .map(part => capitalize(part))
+    .join('');
+}
 
 const getRarityCodeFromRarityId = (rarityId) => {
   if (rarityId < 1 || rarityId > 7) {
@@ -24,10 +43,10 @@ const getRarityCodeFromRarityId = (rarityId) => {
 
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {
   if (circulationTemplate.foil) {
-    return 'Foil';
+    return Variant.Foil;
   }
 
-  return 'Non-foil';
+  return Variant.NonFoil;
 }
 
 const generateTrackerData = async () => {
@@ -45,12 +64,15 @@ const generateTrackerData = async () => {
     prefix: string;
   }[];
 
-  fs.writeFileSync(`${trackerDataPath}/sets.json`, JSON.stringify(allSets), 'utf-8');
+  let generatedSetData = [];
+  let cardType;
 
   for (let i = 0; i < allSets.length; i++) {
+    const currentSet = allSets[i];
+
     const {
       prefix: setCode,
-    } = allSets[i];
+    } = currentSet;
 
     console.log(`Parsing set ${setCode}`);
   
@@ -93,8 +115,78 @@ const generateTrackerData = async () => {
       }
     }
 
+    generatedSetData.push({
+      ...currentSet,
+      cards: {
+        variants: Object.entries(Variant).reduce((obj, [key, value]) => ({
+          ...obj,
+          [key]: setCardData.filter(setCard => setCard.variant === value).length,
+        }), {}),
+        total: setCardData.length,
+      },
+    })
+
     fs.writeFileSync(`${trackerDataPath}/cards/${setCode}.json`, JSON.stringify(setCardData), 'utf-8');
+
+    if (i === 0) {
+      cardType = JsonToTS(setCardData[0])[0]
+        .replace('interface', 'export interface')
+        .replace('RootObject', 'GeneratedCard');
+    }
   }
+
+  fs.writeFileSync(`${trackerDataPath}/sets.json`, JSON.stringify(generatedSetData), 'utf-8');
+  const setType = JsonToTS(generatedSetData[0]).map(entry => {
+    console.log(entry);
+    return entry
+      .replace('interface', 'export interface')
+      .replace('RootObject', 'GeneratedSet')
+      .replace('Cards', 'GeneratedSetCardCount')
+      .replace('Variants', 'GeneratedSetCardVariantCount');
+  }).join('\n\n')
+
+  const options = JSON.parse(fs.readFileSync('./src/api-data/options.json', 'utf8')) as {
+    [key: string]: {
+      text: string,
+      value: string,
+    }[]
+  };
+  const optionTypes = Object.entries(options).reduce((arr, [key, values]) => {
+    let valueFormatter;
+
+    switch (key) {
+      case 'set':
+      case 'statOperator':
+        return arr;
+
+      case 'rarity':
+        valueFormatter = (value) => getRarityCodeFromRarityId(value);
+        break;
+
+      default:
+        break;
+    }
+    
+    return [
+      ...arr,
+`export enum Generated${capitalize(key)} {
+  ${values.map(({ text, value }) => `${pascalCase(text)} = "${typeof valueFormatter === 'function' ? valueFormatter(value) : value}",`).join('\n  ')}
+}`
+    ];
+  }, [
+`export enum GeneratedVariant {
+  ${Object.entries(Variant).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
+}`
+  ]).join('\n\n');
+
+  const formatCardType = (cardType) => {
+    return cardType
+      .replace('element: string', 'element: GeneratedElement')
+      .replace('rarity: string', 'rarity: GeneratedRarity')
+      .replace('variant: string', 'variant: GeneratedVariant')
+  }
+  
+  fs.writeFileSync(`${trackerDataPath}/types.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
 }
 
 generateTrackerData();
