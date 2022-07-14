@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
-const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie.org';
-const deckBuilderDataPath = `${DECK_BUILDER_REPO_LOCAL_PATH}/src/data`;
+const DECK_BUILDER_REPO_LOCAL_PATH = '../img.silvie.org';
+const deckBuilderDataPath = `${DECK_BUILDER_REPO_LOCAL_PATH}/cdn`;
 const generateDeckBuilderData = async () => {
     if (!fs.existsSync(deckBuilderDataPath)) {
         fs.mkdirSync(deckBuilderDataPath);
@@ -20,10 +20,15 @@ const generateDeckBuilderData = async () => {
         for (let j = 0; j < cardData.length; j++) {
             console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
-            cardSearchData.push({
-                uuid: card.uuid,
-                name: card.name,
-            });
+            const cardSearchDataObj = {
+                u: card.uuid,
+                n: card.name,
+                t: typeof card.cost_memory === 'number' ? 'm' : 'r',
+            };
+            if (cardSearchData.find(entry => entry.u === card.uuid)) {
+                continue;
+            }
+            cardSearchData.push(cardSearchDataObj);
             fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/${card.uuid}.json`, JSON.stringify(card), 'utf-8');
         }
     }
