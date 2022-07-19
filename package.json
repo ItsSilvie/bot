@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "echo \"Silvie is pre-built using build-local.\"",
-    "build-local": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data",
+    "build-local": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data & shx cp ./src/deck-builder/types.ts ./dist/deck-builder/types.ts",
     "build-all": "yarn build-local & yarn deployCommands",
     "build-api-data": "shx cp -r ./src/api-data/ ./dist/",
     "clean": "shx rm -rf ./dist",
@@ -34,7 +34,7 @@
     "start": "node .",
     "deploy": "git push heroku main",
     "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js",
-    "generate-deck-builder-data": "echo \"Deck builder data will be built in silvie.org.\" & node ./dist/deck-builder/generate-deck-builder-data.js",
+    "generate-deck-builder-data": "node ./dist/deck-builder/generate-deck-builder-data.js",
     "generate-tracker-data": "echo \"Tracker data will be built in silvie.org.\" & node ./dist/tracker/generate-tracker-data.js",
     "update-static-files": "yarn generate-deck-builder-data & generate-tracker-data & yarn generate-blog-templates"
   },
