@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const json_to_ts_1 = require("json-to-ts");
-const TRACKER_REPO_LOCAL_PATH = '../silvie.org';
-const trackerDataPath = `${TRACKER_REPO_LOCAL_PATH}/src/data`;
+const TRACKER_REPO_LOCAL_PATH = '../silvie.org/src/generated/collection-tracker';
+const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const trackerDataPath = `${TRACKER_CDN_REPO_LOCAL_PATH}/cdn`;
 var Variant;
 (function (Variant) {
     Variant["Foil"] = "Foil";
@@ -45,8 +46,8 @@ const generateTrackerData = async () => {
     if (!fs.existsSync(trackerDataPath)) {
         fs.mkdirSync(trackerDataPath);
     }
-    if (!fs.existsSync(`${trackerDataPath}/cards`)) {
-        fs.mkdirSync(`${trackerDataPath}/cards`);
+    if (!fs.existsSync(`${trackerDataPath}/collection-tracker`)) {
+        fs.mkdirSync(`${trackerDataPath}/collection-tracker`);
     }
     const allSets = Object.values(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
     let generatedSetData = [];
@@ -57,7 +58,6 @@ const generateTrackerData = async () => {
         console.log(`Parsing set ${setCode}`);
         const cardData = JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
         const setCardData = [];
-        let cardId = 0;
         for (let j = 0; j < cardData.length; j++) {
             console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
@@ -68,13 +68,13 @@ const generateTrackerData = async () => {
                 const setCardDataObj = {
                     anchor: '',
                     element: card.element,
-                    id: 0,
                     image: `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
                     name: card.name,
                     number: '',
                     rarity: '',
                     population: '',
                     slug: card.slug,
+                    uuid: cardEdition.uuid,
                     variant: '',
                 };
                 [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => {
@@ -83,7 +83,6 @@ const generateTrackerData = async () => {
                     setCardDataObj.population = `${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`;
                     setCardDataObj.rarity = getRarityCodeFromRarityId(cardEdition.rarity);
                     setCardDataObj.variant = getVariantFromCardData(cardEdition, circulationTemplate);
-                    setCardDataObj.id = ++cardId;
                     setCardData.push(setCardDataObj);
                 });
             }
@@ -98,14 +97,14 @@ const generateTrackerData = async () => {
                 total: setCardData.length,
             },
         });
-        fs.writeFileSync(`${trackerDataPath}/cards/${setCode}.json`, JSON.stringify(setCardData), 'utf-8');
+        fs.writeFileSync(`${trackerDataPath}/collection-tracker/${setCode}.json`, JSON.stringify(setCardData), 'utf-8');
         if (i === 0) {
             cardType = (0, json_to_ts_1.default)(setCardData[0])[0]
                 .replace('interface', 'export interface')
                 .replace('RootObject', 'GeneratedCard');
         }
     }
-    fs.writeFileSync(`${trackerDataPath}/sets.json`, JSON.stringify(generatedSetData), 'utf-8');
+    fs.writeFileSync(`${trackerDataPath}/collection-tracker/sets.json`, JSON.stringify(generatedSetData), 'utf-8');
     const setType = (0, json_to_ts_1.default)(generatedSetData[0]).map(entry => {
         console.log(entry);
         return entry
@@ -144,6 +143,6 @@ const generateTrackerData = async () => {
             .replace('rarity: string', 'rarity: GeneratedRarity')
             .replace('variant: string', 'variant: GeneratedVariant');
     };
-    fs.writeFileSync(`${trackerDataPath}/types.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
+    fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/types.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
 };
 generateTrackerData();
