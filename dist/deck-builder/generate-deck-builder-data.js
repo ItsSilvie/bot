@@ -4,7 +4,7 @@ const node_fetch_1 = require("node-fetch");
 const fs = require("fs");
 const https = require("https");
 const types_1 = require("./types");
-const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie.org/src/generated/deck-builder';
+const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
 const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
 const httpsAgent = new https.Agent({
@@ -58,6 +58,6 @@ const generateDeckBuilderData = async () => {
         }
     }
     fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/search.json`, JSON.stringify(cardSearchData), 'utf-8');
-    fs.copyFileSync(`./dist/deck-builder/types.ts`, `${DECK_BUILDER_REPO_LOCAL_PATH}/types.ts`);
+    fs.copyFileSync(`./dist/deck-builder/types.ts`, `${DECK_BUILDER_REPO_LOCAL_PATH}/deck-builder.ts`);
 };
 generateDeckBuilderData();

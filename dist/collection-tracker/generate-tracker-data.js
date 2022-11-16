@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const json_to_ts_1 = require("json-to-ts");
-const TRACKER_REPO_LOCAL_PATH = '../silvie.org/src/generated/collection-tracker';
+const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
 const trackerDataPath = `${TRACKER_CDN_REPO_LOCAL_PATH}/cdn`;
 var Variant;
@@ -22,7 +22,7 @@ function pascalCase(string) {
         .join('');
 }
 const getRarityCodeFromRarityId = (rarityId) => {
-    if (rarityId < 1 || rarityId > 7) {
+    if (rarityId < 1 || rarityId > 8) {
         throw new Error(`Unhandled rarity ID: ${rarityId}`);
     }
     const rarityArr = [
@@ -31,8 +31,9 @@ const getRarityCodeFromRarityId = (rarityId) => {
         'R',
         'SR',
         'UR',
-        'CR',
-        'PR', // 7
+        'PR',
+        'CSR',
+        'CUR', // 8
     ];
     return rarityArr[rarityId - 1];
 };
@@ -61,28 +62,27 @@ const generateTrackerData = async () => {
         for (let j = 0; j < cardData.length; j++) {
             console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
-            for (let k = 0; k < card.result_editions.length; k++) {
+            const cardEditions = card.editions.filter(entry => entry.set.prefix === setCode);
+            for (let k = 0; k < cardEditions.length; k++) {
                 console.log(`      ...edition ${k + 1}/${card.result_editions.length}...`);
-                const cardEdition = card.result_editions[k];
+                const cardEdition = cardEditions[k];
                 const cardEditionSet = cardEdition.set;
-                const setCardDataObj = {
-                    anchor: '',
-                    element: card.element,
-                    image: `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
-                    name: card.name,
-                    number: '',
-                    rarity: '',
-                    population: '',
-                    slug: card.slug,
-                    uuid: cardEdition.uuid,
-                    variant: '',
-                };
                 [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => {
-                    setCardDataObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase();
-                    setCardDataObj.number = `${cardEditionSet.language}-${cardEdition.collector_number}`;
-                    setCardDataObj.population = `${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`;
-                    setCardDataObj.rarity = getRarityCodeFromRarityId(cardEdition.rarity);
-                    setCardDataObj.variant = getVariantFromCardData(cardEdition, circulationTemplate);
+                    console.log(circulationTemplate);
+                    const setCardDataObj = {
+                        anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase(),
+                        element: card.element,
+                        image: `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
+                        name: card.name,
+                        number: `${cardEditionSet.language}-${cardEdition.collector_number}`,
+                        rarity: getRarityCodeFromRarityId(cardEdition.rarity),
+                        population: circulationTemplate.population,
+                        populationOperator: circulationTemplate.population_operator,
+                        slug: cardEdition.slug,
+                        uuid: cardEdition.uuid,
+                        variant: getVariantFromCardData(cardEdition, circulationTemplate),
+                    };
+                    ;
                     setCardData.push(setCardDataObj);
                 });
             }
@@ -143,6 +143,6 @@ const generateTrackerData = async () => {
             .replace('rarity: string', 'rarity: GeneratedRarity')
             .replace('variant: string', 'variant: GeneratedVariant');
     };
-    fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/types.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
+    fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
 };
 generateTrackerData();
