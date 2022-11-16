@@ -79,7 +79,7 @@ const generateTrackerData = async () => {
                         population: circulationTemplate.population,
                         populationOperator: circulationTemplate.population_operator,
                         slug: cardEdition.slug,
-                        uuid: cardEdition.uuid,
+                        uuid: `${cardEdition.uuid}-${circulationTemplate.uuid}`,
                         variant: getVariantFromCardData(cardEdition, circulationTemplate),
                     };
                     ;
