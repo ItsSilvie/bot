@@ -1,13 +1,18 @@
 import * as fs from 'fs';
 import JsonToTS from 'json-to-ts';
+import nonIndexSets from './non-index-sets';
+import { getSetInfo, getSetLogo, getSetMetadata } from './set-metadata';
 
 const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
 const trackerDataPath = `${TRACKER_CDN_REPO_LOCAL_PATH}/cdn`;
 
 enum Variant {
+  OilFoil = "Oil foil",
   Foil = "Foil",
+  MatteFoil = "Matte foil",
   NonFoil = "Non-foil",
+  StarFoil = "Star foil",
 }
 
 // https://stackoverflow.com/a/1026087/1317805
@@ -44,7 +49,20 @@ const getRarityCodeFromRarityId = (rarityId) => {
 
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {
   if (circulationTemplate.foil) {
-    return Variant.Foil;
+    switch (circulationTemplate.foilType) {
+      case 'oil':
+        return Variant.OilFoil;
+
+      case 'matte':
+        return Variant.MatteFoil;
+
+      case 'star':
+        return Variant.StarFoil;
+
+      default:
+        return Variant.Foil;
+    }
+
   }
 
   return Variant.NonFoil;
@@ -66,27 +84,32 @@ const generateTrackerData = async () => {
   }[];
 
   let generatedSetData = [];
-  let cardType;
+  let setPageSetDataType;
 
-  for (let i = 0; i < allSets.length; i++) {
-    const currentSet = allSets[i];
-
-    const {
-      prefix: setCode,
-    } = currentSet;
+  const parseSet = (currentSet: typeof allSets[0], options: {
+    baseSetCode?: string;
+    cardData?: any;
+    generateType?: boolean;
+    isSample?: boolean;
+    setCode?: string;
+    setName?: string;
+  } = {}) => {
+    const baseSetCode = options.baseSetCode ?? currentSet.prefix;
+    const setCode = options.setCode ?? currentSet.prefix;
+    const setName = options.setName ?? currentSet.name;
 
     console.log(`Parsing set ${setCode}`);
   
-    const cardData = JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
+    const cardData = options.cardData ?? JSON.parse(fs.readFileSync(`./src/api-data/${baseSetCode}.json`, 'utf8'));
     const setCardData = [];
 
     for (let j = 0; j < cardData.length; j++) {
       console.log(`    ...card ${j + 1}/${cardData.length}...`);
       const card = cardData[j];
-      const cardEditions = card.editions.filter(entry => entry.set.prefix === setCode);
+      const cardEditions = card.editions.filter(entry => entry.set.prefix === baseSetCode);
 
       for (let k = 0; k < cardEditions.length; k++) {
-        console.log(`      ...edition ${k + 1}/${card.result_editions.length}...`);
+        console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
         const cardEdition = cardEditions[k];
         const cardEditionSet = cardEdition.set;
 
@@ -103,44 +126,128 @@ const generateTrackerData = async () => {
             population: circulationTemplate.population,
             populationOperator: circulationTemplate.population_operator,
             slug: cardEdition.slug,
-            uuid: `${cardEdition.uuid}-${circulationTemplate.uuid}`,
+            uuid: `${cardEdition.uuid}-${circulationTemplate.uuid}${options.setCode ? `-${options.setCode}` : ''}`,
             variant: getVariantFromCardData(cardEdition, circulationTemplate),
-          };;
+          };
   
           setCardData.push(setCardDataObj);
         });
       }
     }
 
-    generatedSetData.push({
+    const setListSetData = {
       ...currentSet,
+      prefix: setCode,
+      name: setName,
       cards: {
-        variants: Object.entries(Variant).reduce((obj, [key, value]) => ({
-          ...obj,
-          [key]: setCardData.filter(setCard => setCard.variant === value).length,
-        }), {}),
+        variants: Object.entries(Variant).filter(([key, value]) => {
+          // Ignore foil variants (these are combined in the reducer below).
+          if (value === Variant.OilFoil || value === Variant.MatteFoil || value === Variant.StarFoil) {
+            return false;
+          }
+
+          return true;
+        }).reduce((obj, [key, value]) => {
+          return {
+            ...obj,
+            [key]: setCardData.filter(setCard => {
+              if (value === Variant.Foil) {
+                // Combine all foil variants.
+                return setCard.variant === Variant.Foil || setCard.variant === Variant.OilFoil || setCard.variant === Variant.MatteFoil || setCard.variant === Variant.StarFoil
+              }
+
+              return setCard.variant === value
+            }).length,
+          }
+        }, {}),
         total: setCardData.length,
       },
-    })
+      logo: null,
+      info: null,
+      sample: options.isSample ?? false,
+    }
 
-    fs.writeFileSync(`${trackerDataPath}/collection-tracker/${setCode}.json`, JSON.stringify(setCardData), 'utf-8');
+    const setLogo = getSetLogo(setCode);
 
-    if (i === 0) {
-      cardType = JsonToTS(setCardData[0])[0]
-        .replace('interface', 'export interface')
-        .replace('RootObject', 'GeneratedCard');
+    if (setLogo) {
+      setListSetData.logo = setLogo;
+    }
+
+    const setInfo = getSetInfo(setCode);
+
+    if (setInfo) {
+      setListSetData.info = setInfo;
+    }
+
+    generatedSetData.push(setListSetData);
+
+    const setPageSetData = {
+      cards: setCardData,
+      meta: null
+    }
+
+    const setMetadata = getSetMetadata(setCode);
+
+    if (setMetadata) {
+      setPageSetData.meta = setMetadata;
+    }
+
+    fs.writeFileSync(`${trackerDataPath}/collection-tracker/${setCode}.json`, JSON.stringify(setPageSetData), 'utf-8');
+
+    if (options.generateType) {
+      setPageSetDataType = JsonToTS(setPageSetData).map(entry => {
+        return entry
+          .replace('interface', 'export interface')
+          .replace('RootObject', 'GeneratedSetData')
+          .replace('Meta', 'GeneratedSetMetadata')
+          .replace('meta: GeneratedSetMetadata', 'meta?: GeneratedSetMetadata')
+          .replace('Linked', 'GeneratedSetMetadataLinkedSet')
+          .replace('journal: string', 'journal?: string')
+          .replace('linked: ', 'linked?: ')
+          .replace('Card', 'GeneratedCard')
+          .replace('element: string', 'element: GeneratedElement')
+          .replace('rarity: string', 'rarity: GeneratedRarity')
+          .replace('variant: string', 'variant: GeneratedVariant');
+      }).join('\n\n')
     }
   }
 
+  for (let i = 0; i < allSets.length; i++) {
+    if (allSets[i].prefix === 'DOApSP') {
+      // Ignore this set as it was only released for playing on TTS.
+      continue;
+    }
+
+    parseSet(allSets[i]);
+
+    if (allSets[i].prefix === 'DEMO22') {
+      parseSet(allSets[i], {
+        baseSetCode: allSets[i].prefix,
+        // Generate the type here as this set includes both journal and linked set metadata.
+        generateType: true,
+        isSample: true,
+        setCode: 'DEMO22-SAMPLE',
+        setName: `${allSets[i].name} (SAMPLE)`
+      })
+    }
+  }
+
+  // Manually create non-Index sets.
+  nonIndexSets.forEach(([setData, options]) => {
+    parseSet(setData, options);
+  })
+
   fs.writeFileSync(`${trackerDataPath}/collection-tracker/sets.json`, JSON.stringify(generatedSetData), 'utf-8');
 
-  const setType = JsonToTS(generatedSetData[0]).map(entry => {
+  const setListSetDataType = JsonToTS(generatedSetData[0]).map(entry => {
     console.log(entry);
     return entry
       .replace('interface', 'export interface')
       .replace('RootObject', 'GeneratedSet')
       .replace('Cards', 'GeneratedSetCardCount')
-      .replace('Variants', 'GeneratedSetCardVariantCount');
+      .replace('Info', 'GeneratedSetInfo')
+      .replace('Variants', 'GeneratedSetCardVariantCount')
+      .replace('logo: string', 'logo?: string');
   }).join('\n\n')
 
   const options = JSON.parse(fs.readFileSync('./src/api-data/options.json', 'utf8')) as {
@@ -176,15 +283,8 @@ const generateTrackerData = async () => {
   ${Object.entries(Variant).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`
   ]).join('\n\n');
-
-  const formatCardType = (cardType) => {
-    return cardType
-      .replace('element: string', 'element: GeneratedElement')
-      .replace('rarity: string', 'rarity: GeneratedRarity')
-      .replace('variant: string', 'variant: GeneratedVariant')
-  }
   
-  fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setType}\n\n${formatCardType(cardType)}`, 'utf-8');
+  fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setListSetDataType}\n\n${setPageSetDataType}`, 'utf-8');
 }
 
 generateTrackerData();
