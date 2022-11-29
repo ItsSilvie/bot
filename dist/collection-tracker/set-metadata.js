@@ -11,35 +11,39 @@ const getSetLogo = (setPrefix) => {
     }
 };
 exports.getSetLogo = getSetLogo;
+var SetType;
+(function (SetType) {
+    SetType["Deck"] = "deck";
+    SetType["Promo"] = "promo";
+    SetType["Sample"] = "sample";
+    SetType["Standard"] = "standard";
+})(SetType || (SetType = {}));
 const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
-        case 'CMT':
-            return {
-                year: 2021,
-            };
         case 'DEMO22':
             return {
+                type: [SetType.Deck],
                 year: 2022,
             };
         case 'DEMO22-SAMPLE':
             return {
+                type: [SetType.Deck, SetType.Sample],
                 year: 2022,
             };
         case 'DOAp':
             return {
+                type: [SetType.Standard],
                 year: 2023,
-            };
-        case 'DOAp-SAMPLE':
-            return {
-                year: 2022,
-            };
-        case 'P22':
-            return {
-                year: 2022,
             };
         case 'SAMPLE':
             return {
+                type: [SetType.Sample],
                 year: 2021,
+            };
+        case 'P22':
+            return {
+                type: [SetType.Promo],
+                year: 2022,
             };
         default:
             throw new Error(`No set info specified for ${setPrefix}`);
@@ -69,6 +73,10 @@ const getSetMetadata = (setPrefix) => {
         case 'DOAp':
             return {
                 journal: 'More than half of the cards in this set come from the Lorraine and Rai Prelude Starter Decks!',
+            };
+        case 'SAMPLE':
+            return {
+                journal: 'These sample cards were given out between November 2021 and June 2022. They are not legal for play.'
             };
         default:
             return;

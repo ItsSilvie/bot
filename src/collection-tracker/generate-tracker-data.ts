@@ -47,6 +47,17 @@ const getRarityCodeFromRarityId = (rarityId) => {
   return rarityArr[rarityId - 1];
 }
 
+enum Rarity {
+  'C' = 'Common',
+  'U' = 'Uncommon',
+  'R' = 'Rare',
+  'SR' = 'Super Rare',
+  'UR' = 'Ultra Rare',
+  'PR' = 'Promotional Rare',
+  'CSR' = 'Collector\'s Super Rare',
+  'CUR' = 'Collector\'s Ultra Rare',
+}
+
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {
   if (circulationTemplate.foil) {
     switch (circulationTemplate.foilType) {
@@ -90,7 +101,6 @@ const generateTrackerData = async () => {
     baseSetCode?: string;
     cardData?: any;
     generateType?: boolean;
-    isSample?: boolean;
     setCode?: string;
     setName?: string;
   } = {}) => {
@@ -119,9 +129,9 @@ const generateTrackerData = async () => {
           const setCardDataObj = {
             anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase(),
             element: card.element,
-            image: `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
+            image: card.nonIndexImage ?? `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
             name: card.name,
-            number: `${cardEditionSet.language}-${cardEdition.collector_number}`,
+            number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
             rarity: getRarityCodeFromRarityId(cardEdition.rarity),
             population: circulationTemplate.population,
             populationOperator: circulationTemplate.population_operator,
@@ -164,7 +174,6 @@ const generateTrackerData = async () => {
       },
       logo: null,
       info: null,
-      sample: options.isSample ?? false,
     }
 
     const setLogo = getSetLogo(setCode);
@@ -225,9 +234,8 @@ const generateTrackerData = async () => {
         baseSetCode: allSets[i].prefix,
         // Generate the type here as this set includes both journal and linked set metadata.
         generateType: true,
-        isSample: true,
         setCode: 'DEMO22-SAMPLE',
-        setName: `${allSets[i].name} (SAMPLE)`
+        setName: allSets[i].name
       })
     }
   }
@@ -281,6 +289,9 @@ const generateTrackerData = async () => {
   }, [
 `export enum GeneratedVariant {
   ${Object.entries(Variant).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
+}`,
+`export enum GeneratedRarityLabel {
+  ${Object.entries(Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`
   ]).join('\n\n');
   
