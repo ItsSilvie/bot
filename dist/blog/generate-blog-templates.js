@@ -21,6 +21,8 @@ const getRarityCodeFromRarityId = (rarityId) => {
     return rarityArr[rarityId - 1];
 };
 const generateBlogTemplates = async () => {
+    fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
+    fs.readdirSync(blogCardPagesPath).forEach(file => fs.rmSync(`${blogCardPagesPath}/${file}`));
     const allSets = Object.keys(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
     if (!fs.existsSync(blogTemplatesPath)) {
         fs.mkdirSync(blogTemplatesPath);
@@ -44,7 +46,8 @@ const generateBlogTemplates = async () => {
                     number: '',
                     rarity: '',
                     population: '',
-                    slug: card.slug,
+                    cardSlug: card.slug,
+                    editionSlug: cardEdition.slug,
                 };
                 // #ksp--en-008-pr
                 setTemplateCardObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase();
@@ -98,18 +101,18 @@ const generateBlogTemplates = async () => {
         const setTemplateEntries = [];
         for (let j = 0; j < setTemplateData.length; j++) {
             const setTemplateDataEntry = setTemplateData[j];
-            if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.slug}.markdown`)) {
-                fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.slug}.markdown`, (`---
+            if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`)) {
+                fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (`---
 layout: card
 title:  "${setTemplateDataEntry.name} (trading card)"
 date:   2022-06-25 08:44:00 +0100
-permalink: ${setTemplateDataEntry.slug}_(card)
+permalink: ${setTemplateDataEntry.cardSlug}_(card)
 incomplete: true
 ---
 
 ## ${setCode} &middot; ${setTemplateDataEntry.number} ${setTemplateDataEntry.rarity}
 
-{% include templates/${setTemplateDataEntry.slug}-${setCode.toLowerCase()}.html %}`), 'utf8');
+{% include templates/${setTemplateDataEntry.editionSlug}.html %}`), 'utf8');
             }
             const setTemplateEntry = `<tr>
   <td style="text-align: left">
@@ -117,7 +120,7 @@ incomplete: true
   </td>
   <td style="text-align: left">
     <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
-    <a href="/${setTemplateDataEntry.slug}_(card)#${setTemplateDataEntry.anchor}">
+    <a href="/${setTemplateDataEntry.cardSlug}_(card)#${setTemplateDataEntry.anchor}">
       ${setTemplateDataEntry.name}
     </a>
   </td>
