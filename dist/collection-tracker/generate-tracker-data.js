@@ -184,6 +184,14 @@ const generateTrackerData = async () => {
     }
     // Manually create non-Index sets.
     non_index_sets_1.default.forEach(([setData, options]) => {
+        if (setData.prefix === 'DEMO22-SAMPLE') {
+            parseSet(setData, {
+                ...options,
+                // Generate the type here as this set includes both journal and linked set metadata.
+                generateType: true,
+            });
+            return;
+        }
         parseSet(setData, options);
     });
     fs.writeFileSync(`${trackerDataPath}/collection-tracker/sets.json`, JSON.stringify(generatedSetData), 'utf-8');

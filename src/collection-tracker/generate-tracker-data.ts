@@ -232,6 +232,16 @@ const generateTrackerData = async () => {
 
   // Manually create non-Index sets.
   nonIndexSets.forEach(([setData, options]) => {
+    if (setData.prefix === 'DEMO22-SAMPLE') {
+      
+      parseSet(setData, {
+        ...options,
+        // Generate the type here as this set includes both journal and linked set metadata.
+        generateType: true,
+      });
+      return;
+    }
+
     parseSet(setData, options);
   })
 
