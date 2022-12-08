@@ -228,16 +228,6 @@ const generateTrackerData = async () => {
     }
 
     parseSet(allSets[i]);
-
-    if (allSets[i].prefix === 'DEMO22') {
-      parseSet(allSets[i], {
-        baseSetCode: allSets[i].prefix,
-        // Generate the type here as this set includes both journal and linked set metadata.
-        generateType: true,
-        setCode: 'DEMO22-SAMPLE',
-        setName: allSets[i].name
-      })
-    }
   }
 
   // Manually create non-Index sets.
