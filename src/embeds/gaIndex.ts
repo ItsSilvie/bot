@@ -14,7 +14,7 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   const embed = new MessageEmbed()
     .setTitle(card.name)
     .setURL(`https://index.gatcg.com/edition/${edition.slug}`)
-    .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${set.prefix})** · ${circulationTemplate.name ? `${circulationTemplate.name} ` : ''}${collector_number ?? 'Unnumbered'}`)
+    .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${encodeURIComponent(set.prefix)})**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
     .setColor(getEmbedColorFromElement(IndexCardElement[card.element]));
 
   embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })

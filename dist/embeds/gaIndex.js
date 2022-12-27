@@ -10,7 +10,7 @@ const indexEmbed = (card, edition, circulationTemplate) => {
     const embed = new discord_js_1.MessageEmbed()
         .setTitle(card.name)
         .setURL(`https://index.gatcg.com/edition/${edition.slug}`)
-        .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${set.prefix})** · ${circulationTemplate.name ? `${circulationTemplate.name} ` : ''}${collector_number ?? 'Unnumbered'}`)
+        .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${encodeURIComponent(set.prefix)})**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
         .setColor((0, card_1.getEmbedColorFromElement)(types_1.IndexCardElement[card.element]));
     embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' });
     embed.setThumbnail(`https://img.silvie.org/ga-logo.png`);
