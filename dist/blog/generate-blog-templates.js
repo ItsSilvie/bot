@@ -6,7 +6,7 @@ const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
 const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`;
 const getRarityCodeFromRarityId = (rarityId) => {
-    if (rarityId < 1 || rarityId > 7) {
+    if (rarityId < 1 || rarityId > 9) {
         throw new Error(`Unhandled rarity ID: ${rarityId}`);
     }
     const rarityArr = [
@@ -15,8 +15,10 @@ const getRarityCodeFromRarityId = (rarityId) => {
         'R',
         'SR',
         'UR',
-        'CR',
-        'PR', // 7
+        'PR',
+        'CSR',
+        'CUR',
+        'CPR', // 9
     ];
     return rarityArr[rarityId - 1];
 };

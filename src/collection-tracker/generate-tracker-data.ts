@@ -4,7 +4,7 @@ import nonIndexSets from './non-index-sets';
 import { getSetInfo, getSetLogo, getSetMetadata } from './set-metadata';
 
 const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
-const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const trackerDataPath = `${TRACKER_CDN_REPO_LOCAL_PATH}/cdn`;
 
 enum Variant {
@@ -29,7 +29,7 @@ function pascalCase(string) {
 }
 
 const getRarityCodeFromRarityId = (rarityId) => {
-  if (rarityId < 1 || rarityId > 8) {
+  if (rarityId < 1 || rarityId > 9) {
     throw new Error(`Unhandled rarity ID: ${rarityId}`);
   }
 
@@ -42,6 +42,7 @@ const getRarityCodeFromRarityId = (rarityId) => {
     'PR', // 6
     'CSR', // 7
     'CUR', // 8
+    'CPR', // 9
   ];
 
   return rarityArr[rarityId - 1];

@@ -7,7 +7,7 @@ const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`
 const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`
 
 const getRarityCodeFromRarityId = (rarityId) => {
-  if (rarityId < 1 || rarityId > 7) {
+  if (rarityId < 1 || rarityId > 9) {
     throw new Error(`Unhandled rarity ID: ${rarityId}`);
   }
 
@@ -17,8 +17,10 @@ const getRarityCodeFromRarityId = (rarityId) => {
     'R', // 3
     'SR', // 4
     'UR', // 5
-    'CR', // 6
-    'PR', // 7
+    'PR', // 6
+    'CSR', // 7
+    'CUR', // 8
+    'CPR', // 9
   ];
 
   return rarityArr[rarityId - 1];

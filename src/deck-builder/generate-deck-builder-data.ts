@@ -4,7 +4,7 @@ import * as https from 'https';
 import { CardSearchData, CardSearchDataKeys, CardSearchDataValues, CardSearchFilterKeys } from './types';
 
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
-const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
 
 const httpsAgent = new https.Agent({

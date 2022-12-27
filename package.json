@@ -36,7 +36,7 @@
     "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js",
     "generate-deck-builder-data": "node ./dist/deck-builder/generate-deck-builder-data.js",
     "generate-tracker-data": "echo \"Tracker data will be built in silvie-monorepo.\" & node ./dist/collection-tracker/generate-tracker-data.js",
-    "update-static-files": "yarn generate-deck-builder-data & generate-tracker-data & yarn generate-blog-templates"
+    "update-static-files": "yarn generate-deck-builder-data & yarn generate-tracker-data & yarn generate-blog-templates"
   },
   "bugs": {
     "url": "https://github.com/ItsSilvie/bot/issues"

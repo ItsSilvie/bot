@@ -194,7 +194,7 @@ export default [
     name: 'Blitz Mage',
     quote: '"Reckless mages. They should think before they act!" - Rai Koki',
     stats: {
-      attack: 3,
+      power: 3,
       health: 1,
     },
     supertype: CardSupertype.Mage,
@@ -241,7 +241,7 @@ export default [
     name: 'Dungeon Guide',
     quote: '"Lorem ipsum dolor sit amet."',
     stats: {
-      attack: 1,
+      power: 1,
       health: 3,
     },
     supertype: CardSupertype.Mage,
@@ -274,7 +274,7 @@ export default [
     name: 'Impassioned Tutor',
     quote: 'Instruction through fiery passion.',
     stats: {
-      attack: 1,
+      power: 1,
       health: 3,
     },
     supertype: CardSupertype.Mage,
@@ -292,7 +292,7 @@ export default [
     name: 'Library Witch',
     quote: 'The studious ones at the academy have little patience for distractions. However, they are willing to help those in need.',
     stats: {
-      attack: 0,
+      power: 0,
       health: 1,
     },
     supertype: CardSupertype.Mage,
@@ -313,7 +313,7 @@ export default [
     name: 'Magus Disciple',
     quote: '"Harness mana! Divert it to the archmage!"',
     stats: {
-      attack: 1,
+      power: 1,
       health: 1,
     },
     supertype: CardSupertype.Mage,
@@ -331,7 +331,7 @@ export default [
     name: 'Barrier Servant',
     quote: '"Do not worry. I will protect you."',
     stats: {
-      attack: 2,
+      power: 2,
       health: 2,
     },
     subtype: CardSubtype.Cleric,

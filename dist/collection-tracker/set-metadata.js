@@ -30,9 +30,19 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Deck, SetType.Sample],
                 year: 2022,
             };
+        case 'DOA 1st':
+            return {
+                type: [SetType.Standard],
+                year: 2023,
+            };
         case 'DOAp':
             return {
                 type: [SetType.Standard],
+                year: 2023,
+            };
+        case 'KSP':
+            return {
+                type: [SetType.Promo],
                 year: 2023,
             };
         case 'SAMPLE':

@@ -5,7 +5,7 @@ const fs = require("fs");
 const https = require("https");
 const types_1 = require("./types");
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
-const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
@@ -13,7 +13,7 @@ const httpsAgent = new https.Agent({
 const getCardImage = async (slug, uuid) => {
     await (0, node_fetch_1.default)(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
         agent: httpsAgent,
-    }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/cdn/deck-builder/${uuid}.jpg`)));
+    }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)));
 };
 const generateDeckBuilderData = async () => {
     if (!fs.existsSync(deckBuilderDataPath)) {

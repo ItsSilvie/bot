@@ -89,7 +89,7 @@ export default [
     name: 'Clarent, Sword of Peace',
     quote: 'A magical sword that is disenchanted by bloodshed.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 2,
     },
     subtype: CardSubtype.Sword,
@@ -123,7 +123,7 @@ export default [
     name: 'Warrior\'s Longsword',
     quote: 'Warriors hold their lives within their two hands. Reliable weapons are neded to protect them.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 2,
     },
     subtype: CardSubtype.Sword,
@@ -144,7 +144,7 @@ export default [
     name: 'Commander\'s Blade',
     quote: 'An ornate and pristine sword used ceremoniously with great effect, though dull of edge.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 1,
     },
     subtype: CardSubtype.Sword,
@@ -164,7 +164,7 @@ export default [
     name: 'Sword of Seeking',
     quote: 'The jewel on its hilt emits a faint glow when nearby hostility.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 1,
     },
     subtype: CardSubtype.Sword,
@@ -197,7 +197,7 @@ export default [
     image: true,
     name: 'Prismatic Edge',
     stats: {
-      attack: 3,
+      power: 3,
       durability: 1,
     },
     subtype: CardSubtype.Sword,
@@ -218,7 +218,7 @@ export default [
     name: 'Seer\'s Sword',
     quote: 'Even simple enchantment grants great advantage.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 3,
     },
     subtype: CardSubtype.Sword,
@@ -240,7 +240,7 @@ export default [
     name: 'Banner Knight',
     quote: 'Standards raised behind capable leaders often instill courage in those that march astride.',
     stats: {
-      attack: 1,
+      power: 1,
       health: 3,
     },
     supertype: CardSupertype.Warrior,
@@ -260,7 +260,7 @@ export default [
     name: 'Crusader of Aesa',
     quote: 'Persistent, if little else.',
     stats: {
-      attack: 1,
+      power: 1,
       health: 4,
     },
     supertype: CardSupertype.Warrior,
@@ -278,7 +278,7 @@ export default [
     image: true,
     name: 'Dream Fairy',
     stats: {
-      attack: 1,
+      power: 1,
       health: 2,
     },
     supertype: CardSupertype.Mage,
@@ -295,7 +295,7 @@ export default [
     name: 'Dungeon Guide',
     quote: '"Lorem ipsum dolor sit amet."',
     stats: {
-      attack: 1,
+      power: 1,
       health: 3,
     },
     supertype: CardSupertype.Mage,
@@ -314,7 +314,7 @@ export default [
     name: 'Esteemed Knight',
     quote: 'A knight errant whose reputation precedes him. Many have perished beneath his blade.',
     stats: {
-      attack: 2,
+      power: 2,
       health: 3,
     },
     supertype: CardSupertype.Warrior,
@@ -331,7 +331,7 @@ export default [
     name: 'Honorable Vanguard',
     quote: '"On the signal of smoke, we open the gates."',
     stats: {
-      attack: 1,
+      power: 1,
       health: 2,
     },
     supertype: CardSupertype.Warrior,
@@ -351,7 +351,7 @@ export default [
     name: 'Weaponsmith',
     quote: 'Forge-hardened masters fuel the heat of battle to the rhythms of hammers and anvils.',
     stats: {
-      attack: 1,
+      power: 1,
       health: 3,
     },
     supertype: CardSupertype.Warrior,
@@ -503,7 +503,7 @@ export default [
     image: true,
     name: 'Hurricane Sweep',
     stats: {
-      attack: 1,
+      power: 1,
     },
     supertype: CardSupertype.Warrior,
     type: CardType.Attack,
@@ -521,7 +521,7 @@ export default [
     image: 'Spirit Blade Ghost Strike',
     name: 'Spirit Blade: Ghost Strike',
     stats: {
-      attack: 2,
+      power: 2,
     },
     supertype: CardSupertype.Warrior,
     type: CardType.Attack,
@@ -537,7 +537,7 @@ export default [
     name: 'Savage Slash',
     quote: '"There is no such thing as grace on a battlefield." - Lorraine Allard',
     stats: {
-      attack: 2,
+      power: 2,
     },
     supertype: CardSupertype.Warrior,
     type: CardType.Attack,
@@ -555,7 +555,7 @@ export default [
     name: 'Sudden Steel',
     quote: 'A spirited strike never dulls.',
     stats: {
-      attack: 5,
+      power: 5,
     },
     supertype: CardSupertype.Warrior,
     type: CardType.Attack,
@@ -574,7 +574,7 @@ export default [
     image: true,
     name: 'Wind Cutter',
     stats: {
-      attack: 1,
+      power: 1,
     },
     supertype: CardSupertype.Warrior,
     type: CardType.Attack,

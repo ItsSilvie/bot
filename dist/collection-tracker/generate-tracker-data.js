@@ -5,7 +5,7 @@ const json_to_ts_1 = require("json-to-ts");
 const non_index_sets_1 = require("./non-index-sets");
 const set_metadata_1 = require("./set-metadata");
 const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
-const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const trackerDataPath = `${TRACKER_CDN_REPO_LOCAL_PATH}/cdn`;
 var Variant;
 (function (Variant) {
@@ -27,7 +27,7 @@ function pascalCase(string) {
         .join('');
 }
 const getRarityCodeFromRarityId = (rarityId) => {
-    if (rarityId < 1 || rarityId > 8) {
+    if (rarityId < 1 || rarityId > 9) {
         throw new Error(`Unhandled rarity ID: ${rarityId}`);
     }
     const rarityArr = [
@@ -38,7 +38,8 @@ const getRarityCodeFromRarityId = (rarityId) => {
         'UR',
         'PR',
         'CSR',
-        'CUR', // 8
+        'CUR',
+        'CPR', // 9
     ];
     return rarityArr[rarityId - 1];
 };

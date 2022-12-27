@@ -36,9 +36,9 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
   embed.addField(`Class${card.classes.length === 1 ? '' : 'es'}`, card.classes?.join(' ') ?? '-', true);
   embed.addField(`Subtype${card.subtypes.length === 1 ? '' : 's'}`, card.subtypes.join(' ') ?? '-', true);
 
-  if (card.attack || card.durability || card.life) {
+  if (card.power || card.durability || card.life) {
     // @ts-ignore
-    embed.addField('Attack', `${card.attack ?? '-'}`, true);
+    embed.addField('Attack', `${card.power ?? '-'}`, true);
     // @ts-ignore
     embed.addField('Durability', `${card.durability ?? '-'}`, true);
     // @ts-ignore

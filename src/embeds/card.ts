@@ -32,7 +32,7 @@ const cardEmbed: CardEmbed = (card, set) => {
 
   if (card.stats) {
     // @ts-ignore
-    embed.addField('Attack', `${card.stats?.attack ?? '-'}`, true);
+    embed.addField('Attack', `${card.stats?.power ?? '-'}`, true);
     // @ts-ignore
     embed.addField('Durability', `${card.stats?.durability ?? '-'}`, true);
     // @ts-ignore

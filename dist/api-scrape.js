@@ -41,7 +41,9 @@ const apiScrape = async () => {
     const getCardImage = async (slug, uuid) => {
         await (0, node_fetch_1.default)(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
             agent: httpsAgent,
-        }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/api-data/${uuid}.jpg`)));
+        }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
+            flags: 'w',
+        }))).catch((e) => console.error(e));
     };
     const getAllCards = async (cardSet) => {
         console.log('  ...getting cards...');

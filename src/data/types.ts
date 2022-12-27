@@ -48,7 +48,7 @@ export enum CardSpeed {
 }
 
 export type CardStats = {
-  attack: number
+  power: number
   durability: number
   health: number
 }
@@ -115,7 +115,7 @@ export type Card = {
   level?: never
   lineage?: never
   speed?: never
-  stats: Pick<CardStats, 'attack' | 'health'>
+  stats: Pick<CardStats, 'power' | 'health'>
   subtype?: CardSubtype
   supertype?: CardSupertype
   type: CardType.Ally
@@ -131,7 +131,7 @@ export type Card = {
   level?: never
   lineage?: never
   speed?: never
-  stats: Pick<CardStats, 'attack' | 'durability'>
+  stats: Pick<CardStats, 'power' | 'durability'>
   subtype?: CardSubtype
   supertype?: CardSupertype
   type: CardType.RegaliaWeapon
@@ -187,7 +187,7 @@ export enum IndexCardElement {
 }
 
 export type IndexCard = {
-  attack: number | null
+  power: number | null
   classes: string[] | null
   cost_memory: number | null
   cost_reserve: number | null
