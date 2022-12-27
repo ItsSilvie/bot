@@ -2,21 +2,22 @@ import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
 
-/**
- * This is in place until the API includes an endpoint to return all sets.
- * Set information can be obtained from the card response itself, so just the IDs are needed here.
- */
-const cardSets = [
-  'DEMO22',
-  'DOAp',
-];
-
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
 const apiScrape = async () => {
   const [_, __, cardSetArg] = process.argv;
+
+  const getOptions = async () => {
+    const response = await fetch(`https://api.gatcg.com/option/search`, {
+      agent: httpsAgent,
+    }).then(response => response.json())
+    return response;
+  }
+
+  const options = await getOptions();
+  const cardSets = options.set.map(({ value }) => value);
 
   if (cardSetArg && cardSets.indexOf(cardSetArg) === -1) {
     throw new Error(`${cardSetArg} is not a known set. Does the hardcoded set list need updating?`);
@@ -55,8 +56,10 @@ const apiScrape = async () => {
     await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
       agent: httpsAgent,
     }).then(response => response.body.pipe(
-      fs.createWriteStream(`../img.silvie.org/api-data/${uuid}.jpg`)
-    ));
+      fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
+        flags: 'w',
+      })
+    )).catch((e) => console.error(e));
   }
 
   const getAllCards = async (cardSet) => {
@@ -68,15 +71,7 @@ const apiScrape = async () => {
   const allSets = JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'));
   const updatedSetsOutput = { ...allSets };
 
-  const getOptions = async () => {
-    const response = await fetch(`https://api.gatcg.com/option/search`, {
-      agent: httpsAgent,
-    }).then(response => response.json())
-    return response;
-  }
-
   const processOptions = async () => {
-    const options = await getOptions();
     fs.writeFileSync('./src/api-data/options.json', JSON.stringify(options), 'utf8');
   }
 

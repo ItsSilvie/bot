@@ -16,7 +16,7 @@ export default [
     number: 'KS PROMO 001',
     quote: 'A magical sword that is disenchanted by bloodshed.',
     stats: {
-      attack: 1,
+      power: 1,
       durability: 3,
     },
     subtype: CardSubtype.Sword,
@@ -57,7 +57,7 @@ export default [
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 003',
     stats: {
-      attack: 3,
+      power: 3,
       durability: 1,
     },
     subtype: CardSubtype.Sword,

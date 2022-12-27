@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import * as https from 'https';
 import { CardSearchData, CardSearchDataKeys, CardSearchDataValues, CardSearchFilterKeys } from './types';
 
-const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie.org/src/generated/deck-builder';
-const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org';
+const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
+const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
 
 const httpsAgent = new https.Agent({
@@ -15,7 +15,7 @@ const getCardImage = async (slug: string, uuid: string) => {
   await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
-    fs.createWriteStream(`../img.silvie.org/cdn/deck-builder/${uuid}.jpg`)
+    fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)
   ));
 }
 
@@ -88,7 +88,7 @@ const generateDeckBuilderData = async () => {
   }
 
   fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/search.json`, JSON.stringify(cardSearchData), 'utf-8');
-  fs.copyFileSync(`./dist/deck-builder/types.ts`, `${DECK_BUILDER_REPO_LOCAL_PATH}/types.ts`);
+  fs.copyFileSync(`./dist/deck-builder/types.ts`, `${DECK_BUILDER_REPO_LOCAL_PATH}/deck-builder.ts`);
 }
 
 generateDeckBuilderData();
