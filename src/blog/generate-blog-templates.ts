@@ -47,9 +47,9 @@ const generateBlogTemplates = async () => {
       console.log(`    ...card ${j + 1}/${cardData.length}...`);
       const card = cardData[j];
 
-      for (let k = 0; k < card.result_editions.length; k++) {
-          console.log(`      ...edition ${k + 1}/${card.result_editions.length}...`);
-          const cardEdition = card.result_editions[k];
+      for (let k = 0; k < card.editions.length; k++) {
+          console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
+          const cardEdition = card.editions[k];
           const cardEditionSet = cardEdition.set;
 
           const setTemplateCardObj = {
@@ -61,6 +61,7 @@ const generateBlogTemplates = async () => {
             population: '',
             cardSlug: card.slug,
             editionSlug: cardEdition.slug,
+            set: cardEdition.set,
           };
 
           // #ksp--en-008-pr
@@ -128,6 +129,10 @@ const generateBlogTemplates = async () => {
     for (let j = 0; j < setTemplateData.length; j++) {
       const setTemplateDataEntry = setTemplateData[j];
 
+      const templateData = `## ${setTemplateDataEntry.set.prefix} &middot; ${setTemplateDataEntry.number} ${setTemplateDataEntry.rarity}
+
+{% include templates/${setTemplateDataEntry.editionSlug.replace(/ /g, '_')}.html %}`;
+
       if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`)) {
         fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (
 `---
@@ -138,10 +143,19 @@ permalink: ${setTemplateDataEntry.cardSlug}_(card)
 incomplete: true
 ---
 
-## ${setCode} &middot; ${setTemplateDataEntry.number} ${setTemplateDataEntry.rarity}
-
-{% include templates/${setTemplateDataEntry.editionSlug}.html %}`
+${templateData}
+`
         ), 'utf8');
+      } else {
+        const existingFileData = fs.readFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, 'utf8');
+        
+        if (existingFileData.indexOf(templateData) === -1) {
+          fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (`${existingFileData}
+
+${templateData}
+`
+          ), 'utf8');
+        }
       }
 
       const setTemplateEntry =
@@ -166,7 +180,7 @@ incomplete: true
       setTemplateEntries.push(setTemplateEntry);
     }
 
-    fs.writeFileSync(`${blogTemplatesPath}/${setCode}.html`, `<table>
+    fs.writeFileSync(`${blogTemplatesPath}/${setCode.replace(/ /g, '-')}.html`, `<table>
 <thead>
   <tr>
     <th style="text-align: left">Number</th>
@@ -194,13 +208,13 @@ incomplete: true
           id: string;
           quantity?: number;
         };
-        const cardMatch = cardData.find(entry => entry.result_editions.find(resultEdition => resultEdition.uuid === customSetCard.id));
+        const cardMatch = cardData.find(entry => entry.editions.find(resultEdition => resultEdition.uuid === customSetCard.id));
 
         if (!cardMatch) {
           throw new Error(`No matching card found for custom set ${customSet.filename} card ${customSetCard.id}. Is this not a result edition UUID?`);
         }
 
-        const cardEditionMatch = cardMatch.result_editions.find(entry => entry.uuid === customSetCard.id);
+        const cardEditionMatch = cardMatch.editions.find(entry => entry.uuid === customSetCard.id);
         const cardEditionMatchSet = cardEditionMatch.set;
 
         const customSetTemplateCardObj = {
