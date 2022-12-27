@@ -55,8 +55,9 @@ enum Rarity {
   'SR' = 'Super Rare',
   'UR' = 'Ultra Rare',
   'PR' = 'Promotional Rare',
-  'CSR' = 'Collector\'s Super Rare',
-  'CUR' = 'Collector\'s Ultra Rare',
+  'CSR' = 'Collector Super Rare',
+  'CUR' = 'Collector Ultra Rare',
+  'CPR' = 'Collector Promo Rare',
 }
 
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {

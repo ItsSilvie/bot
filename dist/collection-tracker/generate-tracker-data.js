@@ -51,8 +51,9 @@ var Rarity;
     Rarity["SR"] = "Super Rare";
     Rarity["UR"] = "Ultra Rare";
     Rarity["PR"] = "Promotional Rare";
-    Rarity["CSR"] = "Collector's Super Rare";
-    Rarity["CUR"] = "Collector's Ultra Rare";
+    Rarity["CSR"] = "Collector Super Rare";
+    Rarity["CUR"] = "Collector Ultra Rare";
+    Rarity["CPR"] = "Collector Promo Rare";
 })(Rarity || (Rarity = {}));
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {
     if (circulationTemplate.foil) {
