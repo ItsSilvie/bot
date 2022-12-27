@@ -15,7 +15,7 @@ const getCardImage = async (slug: string, uuid: string) => {
   await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
-    fs.createWriteStream(`../img.silvie.org/cdn/deck-builder/${uuid}.jpg`)
+    fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)
   ));
 }
 
