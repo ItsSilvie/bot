@@ -76,10 +76,14 @@ const getEmbedColorFromElement = (element) => {
         case types_1.CardElement.Fire:
         case types_1.IndexCardElement.FIRE:
             return '#E3462A';
+        case types_1.IndexCardElement.LUXEM:
+            return '#F4B549';
         case types_1.CardElement.Normal:
         case types_1.IndexCardElement.NORM:
         default:
             return '#111111';
+        case types_1.IndexCardElement.TERA:
+            return '#3DA6AC';
         case types_1.CardElement.Water:
         case types_1.IndexCardElement.WATER:
             return '#5FD0F8';

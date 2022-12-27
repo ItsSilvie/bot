@@ -110,10 +110,16 @@ export const getEmbedColorFromElement: (element: CardElement | IndexCardElement)
     case IndexCardElement.FIRE:
       return '#E3462A';
 
+    case IndexCardElement.LUXEM:
+      return '#F4B549';
+
     case CardElement.Normal:
     case IndexCardElement.NORM:
     default:
       return '#111111';
+
+    case IndexCardElement.TERA:
+      return '#3DA6AC';
 
     case CardElement.Water:
     case IndexCardElement.WATER:

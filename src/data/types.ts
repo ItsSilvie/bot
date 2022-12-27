@@ -181,7 +181,9 @@ export enum IndexCardElement {
   ARCANE = 'Arcane',
   CRUX = 'Crux',
   FIRE = 'Fire',
+  LUXEM = 'Luxem',
   NORM = 'Normal',
+  TERA = 'Tera',
   WATER = 'Water',
   WIND = 'Wind',
 }
