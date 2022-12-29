@@ -1,27 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+const rarity_1 = require("../utils/rarity");
 const custom_sets_card_edition_uuids_1 = require("./custom-sets-card-edition-uuids");
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
 const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`;
-const getRarityCodeFromRarityId = (rarityId) => {
-    if (rarityId < 1 || rarityId > 9) {
-        throw new Error(`Unhandled rarity ID: ${rarityId}`);
-    }
-    const rarityArr = [
-        'C',
-        'U',
-        'R',
-        'SR',
-        'UR',
-        'PR',
-        'CSR',
-        'CUR',
-        'CPR', // 9
-    ];
-    return rarityArr[rarityId - 1];
-};
 const generateBlogTemplates = async () => {
     fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
     fs.readdirSync(blogCardPagesPath).forEach(file => fs.rmSync(`${blogCardPagesPath}/${file}`));
@@ -44,7 +28,10 @@ const generateBlogTemplates = async () => {
                 const cardEditionSet = cardEdition.set;
                 const setTemplateCardObj = {
                     anchor: '',
+                    cost: typeof card.cost_memory === 'number' ? card.cost_memory : card.cost_reserve,
+                    costType: typeof card.cost_memory === 'number' ? 'memory' : 'reserve',
                     element: card.element,
+                    lastUpdated: card.last_update,
                     name: card.name,
                     number: '',
                     rarity: '',
@@ -54,9 +41,9 @@ const generateBlogTemplates = async () => {
                     set: cardEdition.set,
                 };
                 // #ksp--en-008-pr
-                setTemplateCardObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase();
+                setTemplateCardObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${(0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity)}`.toLowerCase();
                 setTemplateCardObj.number = `${cardEditionSet.language}-${cardEdition.collector_number}`;
-                setTemplateCardObj.rarity = getRarityCodeFromRarityId(cardEdition.rarity);
+                setTemplateCardObj.rarity = (0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity);
                 setTemplateCardObj.population = [...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join('<br/>');
                 setTemplateData.push(setTemplateCardObj);
                 const cardTemplate = `<p>This card is part of the <a href="/${cardEditionSet.prefix}_(set)">${cardEditionSet.name}</a> set.</p>
@@ -82,6 +69,12 @@ const generateBlogTemplates = async () => {
       <span class="card-template-stat-heading">Rules</span>
       <span class="card-template-stat-values">${card.rule.map(rule => `<span class="card-template-stat-values-rule">${rule.date_added} &ndash; ${rule.description}</span>`).join('')}</span>
     </div>` : ''}
+    <div class="card-template-stat">
+      <span class="card-template-stat-heading">Rarity</span>
+      <span class="card-template-stat-values">
+        <span class="card-rarity-label card-rarity-label-${setTemplateCardObj.rarity}">${rarity_1.Rarity[setTemplateCardObj.rarity]}</span>
+      </span>
+    </div>
     <div class="card-template-stat">
       <span class="card-template-stat-heading">Illustrator</span>
       <span class="card-template-stat-values">
@@ -111,10 +104,9 @@ const generateBlogTemplates = async () => {
             if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`)) {
                 fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (`---
 layout: card
-title:  "${setTemplateDataEntry.name} (trading card)"
-date:   "${new Date().toISOString()}"
+title:  "${setTemplateDataEntry.name} (card)"
+date:   "${setTemplateDataEntry.lastUpdated}"
 permalink: ${setTemplateDataEntry.cardSlug}_(card)
-incomplete: true
 ---
 
 ${templateData}
@@ -134,13 +126,18 @@ ${templateData}
     ${setTemplateDataEntry.number}
   </td>
   <td style="text-align: left">
-    <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
-    <a href="/${setTemplateDataEntry.cardSlug}_(card)#${setTemplateDataEntry.anchor}">
-      ${setTemplateDataEntry.name}
-    </a>
-  </td>
-  <td style="text-align: left">
-    ${setTemplateDataEntry.rarity}
+    <div class="set-list-card-name">
+      <span class="card-cost card-cost-${setTemplateDataEntry.costType}">
+        ${setTemplateDataEntry.cost}
+      </span>
+      <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
+      <abbr class="card-rarity-label card-rarity-label-${setTemplateDataEntry.rarity}" title="${rarity_1.Rarity[setTemplateDataEntry.rarity]}">${setTemplateDataEntry.rarity}</abbr>
+      <span class="name-wrapper">
+        <a href="/${setTemplateDataEntry.cardSlug}_(card)#${setTemplateDataEntry.anchor}">
+          ${setTemplateDataEntry.name}
+        </a>
+      </span>
+    </div>
   </td>
   <td style="text-align: right">
     ${setTemplateDataEntry.population}
@@ -148,12 +145,11 @@ ${templateData}
 </tr>`;
             setTemplateEntries.push(setTemplateEntry);
         }
-        fs.writeFileSync(`${blogTemplatesPath}/${setCode.replace(/ /g, '-')}.html`, `<table>
+        fs.writeFileSync(`${blogTemplatesPath}/${setCode.replace(/ /g, '-')}.html`, `<table class="set-list">
 <thead>
   <tr>
     <th style="text-align: left">Number</th>
     <th style="text-align: left">Name</th>
-    <th style="text-align: left">Rarity</th>
     <th style="text-align: right">Population</th>
   </tr>
 </thead>
@@ -178,6 +174,8 @@ ${templateData}
                 const cardEditionMatchSet = cardEditionMatch.set;
                 const customSetTemplateCardObj = {
                     anchor: '',
+                    cost: typeof cardMatch.cost_memory === 'number' ? cardMatch.cost_memory : cardMatch.cost_reserve,
+                    costType: typeof cardMatch.cost_memory === 'number' ? 'memory' : 'reserve',
                     element: cardMatch.element,
                     name: cardMatch.name,
                     number: '',
@@ -188,9 +186,9 @@ ${templateData}
                     type: cardMatch.types[0],
                 };
                 // #ksp--en-008-pr
-                customSetTemplateCardObj.anchor = `${cardEditionMatchSet.prefix}--${cardEditionMatchSet.language}-${cardEditionMatch.collector_number}-${getRarityCodeFromRarityId(cardEditionMatch.rarity)}`.toLowerCase();
+                customSetTemplateCardObj.anchor = `${cardEditionMatchSet.prefix}--${cardEditionMatchSet.language}-${cardEditionMatch.collector_number}-${(0, rarity_1.getRarityCodeFromRarityId)(cardEditionMatch.rarity)}`.toLowerCase();
                 customSetTemplateCardObj.number = `${cardEditionMatchSet.language}-${cardEditionMatch.collector_number}`;
-                customSetTemplateCardObj.rarity = getRarityCodeFromRarityId(cardEditionMatch.rarity);
+                customSetTemplateCardObj.rarity = (0, rarity_1.getRarityCodeFromRarityId)(cardEditionMatch.rarity);
                 customSetTemplateCardObj.population = [...cardEditionMatch.circulationTemplates, ...cardEditionMatch.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join('<br/>');
                 customSetTemplateData.push(customSetTemplateCardObj);
             }
@@ -209,24 +207,27 @@ ${templateData}
       ${customSetTemplateDataEntry.number}
     </td>
     <td style="text-align: left">
-      <img class="image-element" src="https://img.silvie.org/misc/elements/${customSetTemplateDataEntry.element.toLowerCase()}.png" alt="${customSetTemplateDataEntry.element} element" />
-      <a href="/${customSetTemplateDataEntry.slug}_(card)#${customSetTemplateDataEntry.anchor}">
-        ${customSetTemplateDataEntry.name}
-      </a>${customSetTemplateDataEntry.quantity ? ` x${customSetTemplateDataEntry.quantity}` : ''}
+      <div class="set-list-card-name">
+        <span class="card-cost card-cost-${customSetTemplateDataEntry.costType}">
+          ${customSetTemplateDataEntry.cost}
+        </span>
+        <img class="image-element" src="https://img.silvie.org/misc/elements/${customSetTemplateDataEntry.element.toLowerCase()}.png" alt="${customSetTemplateDataEntry.element} element" />
+        <abbr class="card-rarity-label card-rarity-label-${customSetTemplateDataEntry.rarity}" title="${rarity_1.Rarity[customSetTemplateDataEntry.rarity]}">${customSetTemplateDataEntry.rarity}</abbr>
+        <span class="name-wrapper">
+          <a href="/${customSetTemplateDataEntry.slug}_(card)#${customSetTemplateDataEntry.anchor}">
+            ${customSetTemplateDataEntry.name}
+          </a> ${customSetTemplateDataEntry.quantity ? ` x${customSetTemplateDataEntry.quantity}` : ''}
+        </span>
+      </div>
     </td>
-    
-    ${customSetTemplateDataEntry.quantity ? '' : (`    <td style="text-align: left">
-      ${customSetTemplateDataEntry.rarity}
-    </td>`)}
   </tr>`;
                 customSetTemplateEntries.push(setTemplateEntry);
             }
-            fs.writeFileSync(`${blogTemplatesPath}/${setCode}-${customSet.filename}.html`, `<table class="condensed-table">
+            fs.writeFileSync(`${blogTemplatesPath}/${setCode}-${customSet.filename}.html`, `<table class="condensed-table set-list">
       <thead>
         <tr>
           <th style="text-align: left">Number</th>
           <th style="text-align: left">Name</th>
-          ${customSet.isDeck ? '' : '<th style="text-align: left">Rarity</th>'}
         </tr>
       </thead>
       <tbody>

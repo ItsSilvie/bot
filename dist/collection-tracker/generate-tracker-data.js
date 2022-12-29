@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const json_to_ts_1 = require("json-to-ts");
+const rarity_1 = require("../utils/rarity");
 const non_index_sets_1 = require("./non-index-sets");
 const set_metadata_1 = require("./set-metadata");
 const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
@@ -26,35 +27,6 @@ function pascalCase(string) {
         .map(part => capitalize(part))
         .join('');
 }
-const getRarityCodeFromRarityId = (rarityId) => {
-    if (rarityId < 1 || rarityId > 9) {
-        throw new Error(`Unhandled rarity ID: ${rarityId}`);
-    }
-    const rarityArr = [
-        'C',
-        'U',
-        'R',
-        'SR',
-        'UR',
-        'PR',
-        'CSR',
-        'CUR',
-        'CPR', // 9
-    ];
-    return rarityArr[rarityId - 1];
-};
-var Rarity;
-(function (Rarity) {
-    Rarity["C"] = "Common";
-    Rarity["U"] = "Uncommon";
-    Rarity["R"] = "Rare";
-    Rarity["SR"] = "Super Rare";
-    Rarity["UR"] = "Ultra Rare";
-    Rarity["PR"] = "Promotional Rare";
-    Rarity["CSR"] = "Collector Super Rare";
-    Rarity["CUR"] = "Collector Ultra Rare";
-    Rarity["CPR"] = "Collector Promo Rare";
-})(Rarity || (Rarity = {}));
 const getVariantFromCardData = (cardEdition, circulationTemplate) => {
     if (circulationTemplate.foil) {
         switch (circulationTemplate.foilType) {
@@ -98,12 +70,12 @@ const generateTrackerData = async () => {
                 [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => {
                     console.log(circulationTemplate);
                     const setCardDataObj = {
-                        anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase(),
+                        anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${(0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity)}`.toLowerCase(),
                         element: card.element,
                         image: card.nonIndexImage ?? `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
                         name: card.name,
                         number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
-                        rarity: getRarityCodeFromRarityId(cardEdition.rarity),
+                        rarity: (0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity),
                         population: circulationTemplate.population,
                         populationOperator: circulationTemplate.population_operator,
                         slug: cardEdition.slug,
@@ -215,7 +187,7 @@ const generateTrackerData = async () => {
             case 'statOperator':
                 return arr;
             case 'rarity':
-                valueFormatter = (value) => getRarityCodeFromRarityId(value);
+                valueFormatter = (value) => (0, rarity_1.getRarityCodeFromRarityId)(value);
                 break;
             default:
                 break;
@@ -231,7 +203,7 @@ const generateTrackerData = async () => {
   ${Object.entries(Variant).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`,
         `export enum GeneratedRarityLabel {
-  ${Object.entries(Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
+  ${Object.entries(rarity_1.Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`
     ]).join('\n\n');
     fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setListSetDataType}\n\n${setPageSetDataType}`, 'utf-8');
