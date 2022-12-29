@@ -39,7 +39,7 @@ const generateBlogTemplates = async () => {
             cost: typeof card.cost_memory === 'number' ? card.cost_memory : card.cost_reserve,
             costType: typeof card.cost_memory === 'number' ? 'memory' : 'reserve',
             element: card.element,
-            lastUpdated: card.last_update,
+            lastUpdated: card.last_update ?? new Date().toISOString(),
             name: card.name,
             number: '',
             rarity: '',
