@@ -56,7 +56,7 @@ const generateBlogTemplates = async () => {
                 setTemplateCardObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase();
                 setTemplateCardObj.number = `${cardEditionSet.language}-${cardEdition.collector_number}`;
                 setTemplateCardObj.rarity = getRarityCodeFromRarityId(cardEdition.rarity);
-                setTemplateCardObj.population = [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join(' &ndash; ');
+                setTemplateCardObj.population = [...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join('<br/>');
                 setTemplateData.push(setTemplateCardObj);
                 const cardTemplate = `<p>This card is part of the <a href="/${cardEditionSet.prefix}_(set)">${cardEditionSet.name}</a> set.</p>
 <div class="card-template">
@@ -90,7 +90,7 @@ const generateBlogTemplates = async () => {
     <div class="card-template-stat">
       <span class="card-template-stat-heading">Population</span>
       <span class="card-template-stat-values">
-        ${[...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => (`<div>${circulationTemplate.foil ? 'Foil' : 'Normal'} &ndash; ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}</div>`)).join('\n')}
+        ${[...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`<div>${circulationTemplate.foil ? 'Foil' : 'Normal'} &ndash; ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}</div>`)).join('\n')}
       </span>
     </div>
   </div>
@@ -190,7 +190,7 @@ ${templateData}
                 customSetTemplateCardObj.anchor = `${cardEditionMatchSet.prefix}--${cardEditionMatchSet.language}-${cardEditionMatch.collector_number}-${getRarityCodeFromRarityId(cardEditionMatch.rarity)}`.toLowerCase();
                 customSetTemplateCardObj.number = `${cardEditionMatchSet.language}-${cardEditionMatch.collector_number}`;
                 customSetTemplateCardObj.rarity = getRarityCodeFromRarityId(cardEditionMatch.rarity);
-                customSetTemplateCardObj.population = [...cardEditionMatch.circulationTemplates, ...cardEditionMatch.circulations].map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join(' &ndash; ');
+                customSetTemplateCardObj.population = [...cardEditionMatch.circulationTemplates, ...cardEditionMatch.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join('<br/>');
                 customSetTemplateData.push(customSetTemplateCardObj);
             }
             const customSetTemplateEntries = [];
