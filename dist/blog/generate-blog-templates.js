@@ -37,9 +37,10 @@ const generateBlogTemplates = async () => {
         for (let j = 0; j < cardData.length; j++) {
             console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
-            for (let k = 0; k < card.editions.length; k++) {
-                console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
-                const cardEdition = card.editions[k];
+            const filteredCardEditions = card.editions.filter(entry => entry.set.prefix === setCode);
+            for (let k = 0; k < filteredCardEditions.length; k++) {
+                console.log(`      ...edition ${k + 1}/${filteredCardEditions.length}...`);
+                const cardEdition = filteredCardEditions[k];
                 const cardEditionSet = cardEdition.set;
                 const setTemplateCardObj = {
                     anchor: '',

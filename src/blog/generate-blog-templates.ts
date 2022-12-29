@@ -1,30 +1,11 @@
 import * as fs from 'fs';
+import { getRarityCodeFromRarityId } from '../utils/rarity';
 import customSets from './custom-sets-card-edition-uuids';
 
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`
 const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`
-
-const getRarityCodeFromRarityId = (rarityId) => {
-  if (rarityId < 1 || rarityId > 9) {
-    throw new Error(`Unhandled rarity ID: ${rarityId}`);
-  }
-
-  const rarityArr = [
-    'C', // 1
-    'U', // 2
-    'R', // 3
-    'SR', // 4
-    'UR', // 5
-    'PR', // 6
-    'CSR', // 7
-    'CUR', // 8
-    'CPR', // 9
-  ];
-
-  return rarityArr[rarityId - 1];
-}
 
 const generateBlogTemplates = async () => {
   fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
@@ -46,10 +27,11 @@ const generateBlogTemplates = async () => {
     for (let j = 0; j < cardData.length; j++) {
       console.log(`    ...card ${j + 1}/${cardData.length}...`);
       const card = cardData[j];
+      const filteredCardEditions = card.editions.filter(entry => entry.set.prefix === setCode);
 
-      for (let k = 0; k < card.editions.length; k++) {
-          console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
-          const cardEdition = card.editions[k];
+      for (let k = 0; k < filteredCardEditions.length; k++) {
+          console.log(`      ...edition ${k + 1}/${filteredCardEditions.length}...`);
+          const cardEdition = filteredCardEditions[k];
           const cardEditionSet = cardEdition.set;
 
           const setTemplateCardObj = {
