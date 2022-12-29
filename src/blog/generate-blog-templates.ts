@@ -138,7 +138,7 @@ const generateBlogTemplates = async () => {
 `---
 layout: card
 title:  "${setTemplateDataEntry.name} (trading card)"
-date:   2022-06-25 08:44:00 +0100
+date:   "${new Date().toISOString()}"
 permalink: ${setTemplateDataEntry.cardSlug}_(card)
 incomplete: true
 ---
