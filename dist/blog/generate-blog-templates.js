@@ -46,8 +46,7 @@ const generateBlogTemplates = async () => {
                 setTemplateCardObj.rarity = (0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity);
                 setTemplateCardObj.population = [...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`${circulationTemplate.foil ? `Foil` : `Normal`} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}`)).join('<br/>');
                 setTemplateData.push(setTemplateCardObj);
-                const cardTemplate = `<p>This card is part of the <a href="/${cardEditionSet.prefix}_(set)">${cardEditionSet.name}</a> set.</p>
-<div class="card-template">
+                const cardTemplate = `<div class="card-template">
   <figure class="image">
     <img
       src="https://img.silvie.org/api-data/${cardEdition.uuid}.jpg"
@@ -56,8 +55,15 @@ const generateBlogTemplates = async () => {
     >
     <figcaption>${card.name} &ndash; ${cardEditionSet.prefix} &middot; ${cardEditionSet.language}-${cardEdition.collector_number}</figcaption>
   </figure>
-  <div class="card-template-stats">
-  ${cardEdition.effect || card.effect ? (`  <div class="card-template-stat">
+  <div class="card-template-info">
+    <div class="card-template-stats">
+      <div class="card-template-stat">
+        <span class="card-template-stat-heading">Set</span>
+        <span class="card-template-stat-values">
+          <a href="/${cardEditionSet.prefix.replace(/ /g, '-')}_(set)">${cardEditionSet.name}</a>
+        </span>
+      </div>
+      ${cardEdition.effect || card.effect ? (`   <div class="card-template-stat">
       <span class="card-template-stat-heading">Effect</span>
       <span class="card-template-stat-values">
         <span class="card-template-stat-values-effect">
@@ -65,32 +71,33 @@ const generateBlogTemplates = async () => {
         </span>
       </span>
     </div>`) : ''}
-    ${card.rule ? `    <div class="card-template-stat">
-      <span class="card-template-stat-heading">Rules</span>
-      <span class="card-template-stat-values">${card.rule.map(rule => `<span class="card-template-stat-values-rule">${rule.date_added} &ndash; ${rule.description}</span>`).join('')}</span>
-    </div>` : ''}
-    <div class="card-template-stat">
-      <span class="card-template-stat-heading">Rarity</span>
-      <span class="card-template-stat-values">
-        <span class="card-rarity-label card-rarity-label-${setTemplateCardObj.rarity}">${rarity_1.Rarity[setTemplateCardObj.rarity]}</span>
-      </span>
+      ${card.rule ? `    <div class="card-template-stat">
+        <span class="card-template-stat-heading">Rules</span>
+        <span class="card-template-stat-values">${card.rule.map(rule => `<span class="card-template-stat-values-rule">${rule.date_added} &ndash; ${rule.description}</span>`).join('')}</span>
+      </div>` : ''}
+      <div class="card-template-stat">
+        <span class="card-template-stat-heading">Rarity</span>
+        <span class="card-template-stat-values">
+          <span class="card-rarity-label card-rarity-label-${setTemplateCardObj.rarity}">${rarity_1.Rarity[setTemplateCardObj.rarity]}</span>
+        </span>
+      </div>
+      <div class="card-template-stat">
+        <span class="card-template-stat-heading">Illustrator</span>
+        <span class="card-template-stat-values">
+          <span class="dead-link"><a href="/illustrators">${cardEdition.illustrator}</a></span>
+        </span>
+      </div>
+      <div class="card-template-stat">
+        <span class="card-template-stat-heading">Population</span>
+        <span class="card-template-stat-values">
+          ${[...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`<div>${circulationTemplate.foil ? 'Foil' : 'Normal'} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}</div>`)).join('\n')}
+        </span>
+      </div>
     </div>
-    <div class="card-template-stat">
-      <span class="card-template-stat-heading">Illustrator</span>
-      <span class="card-template-stat-values">
-        <span class="dead-link"><a href="/illustrators">${cardEdition.illustrator}</a></span>
-      </span>
-    </div>
-    <div class="card-template-stat">
-      <span class="card-template-stat-heading">Population</span>
-      <span class="card-template-stat-values">
-        ${[...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (`<div>${circulationTemplate.foil ? 'Foil' : 'Normal'} &ndash; ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}</div>`)).join('\n')}
-      </span>
-    </div>
+    <p class="card-template-index-link">
+      <a href="https://index.gatcg.com/edition/${cardEdition.slug}">View this card on Grand Archive Index</a>.
+    </p>
   </div>
-  <p>
-    For the full card stats, <a href="https://index.gatcg.com/edition/${cardEdition.slug}">view this card on Grand Archive Index</a>.
-  </p>
 </div>`;
                 fs.writeFileSync(`${blogTemplatesPath}/${cardEdition.slug}.html`, cardTemplate, 'utf8');
             }
