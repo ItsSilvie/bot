@@ -332,6 +332,9 @@ export default [{
     id: 'RWwB4PfbAT',
     quantity: 1,
   }, {
+    id: 'fduy9cy0W3',
+    quantity: 1,
+  }, {
     id: 'KkmMxafOcd',
     quantity: 1,
   }, {
@@ -349,6 +352,9 @@ export default [{
   }, {
     id: 'KEpPCif67K',
     quantity: 1,
+  }, {
+    id: 'lo6bC9AWKJ',
+    quantity: 3,
   }, {
     id: 'dkNM9803HT',
     quantity: 2,
@@ -371,9 +377,6 @@ export default [{
     id: 'vpOVdHNJP2',
     quantity: 2,
   }, {
-    id: 'lo6bC9AWKJ',
-    quantity: 3,
-  }, {
     id: 'VuJ9KdU8pR',
     quantity: 2,
   }, {
@@ -381,6 +384,6 @@ export default [{
     quantity: 2,
   }, {
     id: '8K31b06xIE',
-    quantity: 2,
+    quantity: 3,
   }]
 }]
