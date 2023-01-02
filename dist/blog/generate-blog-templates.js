@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const rarity_1 = require("../utils/rarity");
 const custom_sets_card_edition_uuids_1 = require("./custom-sets-card-edition-uuids");
+const ignoredSets = ['DOApSP'];
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
 const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`;
@@ -15,6 +16,10 @@ const generateBlogTemplates = async () => {
     }
     for (let i = 0; i < allSets.length; i++) {
         const setCode = allSets[i];
+        if (ignoredSets.find(entry => entry === setCode)) {
+            console.log(`Ignoring set ${setCode}`);
+            continue;
+        }
         console.log(`Parsing set ${setCode}`);
         const cardData = JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
         const setTemplateData = [];

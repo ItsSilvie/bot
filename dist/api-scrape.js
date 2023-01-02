@@ -50,8 +50,7 @@ const apiScrape = async () => {
         const response = await getAllPaginatedResults(`https://api.gatcg.com/cards/search?prefix=${cardSet}`);
         return response;
     };
-    const allSets = JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'));
-    const updatedSetsOutput = { ...allSets };
+    const updatedSetsOutput = {};
     const processOptions = async () => {
         fs.writeFileSync('./src/api-data/options.json', JSON.stringify(options), 'utf8');
     };
