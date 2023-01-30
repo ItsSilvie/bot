@@ -35,9 +35,6 @@ const generateDeckBuilderData = async () => {
         const currentSet = allSets[i];
         const { prefix: setCode, } = currentSet;
         console.log(`Parsing set ${setCode}`);
-        if (setCode !== non_index_sets_1.default[0][0].prefix) {
-            continue;
-        }
         const nonIndexSetMatch = non_index_sets_1.default.find(([setData]) => setData.prefix === setCode);
         const cardData = nonIndexSetMatch ? nonIndexSetMatch[1].cardData : JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
         for (let j = 0; j < cardData.length; j++) {
