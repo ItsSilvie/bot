@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
 import { CardSearchData, CardSearchDataKeys, CardSearchDataValues, CardSearchFilterKeys } from './types';
+import nonIndexSets from './non-index-sets';
 
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
@@ -11,8 +12,8 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const getCardImage = async (slug: string, uuid: string) => {
-  await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
+const getCardImage = async (slug: string, uuid: string, nonIndexImage?: string) => {
+  await fetch(nonIndexImage ?? `https://api.gatcg.com/images/cards/${slug}.jpg`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
     fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)
@@ -32,7 +33,10 @@ const generateDeckBuilderData = async () => {
     fs.mkdirSync(DECK_BUILDER_REPO_LOCAL_PATH);
   }
 
-  const allSets = Object.values(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'))) as {
+  const allSets = [
+    ...Object.values(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8'))),
+    ...nonIndexSets.map(([setData]) => setData)
+  ] as {
     language: string;
     name: string;
     prefix: string;
@@ -49,7 +53,8 @@ const generateDeckBuilderData = async () => {
 
     console.log(`Parsing set ${setCode}`);
   
-    const cardData = JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
+    const nonIndexSetMatch = nonIndexSets.find(([setData]) => setData.prefix === setCode);
+    const cardData = nonIndexSetMatch ? nonIndexSetMatch[1].cardData : JSON.parse(fs.readFileSync(`./src/api-data/${setCode}.json`, 'utf8'));
 
     for (let j = 0; j < cardData.length; j++) {
       console.log(`    ...card ${j + 1}/${cardData.length}...`);
@@ -80,7 +85,7 @@ const generateDeckBuilderData = async () => {
       } = (card.editions || card.result_editions)[0];
 
       console.log(`      ...image ${j + 1}/${cardData.length}...`)
-      await getCardImage(slug, card.uuid);
+      await getCardImage(slug, card.uuid, card.nonIndexImage);
 
       cardSearchData.push(cardSearchDataObj);
       fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/${card.uuid}.json`, JSON.stringify(card), 'utf-8');
