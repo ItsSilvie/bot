@@ -66,7 +66,7 @@ nonIndexSets.push([
         set: TEMP_DISCORD_TOURNAMENT,
         uuid: 'temp-discord-2',
       }],
-      effect: '<span class="effect__label">Stealth</span> <span class="effect__reminder">(This unit can\'t be targeted by attacks unless permitted by <span class="effect__label">true sight</span>.)</span><br><span class="effect__label">On Enter:</span> Target non-champion object gains "At the beginning of your recollection phase, deal 1 unpreventable damage to your champion" for a slong as you control Spark Fairy.',
+      effect: '<span class="effect__label">Stealth</span> <span class="effect__reminder">(This unit can\'t be targeted by attacks unless permitted by <span class="effect__label">true sight</span>.)</span><br><span class="effect__label">On Enter:</span> Target non-champion object gains "At the beginning of your recollection phase, deal 1 unpreventable damage to your champion" for as long as you control Spark Fairy.',
       effect_raw: 'todo_raw',
       element: 'FIRE',
       flavor: 'todo flavor',
