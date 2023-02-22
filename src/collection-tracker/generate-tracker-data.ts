@@ -12,6 +12,7 @@ enum Variant {
   OilFoil = "Oil foil",
   Foil = "Foil",
   MatteFoil = "Matte foil",
+  Metal = "Metal",
   NonFoil = "Non-foil",
   StarFoil = "Star foil",
 }
@@ -37,6 +38,9 @@ const getVariantFromCardData = (cardEdition, circulationTemplate) => {
 
       case 'matte':
         return Variant.MatteFoil;
+
+      case 'metal':
+        return Variant.Metal;
 
       case 'star':
         return Variant.StarFoil;
@@ -204,7 +208,6 @@ const generateTrackerData = async () => {
   // Manually create non-Index sets.
   nonIndexSets.forEach(([setData, options]) => {
     if (setData.prefix === 'DEMO22-SAMPLE') {
-      
       parseSet(setData, {
         ...options,
         // Generate the type here as this set includes both journal and linked set metadata.

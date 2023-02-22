@@ -13,6 +13,7 @@ var Variant;
     Variant["OilFoil"] = "Oil foil";
     Variant["Foil"] = "Foil";
     Variant["MatteFoil"] = "Matte foil";
+    Variant["Metal"] = "Metal";
     Variant["NonFoil"] = "Non-foil";
     Variant["StarFoil"] = "Star foil";
 })(Variant || (Variant = {}));
@@ -34,6 +35,8 @@ const getVariantFromCardData = (cardEdition, circulationTemplate) => {
                 return Variant.OilFoil;
             case 'matte':
                 return Variant.MatteFoil;
+            case 'metal':
+                return Variant.Metal;
             case 'star':
                 return Variant.StarFoil;
             default:

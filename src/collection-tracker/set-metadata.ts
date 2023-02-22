@@ -45,6 +45,12 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2023,
       }
 
+    case 'KS-Metal':
+      return {
+        type: [SetType.Promo],
+        year: 2023,
+      }
+
     case 'KSP':
       return {
         type: [SetType.Promo],

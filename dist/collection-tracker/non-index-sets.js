@@ -1257,4 +1257,125 @@ nonIndexSets.push([
         isSample: true,
     }
 ]);
+const KS_METAL = {
+    language: 'EN',
+    name: 'Kickstarter Metal Cards',
+    prefix: 'KS-Metal',
+};
+nonIndexSets.push([
+    KS_METAL,
+    {
+        cardData: [{
+                // White metal
+                nonIndexImage: 'https://img.silvie.org/cdn/collection-tracker/non-index/ks-metal-white.png',
+                editions: [{
+                        card_id: 'white-cmt-013',
+                        circulationTemplates: [{
+                                foil: true,
+                                foilType: 'metal',
+                                name: 'CMT-013 KS',
+                                population: 497,
+                                population_operator: '=',
+                                printing: 'false',
+                                uuid: 'white-cmt-013',
+                            }],
+                        circulations: [],
+                        collector_number: '013 KS',
+                        formattedCollectorNumber: 'CMT-013 KS',
+                        set: KS_METAL,
+                        uuid: 'white-013',
+                    }],
+                name: '[White] Lorraine, Wandering Warrior',
+                uuid: 'white-013',
+            }, {
+                // Blue metal
+                nonIndexImage: 'https://img.silvie.org/cdn/collection-tracker/non-index/ks-metal-blue.png',
+                editions: [{
+                        card_id: 'blue-cmt-013',
+                        circulationTemplates: [{
+                                foil: true,
+                                foilType: 'metal',
+                                name: 'CMT-013 KS',
+                                population: 330,
+                                population_operator: '=',
+                                printing: 'false',
+                                uuid: 'blue-cmt-013',
+                            }],
+                        circulations: [],
+                        collector_number: '013 KS',
+                        formattedCollectorNumber: 'CMT-013 KS',
+                        set: KS_METAL,
+                        uuid: 'blue-013',
+                    }],
+                name: '[Blue] Lorraine, Wandering Warrior',
+                uuid: 'blue-013',
+            }, {
+                // Red metal
+                nonIndexImage: 'https://img.silvie.org/cdn/collection-tracker/non-index/ks-metal-red.png',
+                editions: [{
+                        card_id: 'blue-cmt-013',
+                        circulationTemplates: [{
+                                foil: true,
+                                foilType: 'metal',
+                                name: 'CMT-013 KS',
+                                population: 175,
+                                population_operator: '=',
+                                printing: 'false',
+                                uuid: 'red-cmt-013',
+                            }],
+                        circulations: [],
+                        collector_number: '013 KS',
+                        formattedCollectorNumber: 'CMT-013 KS',
+                        set: KS_METAL,
+                        uuid: 'red-013',
+                    }],
+                name: '[Red] Lorraine, Wandering Warrior',
+                uuid: 'red-013',
+            }, {
+                // Silver metal
+                nonIndexImage: 'https://img.silvie.org/cdn/collection-tracker/non-index/ks-metal-silver.png',
+                editions: [{
+                        card_id: 'silver-cmt-013',
+                        circulationTemplates: [{
+                                foil: true,
+                                foilType: 'metal',
+                                name: 'CMT-013 KS',
+                                population: 202,
+                                population_operator: '=',
+                                printing: 'false',
+                                uuid: 'silver-cmt-013',
+                            }],
+                        circulations: [],
+                        collector_number: '013 KS',
+                        formattedCollectorNumber: 'CMT-013 KS',
+                        set: KS_METAL,
+                        uuid: 'silver-013',
+                    }],
+                name: '[Silver] Lorraine, Wandering Warrior',
+                uuid: 'silver-013',
+            }, {
+                // Blue metal
+                nonIndexImage: 'https://img.silvie.org/cdn/collection-tracker/non-index/ks-metal-gold.png',
+                editions: [{
+                        card_id: 'gold-cmt-013',
+                        circulationTemplates: [{
+                                foil: true,
+                                foilType: 'metal',
+                                name: 'CMT-013 KS',
+                                population: 84,
+                                population_operator: '=',
+                                printing: 'false',
+                                uuid: 'gold-cmt-013',
+                            }],
+                        circulations: [],
+                        collector_number: '013 KS',
+                        formattedCollectorNumber: 'CMT-013 KS',
+                        set: KS_METAL,
+                        uuid: 'gold-013',
+                    }],
+                name: '[Gold] Lorraine, Wandering Warrior',
+                uuid: 'gold-013',
+            }],
+    }
+]);
 exports.default = nonIndexSets;
