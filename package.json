@@ -27,7 +27,7 @@
     "build": "echo \"Silvie is pre-built using build-local.\"",
     "build-local": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data & shx cp ./src/deck-builder/types.ts ./dist/deck-builder/types.ts",
     "build-all": "yarn build-local & yarn deployCommands",
-    "build-api-data": "shx cp -r ./src/api-data/ ./dist/",
+    "build-api-data": "shx cp -r ./src/api-data/ ./dist/ & shx cp -r ./src/api-data/ ../silvie-monorepo/apps/api.silvie.org/src/",
     "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js & yarn build-local & yarn update-static-files",
