@@ -230,7 +230,7 @@ ${templateData}
   </tr>`;
                 customSetTemplateEntries.push(setTemplateEntry);
             }
-            fs.writeFileSync(`${blogTemplatesPath}/${setCode}-${customSet.filename}.html`, `<table class="condensed-table set-list">
+            fs.writeFileSync(`${blogTemplatesPath}/${setCode.replace(/ /g, '-')}-${customSet.filename}.html`, `<table class="condensed-table set-list">
       <thead>
         <tr>
           <th style="text-align: left">Number</th>

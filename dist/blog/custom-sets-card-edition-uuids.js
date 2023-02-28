@@ -256,6 +256,8 @@ exports.default = [{
             }, {
                 id: 'glApsoTUXv',
             }, {
+                id: 'kGdhXWvHFi',
+            }, {
                 id: 'UvDktoulIJ',
             }, {
                 id: 'pjvYLaHE1k',
@@ -321,6 +323,45 @@ exports.default = [{
                 id: 'D1LJVwFNkh',
             }, {
                 id: 'seHW4HxE03',
+            }]
+    }, {
+        setCode: 'DOAp',
+        filename: 'box-topper',
+        name: 'Box topper pack',
+        isDeck: true,
+        cards: [{
+                id: 'TehAgfflE3',
+                quantity: 1,
+            }, {
+                id: 'nKsbvq7izT',
+                quantity: 1,
+            }, {
+                id: 'J7Z6Ksbsox',
+                quantity: 1,
+            }, {
+                id: 'LLgpatiC2S',
+                quantity: 1,
+            }, {
+                id: 'KHxN8Dsm36',
+                quantity: 1,
+            }, {
+                id: '5dnNqK3KZU',
+                quantity: 1,
+            }]
+    }, {
+        setCode: 'DOA 1st',
+        filename: 'box-topper',
+        name: 'Box topper pack',
+        isDeck: true,
+        cards: [{
+                id: '1tisZwrn8k',
+                quantity: 2,
+            }, {
+                id: 'XhpXCItkPe',
+                quantity: 2,
+            }, {
+                id: '3051lmd58M',
+                quantity: 2,
             }]
     }, {
         setCode: 'DEMO22',
