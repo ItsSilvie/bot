@@ -354,13 +354,13 @@ exports.default = [{
         name: 'Box topper pack',
         isDeck: true,
         cards: [{
-                id: '1tisZwrn8k',
+                id: 'zqHccKpk8L',
                 quantity: 2,
             }, {
                 id: 'XhpXCItkPe',
                 quantity: 2,
             }, {
-                id: '3051lmd58M',
+                id: '1drFujjOnf',
                 quantity: 2,
             }]
     }, {
