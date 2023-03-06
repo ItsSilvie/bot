@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
+const commands_1 = require("../utils/commands");
 const command = {
     name: 'whoami',
     generator: (subcommand) => {
@@ -17,7 +18,7 @@ const command = {
                 .then(res => res.json());
             if (data.error || !data.displayName) {
                 return interaction.reply({
-                    content: 'I could not find a Silvie.org user account that has your Discord account linked. You can link your Discord account at https://portal.silvie.org.',
+                    content: commands_1.unauthenticatedMessage,
                     ephemeral: true,
                 });
             }

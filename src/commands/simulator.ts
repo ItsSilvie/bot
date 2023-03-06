@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { unauthenticatedMessage } from '../utils/commands';
 import { BotCommand } from './types';
 
 const setCategoryMap = {
@@ -76,7 +77,7 @@ const command = <BotCommand>{
     }
 
     const userId = interaction.user.id;
-    const packCountString = category.replace(' packs', '');
+    const packCountString = category.replace(/ packs?/, '');
 
     const queryParams = new URLSearchParams({
       category: packCountString,
@@ -91,6 +92,13 @@ const command = <BotCommand>{
       if (!data) {
         return interaction.reply({
           content: 'Something went wrong. Please try again later.',
+          ephemeral: true,
+        })
+      }
+
+      if (data.error === 'silvie/unauthenticated') {
+        return interaction.reply({
+          content: unauthenticatedMessage,
           ephemeral: true,
         })
       }
@@ -171,7 +179,7 @@ const command = <BotCommand>{
       })();
 
       return interaction.reply({
-        content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster packs and pulled ${raritiesString} ${foilsString} for a total score of: **${data.score.toLocaleString()}**.
+        content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster pack${packCountString === '1' ? '' : 's'} and pulled ${raritiesString}${foilsString ? ` ${foilsString}` : ''} for a total score of: **${data.score.toLocaleString()}**.
 The highest scoring cards were ${data.top3String}.
 ${personalScoreString}`,
       });

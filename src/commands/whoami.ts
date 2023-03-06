@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { unauthenticatedMessage } from '../utils/commands';
 import { BotCommand } from './types';
 
 const command = <BotCommand>{
@@ -19,7 +20,7 @@ const command = <BotCommand>{
 
       if (data.error || !data.displayName) {
         return interaction.reply({
-          content: 'I could not find a Silvie.org user account that has your Discord account linked. You can link your Discord account at https://portal.silvie.org.',
+          content: unauthenticatedMessage,
           ephemeral: true,
         })
       }

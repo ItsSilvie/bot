@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
+const commands_1 = require("../utils/commands");
 const setCategoryMap = {
     'DOA 1st': {
         categories: [
@@ -68,7 +69,7 @@ const command = {
             });
         }
         const userId = interaction.user.id;
-        const packCountString = category.replace(' packs', '');
+        const packCountString = category.replace(/ packs?/, '');
         const queryParams = new URLSearchParams({
             category: packCountString,
             id: userId,
@@ -83,9 +84,15 @@ const command = {
                     ephemeral: true,
                 });
             }
+            if (data.error === 'silvie/unauthenticated') {
+                return interaction.reply({
+                    content: commands_1.unauthenticatedMessage,
+                    ephemeral: true,
+                });
+            }
             if (data.error === 'silvie/too-many-requests') {
                 const { cooldown, isPatreonSupporter, } = data.message;
-                const remainingTime = Number(new Date(data.message.cooldown)) - Date.now();
+                const remainingTime = Number(new Date(cooldown)) - Date.now();
                 const remainingTimeObj = {};
                 if ((remainingTime / 1000 / 60) < 1) {
                     const seconds = Math.ceil(remainingTime / 1000);
@@ -131,7 +138,7 @@ const command = {
                 return `Your personal best is ${data.pb} and worst is ${data.pw}.`;
             })();
             return interaction.reply({
-                content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster packs and pulled ${raritiesString} ${foilsString} for a total score of: **${data.score.toLocaleString()}**.
+                content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster pack${packCountString === '1' ? '' : 's'} and pulled ${raritiesString}${foilsString ? ` ${foilsString}` : ''} for a total score of: **${data.score.toLocaleString()}**.
 The highest scoring cards were ${data.top3String}.
 ${personalScoreString}`,
             });
