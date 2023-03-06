@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { unauthenticatedMessage } from '../utils/commands';
+import { API_URL, unauthenticatedMessage } from '../utils/commands';
 import { BotCommand } from './types';
 
 const command = <BotCommand>{
@@ -15,7 +15,7 @@ const command = <BotCommand>{
     });
 
     try {
-      const data = await fetch(`http://localhost:3999/api/discord/user?${queryParams.toString()}`)
+      const data = await fetch(`${API_URL}/api/discord/user?${queryParams.toString()}`)
         .then(res => res.json())
 
       if (data.error || !data.displayName) {

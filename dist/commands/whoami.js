@@ -14,7 +14,7 @@ const command = {
             id: interaction.user.id,
         });
         try {
-            const data = await (0, node_fetch_1.default)(`http://localhost:3999/api/discord/user?${queryParams.toString()}`)
+            const data = await (0, node_fetch_1.default)(`${commands_1.API_URL}/api/discord/user?${queryParams.toString()}`)
                 .then(res => res.json());
             if (data.error || !data.displayName) {
                 return interaction.reply({

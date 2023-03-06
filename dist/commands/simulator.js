@@ -76,7 +76,7 @@ const command = {
             prefix: setPrefix,
         });
         try {
-            const data = await (0, node_fetch_1.default)(`http://localhost:3999/api/discord/simulator/open?${queryParams.toString()}`)
+            const data = await (0, node_fetch_1.default)(`${commands_1.API_URL}/api/discord/simulator/open?${queryParams.toString()}`)
                 .then(res => res.json());
             if (!data) {
                 return interaction.reply({

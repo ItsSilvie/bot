@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { unauthenticatedMessage } from '../utils/commands';
+import { API_URL, unauthenticatedMessage } from '../utils/commands';
 import { BotCommand } from './types';
 
 const setCategoryMap = {
@@ -86,7 +86,7 @@ const command = <BotCommand>{
     });
 
     try {
-      const data = await fetch(`http://localhost:3999/api/discord/simulator/open?${queryParams.toString()}`)
+      const data = await fetch(`${API_URL}/api/discord/simulator/open?${queryParams.toString()}`)
         .then(res => res.json())
 
       if (!data) {
