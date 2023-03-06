@@ -5,11 +5,9 @@ import customSets from './custom-sets-card-edition-uuids';
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`
-const blogCardPagesPath = `${BLOG_REPO_LOCAL_PATH}/cards`
 
 const generateBlogTemplates = async () => {
   fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
-  fs.readdirSync(blogCardPagesPath).forEach(file => fs.rmSync(`${blogCardPagesPath}/${file}`));
 
   const allSets = Object.keys(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
 
@@ -58,67 +56,6 @@ const generateBlogTemplates = async () => {
           )).join('<br/>')
 
           setTemplateData.push(setTemplateCardObj);
-          
-          const cardTemplate = 
-`<div class="card-template">
-  <figure class="image">
-    <img
-      src="https://img.silvie.org/api-data/${cardEdition.uuid}.jpg"
-      alt="${card.name} &ndash; ${cardEditionSet.prefix} &middot; ${cardEditionSet.language}-${cardEdition.collector_number}"
-      style="max-width: 440px;"
-    >
-    <figcaption>${card.name} &ndash; ${cardEditionSet.prefix} &middot; ${cardEditionSet.language}-${cardEdition.collector_number}</figcaption>
-  </figure>
-  <div class="card-template-info">
-    <div class="card-template-stats">
-      <div class="card-template-stat">
-        <span class="card-template-stat-heading">Set</span>
-        <span class="card-template-stat-values">
-          <a href="/${cardEditionSet.prefix.replace(/ /g, '-')}_(set)">${cardEditionSet.name}</a>
-        </span>
-      </div>
-      ${cardEdition.effect || card.effect ? (
-`   <div class="card-template-stat">
-      <span class="card-template-stat-heading">Effect</span>
-      <span class="card-template-stat-values">
-        <span class="card-template-stat-values-effect">
-          ${cardEdition.effect || card.effect}
-        </span>
-      </span>
-    </div>`
-    ) : ''}
-      ${card.rule ? `    <div class="card-template-stat">
-        <span class="card-template-stat-heading">Rules</span>
-        <span class="card-template-stat-values">${card.rule.map(rule => `<span class="card-template-stat-values-rule">${rule.date_added} &ndash; ${rule.description}</span>`).join('')}</span>
-      </div>` : ''}
-      <div class="card-template-stat">
-        <span class="card-template-stat-heading">Rarity</span>
-        <span class="card-template-stat-values">
-          <span class="card-rarity-label card-rarity-label-${setTemplateCardObj.rarity}">${Rarity[setTemplateCardObj.rarity]}</span>
-        </span>
-      </div>
-      <div class="card-template-stat">
-        <span class="card-template-stat-heading">Illustrator</span>
-        <span class="card-template-stat-values">
-          <span class="dead-link"><a href="/illustrators">${cardEdition.illustrator}</a></span>
-        </span>
-      </div>
-      <div class="card-template-stat">
-        <span class="card-template-stat-heading">Population</span>
-        <span class="card-template-stat-values">
-          ${[...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (
-            `<div>${circulationTemplate.foil ? 'Foil' : 'Normal'} ${circulationTemplate.population_operator}${circulationTemplate.population.toLocaleString()}</div>`
-          )).join('\n')}
-        </span>
-      </div>
-    </div>
-    <p class="card-template-index-link">
-      <a href="https://index.gatcg.com/edition/${cardEdition.slug}">View this card on Grand Archive Index</a>.
-    </p>
-  </div>
-</div>`;
-
-        fs.writeFileSync(`${blogTemplatesPath}/${cardEdition.slug}.html`, cardTemplate, 'utf8');
       }
     }
 
@@ -126,34 +63,6 @@ const generateBlogTemplates = async () => {
 
     for (let j = 0; j < setTemplateData.length; j++) {
       const setTemplateDataEntry = setTemplateData[j];
-
-      const templateData = `## ${setTemplateDataEntry.set.prefix} &middot; ${setTemplateDataEntry.number} ${setTemplateDataEntry.rarity}
-
-{% include templates/${setTemplateDataEntry.editionSlug.replace(/ /g, '_')}.html %}`;
-
-      if (!fs.existsSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`)) {
-        fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (
-`---
-layout: card
-title:  "${setTemplateDataEntry.name} (card)"
-date:   "${setTemplateDataEntry.lastUpdated}"
-permalink: ${setTemplateDataEntry.cardSlug}_(card)
----
-
-${templateData}
-`
-        ), 'utf8');
-      } else {
-        const existingFileData = fs.readFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, 'utf8');
-        
-        if (existingFileData.indexOf(templateData) === -1) {
-          fs.writeFileSync(`${blogCardPagesPath}/${setTemplateDataEntry.cardSlug}.markdown`, (`${existingFileData}
-
-${templateData}
-`
-          ), 'utf8');
-        }
-      }
 
       const setTemplateEntry =
 `<tr>
@@ -168,7 +77,7 @@ ${templateData}
       <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
       <abbr class="card-rarity-label card-rarity-label-${setTemplateDataEntry.rarity}" title="${Rarity[setTemplateDataEntry.rarity]}">${setTemplateDataEntry.rarity}</abbr>
       <span class="name-wrapper">
-        <a href="/${setTemplateDataEntry.cardSlug}_(card)#${setTemplateDataEntry.anchor}">
+        <a href="https://index.gatcg.com/edition/${setTemplateDataEntry.editionSlug.replace(/ /g, '_')}" rel="noopener noreferrer" target="_blank">
           ${setTemplateDataEntry.name}
         </a>
       </span>
@@ -230,6 +139,7 @@ ${templateData}
           slug: cardMatch.slug,
           quantity: customSet.isDeck ? customSetCard.quantity : undefined,
           type: cardMatch.types[0],
+          editionSlug: cardEditionMatch.slug,
         };
 
         // #ksp--en-008-pr
@@ -269,7 +179,7 @@ ${templateData}
         <img class="image-element" src="https://img.silvie.org/misc/elements/${customSetTemplateDataEntry.element.toLowerCase()}.png" alt="${customSetTemplateDataEntry.element} element" />
         <abbr class="card-rarity-label card-rarity-label-${customSetTemplateDataEntry.rarity}" title="${Rarity[customSetTemplateDataEntry.rarity]}">${customSetTemplateDataEntry.rarity}</abbr>
         <span class="name-wrapper">
-          <a href="/${customSetTemplateDataEntry.slug}_(card)#${customSetTemplateDataEntry.anchor}">
+        <a href="https://index.gatcg.com/edition/${customSetTemplateDataEntry.editionSlug.replace(/ /g, '_')}" rel="noopener noreferrer" target="_blank">
             ${customSetTemplateDataEntry.name}
           </a> ${customSetTemplateDataEntry.quantity ? ` x${customSetTemplateDataEntry.quantity}` : ''}
         </span>
