@@ -124,7 +124,10 @@ const command = {
             }
             const { foils, rarities, } = data.breakdown;
             const raritiesString = rarities.map(([statKey, { count, }], index, arr) => (`${count} ${GeneratedRarityLabel[statKey]}${count === 1 ? '' : 's'}${index < arr.length - 2 ? ', ' : ''}${index === arr.length - 2 ? ' and ' : ''}`)).join('');
-            const foilsString = foils.length ? (`– including *${foils.length} foil${foils.length === 1 ? '' : 's'}* –`) : '';
+            const foilsString = foils.length ? (() => {
+                const foilCount = foils.reduce((n, [rarity, { foil }]) => n + foil, 0);
+                return `– including ${foilCount} foil${foilCount === 1 ? '' : 's'} –`;
+            })() : '';
             const personalScoreString = (() => {
                 if (!data.pb || !data.pw) {
                     return 'You\'ve set their first score for this category. <:wow_silvie:918934079435583519>';
