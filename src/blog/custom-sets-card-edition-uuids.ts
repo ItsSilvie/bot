@@ -102,7 +102,7 @@ export default [{
     quantity: 2,
   }, {
     id: '02yhNm2ejR',
-    quantity: 1,
+    quantity: 3,
   }]
 }, {
   setCode: 'DOAp',
