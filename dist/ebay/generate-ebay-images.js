@@ -4,6 +4,7 @@ const node_fetch_1 = require("node-fetch");
 const fs = require("fs");
 const https = require("https");
 const rarity_1 = require("../utils/rarity");
+const constants_1 = require("../utils/constants");
 const EBAY_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const ebayDataPath = `${EBAY_CDN_REPO_LOCAL_PATH}/cdn`;
 const httpsAgent = new https.Agent({
@@ -18,7 +19,7 @@ const getCardImage = async (slug, setPrefix, number, rarity) => {
     if (!fs.existsSync(rarityPath)) {
         fs.mkdirSync(rarityPath);
     }
-    await (0, node_fetch_1.default)(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
+    await (0, node_fetch_1.default)(`${constants_1.IMAGE_BASE}/${slug}.jpg`, {
         agent: httpsAgent,
     }).then(response => response.body.pipe(fs.createWriteStream(`${rarityPath}/${number}.jpg`)));
 };

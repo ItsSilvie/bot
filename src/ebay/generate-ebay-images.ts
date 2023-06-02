@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
 import { getRarityCodeFromRarityId, Rarity } from '../utils/rarity';
+import { IMAGE_BASE } from '../utils/constants';
 
 const EBAY_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const ebayDataPath = `${EBAY_CDN_REPO_LOCAL_PATH}/cdn`;
@@ -23,7 +24,7 @@ const getCardImage = async (slug: string, setPrefix: string, number: string, rar
     fs.mkdirSync(rarityPath);
   }
 
-  await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
+  await fetch(`${IMAGE_BASE}/${slug}.jpg`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
     fs.createWriteStream(`${rarityPath}/${number}.jpg`)

@@ -1,5 +1,8 @@
 export const getSetLogo = (setPrefix) => {
   switch (setPrefix) {
+    case 'DOA 1st':
+    case 'DOA Alter':
+    case 'DOASD':
     case 'DOAp':
     case 'DOApSP':
       return 'DOA.png';
@@ -34,23 +37,22 @@ export const getSetInfo: (setPrefix: string) => {
       }
 
     case 'DOA 1st':
+    case 'DOA Alter':
       return {
         type: [SetType.Standard],
         year: 2023,
       }
 
     case 'DOAp':
+    case 'DOASD':
       return {
         type: [SetType.Standard],
         year: 2023,
       }
 
+    case 'EVP':
+    case 'GSC':
     case 'KS-Metal':
-      return {
-        type: [SetType.Promo],
-        year: 2023,
-      }
-
     case 'KSP':
       return {
         type: [SetType.Promo],

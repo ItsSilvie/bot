@@ -1,0 +1,1 @@
+export const IMAGE_BASE = `https://ga-index-public.s3.us-west-2.amazonaws.com/cards`;

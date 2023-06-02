@@ -5,6 +5,7 @@ const fs = require("fs");
 const https = require("https");
 const types_1 = require("./types");
 const non_index_sets_1 = require("./non-index-sets");
+const constants_1 = require("../utils/constants");
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
@@ -12,7 +13,7 @@ const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
 const getCardImage = async (slug, uuid, nonIndexImage) => {
-    await (0, node_fetch_1.default)(nonIndexImage ?? `https://api.gatcg.com/images/cards/${slug}.jpg`, {
+    await (0, node_fetch_1.default)(nonIndexImage ?? `${constants_1.IMAGE_BASE}/${slug}.jpg`, {
         agent: httpsAgent,
     }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)));
 };
@@ -50,6 +51,7 @@ const generateDeckBuilderData = async () => {
                 },
                 [types_1.CardSearchDataKeys.UUID]: card.uuid,
                 [types_1.CardSearchDataKeys.Name]: card.name,
+                [types_1.CardSearchDataKeys.LastUpdated]: card.last_update,
             };
             if (cardSearchData.find(entry => entry.u === card.uuid)) {
                 // Exclude matches that have already been seen in other sets.

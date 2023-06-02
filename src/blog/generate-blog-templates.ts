@@ -6,6 +6,43 @@ const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`
 
+const themaTypes = [
+  'charm',
+  'ferocity',
+  'grace',
+  'mystique',
+  'valor',
+]
+
+const getThemaScoreHTMLFromThema = (thema, label: string) => {
+  const typeBreakdown = themaTypes.filter(type => !!thema[type]).map(type => `<span class="thema-score thema-score-${type}" title="${type.toLocaleUpperCase()}">${thema[type].toLocaleString()}</span>`);
+  return `<span class="thema-score-breakdown">${label} ${thema.total.toLocaleString()} ${typeBreakdown.join(' ')}</span>`;
+}
+
+const getThemaScoreHTMLFromTemplate = (templateData) => {
+  const nonFoilTotal = templateData.thema.nonfoil.total;
+  const foilTotal = templateData.thema.foil.total;
+
+  if (!nonFoilTotal && !foilTotal) {
+    return '';
+  }
+
+  let nonFoil; 
+  let foil;
+
+  if (nonFoilTotal) {
+    nonFoil = getThemaScoreHTMLFromThema(templateData.thema.nonfoil, 'Normal');
+  }
+
+  if (foilTotal) {
+    foil = getThemaScoreHTMLFromThema(templateData.thema.foil, 'Foil');
+  }
+
+  return `<div class="set-list-thema-score" title="Thema score">
+  ${nonFoil && foil ? `${nonFoil}${foil}` : (nonFoil || foil)}
+</div>`;
+}
+
 const generateBlogTemplates = async () => {
   fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
 
@@ -44,6 +81,22 @@ const generateBlogTemplates = async () => {
             population: '',
             cardSlug: card.slug,
             editionSlug: cardEdition.slug,
+            thema: {
+              foil: {
+                total: cardEdition.thema_foil,
+                ...themaTypes.reduce((obj, type) => ({
+                  ...obj,
+                  [type]: cardEdition[`thema_${type}_foil`],
+                }), {}),
+              },
+              nonfoil: {
+                total: cardEdition.thema_nonfoil,
+                ...themaTypes.reduce((obj, type) => ({
+                  ...obj,
+                  [type]: cardEdition[`thema_${type}_nonfoil`],
+                }), {}),
+              },
+            },
             set: cardEdition.set,
           };
 
@@ -66,7 +119,7 @@ const generateBlogTemplates = async () => {
 
       const setTemplateEntry =
 `<tr>
-  <td style="text-align: left">
+  <td class="set-list-card-number" style="text-align: left">
     ${setTemplateDataEntry.number}
   </td>
   <td style="text-align: left">
@@ -82,8 +135,9 @@ const generateBlogTemplates = async () => {
         </a>
       </span>
     </div>
+    ${getThemaScoreHTMLFromTemplate(setTemplateDataEntry)}
   </td>
-  <td style="text-align: right">
+  <td class="set-list-card-population" style="text-align: right">
     ${setTemplateDataEntry.population}
   </td>
 </tr>`;
@@ -179,7 +233,7 @@ const generateBlogTemplates = async () => {
         <img class="image-element" src="https://img.silvie.org/misc/elements/${customSetTemplateDataEntry.element.toLowerCase()}.png" alt="${customSetTemplateDataEntry.element} element" />
         <abbr class="card-rarity-label card-rarity-label-${customSetTemplateDataEntry.rarity}" title="${Rarity[customSetTemplateDataEntry.rarity]}">${customSetTemplateDataEntry.rarity}</abbr>
         <span class="name-wrapper">
-        <a href="https://index.gatcg.com/edition/${customSetTemplateDataEntry.editionSlug.replace(/ /g, '_')}" rel="noopener noreferrer" target="_blank">
+          <a href="https://index.gatcg.com/edition/${customSetTemplateDataEntry.editionSlug.replace(/ /g, '_')}" rel="noopener noreferrer" target="_blank">
             ${customSetTemplateDataEntry.name}
           </a> ${customSetTemplateDataEntry.quantity ? ` x${customSetTemplateDataEntry.quantity}` : ''}
         </span>

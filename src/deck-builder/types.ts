@@ -1,6 +1,7 @@
 export enum CardSearchDataKeys {
   CostType = "t",
   Filter = "f",
+  LastUpdated = "l",
   Name = "n",
   UUID = "u",
 }
@@ -25,6 +26,7 @@ export interface CardSearchData {
     [CardSearchFilterKeys.SubTypes]?: string[];
     [CardSearchFilterKeys.Types]?: string[];
   },
+  [CardSearchDataKeys.LastUpdated]: string;
   [CardSearchDataKeys.Name]: string;
   [CardSearchDataKeys.UUID]: string;
 }

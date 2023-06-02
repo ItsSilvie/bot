@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
+import { IMAGE_BASE } from './utils/constants';
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
@@ -53,7 +54,7 @@ const apiScrape = async () => {
   }
 
   const getCardImage = async (slug: string, uuid: string) => {
-    await fetch(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
+    await fetch(`${IMAGE_BASE}/${slug}.jpg`, {
       agent: httpsAgent,
     }).then(response => response.body.pipe(
       fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
@@ -82,9 +83,10 @@ const apiScrape = async () => {
     for (let i = 0; i < cardData.length; i++) {
       console.log(`    ...card ${i + 1}/${cardData.length}...`);
       const card = cardData[i];
-      for (let j = 0; j < card.editions.length; j++) {
-        console.log(`      ...image ${j + 1}/${card.editions.length}...`);
-        const cardEdition = card.editions[j];
+      const cardEditionsInSet = card.editions.filter(edition => edition.set.prefix === cardSet)
+      for (let j = 0; j < cardEditionsInSet.length; j++) {
+        console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
+        const cardEdition = cardEditionsInSet[j];
         await getCardImage(cardEdition.slug, cardEdition.uuid);
       }
     }

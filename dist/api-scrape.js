@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
 const fs = require("fs");
 const https = require("https");
+const constants_1 = require("./utils/constants");
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
@@ -39,7 +40,7 @@ const apiScrape = async () => {
         return getAllPaginatedResults(url, response, page + 1, totalPages);
     };
     const getCardImage = async (slug, uuid) => {
-        await (0, node_fetch_1.default)(`https://api.gatcg.com/images/cards/${slug}.jpg`, {
+        await (0, node_fetch_1.default)(`${constants_1.IMAGE_BASE}/${slug}.jpg`, {
             agent: httpsAgent,
         }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
             flags: 'w',
@@ -61,9 +62,10 @@ const apiScrape = async () => {
         for (let i = 0; i < cardData.length; i++) {
             console.log(`    ...card ${i + 1}/${cardData.length}...`);
             const card = cardData[i];
-            for (let j = 0; j < card.editions.length; j++) {
-                console.log(`      ...image ${j + 1}/${card.editions.length}...`);
-                const cardEdition = card.editions[j];
+            const cardEditionsInSet = card.editions.filter(edition => edition.set.prefix === cardSet);
+            for (let j = 0; j < cardEditionsInSet.length; j++) {
+                console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
+                const cardEdition = cardEditionsInSet[j];
                 await getCardImage(cardEdition.slug, cardEdition.uuid);
             }
         }

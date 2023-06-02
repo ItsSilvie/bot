@@ -362,6 +362,36 @@ export default [{
     quantity: 2,
   }]
 }, {
+  setCode: 'DOA Alter',
+  filename: 'box-topper',
+  name: 'Box topper pack',
+  isDeck: true,
+  cards: [{
+    id: 'eslfpwkkbb',
+    quantity: 2,
+  }, {
+    id: 'tmw3rrii17',
+    quantity: 2,
+  }, {
+    id: 'pdtiptrzbl',
+    quantity: 2,
+  }]
+}, {
+  setCode: 'DOASD',
+  filename: 'box-topper',
+  name: 'Assassin Class Starter Pack',
+  isDeck: true,
+  cards: [{
+    id: 'y68ixy5b8s',
+    quantity: 1,
+  }, {
+    id: 'v3hqi8r66p',
+    quantity: 1,
+  }, {
+    id: '6nj45r59f7',
+    quantity: 1,
+  }]
+}, {
   setCode: 'DEMO22',
   filename: 'lgs-demo-deck',
   name: 'LGS Demo Deck',

@@ -5,6 +5,7 @@ var CardSearchDataKeys;
 (function (CardSearchDataKeys) {
     CardSearchDataKeys["CostType"] = "t";
     CardSearchDataKeys["Filter"] = "f";
+    CardSearchDataKeys["LastUpdated"] = "l";
     CardSearchDataKeys["Name"] = "n";
     CardSearchDataKeys["UUID"] = "u";
 })(CardSearchDataKeys = exports.CardSearchDataKeys || (exports.CardSearchDataKeys = {}));

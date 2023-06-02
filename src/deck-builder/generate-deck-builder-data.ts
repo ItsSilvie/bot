@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as https from 'https';
 import { CardSearchData, CardSearchDataKeys, CardSearchDataValues, CardSearchFilterKeys } from './types';
 import nonIndexSets from './non-index-sets';
+import { IMAGE_BASE } from '../utils/constants';
 
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
@@ -13,7 +14,7 @@ const httpsAgent = new https.Agent({
 });
 
 const getCardImage = async (slug: string, uuid: string, nonIndexImage?: string) => {
-  await fetch(nonIndexImage ?? `https://api.gatcg.com/images/cards/${slug}.jpg`, {
+  await fetch(nonIndexImage ?? `${IMAGE_BASE}/${slug}.jpg`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
     fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)
@@ -74,6 +75,7 @@ const generateDeckBuilderData = async () => {
         },
         [CardSearchDataKeys.UUID]: card.uuid,
         [CardSearchDataKeys.Name]: card.name,
+        [CardSearchDataKeys.LastUpdated]: card.last_update,
       }
 
       if (cardSearchData.find(entry => entry.u === card.uuid)) {
