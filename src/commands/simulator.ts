@@ -11,6 +11,14 @@ const setCategoryMap = {
     ],
     name: 'Dawn of Ashes First Edition',
   },
+  'DOA Alter': {
+    categories: [
+      '1 pack',
+      '6 packs',
+      '24 packs',
+    ],
+    name: 'Dawn of Ashes Alter Edition',
+  },
   'DOAp': {
     categories: [
       '4 packs',
@@ -155,7 +163,7 @@ const command = <BotCommand>{
       const raritiesString = rarities.map(([statKey, {
         count,
       }], index, arr) => (
-        `${count} ${GeneratedRarityLabel[statKey]}${count === 1 ? '' : 's'}${index < arr.length - 2 ? ', ' : ''}${index === arr.length - 2 ? ' and ' : ''}`
+        `${count} ${statKey}${index < arr.length - 2 ? ', ' : ''}${index === arr.length - 2 ? ' and ' : ''}`
       )).join('');
 
       const foilsString = foils.length ? (() => {
@@ -180,9 +188,9 @@ const command = <BotCommand>{
       })();
 
       return interaction.reply({
-        content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster pack${packCountString === '1' ? '' : 's'} and pulled ${raritiesString}${foilsString ? ` ${foilsString}` : ''} for a total score of: **${data.score.toLocaleString()}**.
+        content: `<@${userId}> you opened ${packCountString} ${setMatch.name} booster pack${packCountString === '1' ? '' : 's'} and pulled ${raritiesString}${foilsString ? ` ${foilsString}` : ''} for a total score of: **${data.score.toLocaleString()}**.${data.collectionNew ? ` You added **${data.collectionNew}** new card${data.collectionNew === 1 ? '' : 's'} to your collection for this category.` : ''}
 The highest scoring cards were ${data.top3String}.
-${personalScoreString}`,
+You have unlocked ${data.collection}/${data.setCollectionTotal} cards from this category. ${personalScoreString}`,
       });
     } catch (e) {
       return interaction.reply({
