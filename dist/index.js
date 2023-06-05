@@ -2,50 +2,52 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const dotenv = require("dotenv");
+const node_fetch_1 = require("node-fetch");
 // Subcommand handlers.
 const subcommands = require("./commands");
+const commands_1 = require("./utils/commands");
+// Must match what is in (silvie-monorepo) /api/discord/server-boost
+var ServerBoostStatus;
+(function (ServerBoostStatus) {
+    ServerBoostStatus["Added"] = "added";
+    ServerBoostStatus["Removed"] = "removed";
+})(ServerBoostStatus || (ServerBoostStatus = {}));
 // For local development, make sure the .env file is set up in the root dir.
 dotenv.config();
 // Create a new client instance
-const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS] });
+const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MEMBERS, discord_js_1.Intents.FLAGS.GUILD_PRESENCES] });
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
     console.log('Ready!');
 });
-// const digMessages = [
-// 	'*wants to play*',
-// 	'*runs away from Sylidar*',
-// 	'*looks for critters*',
-// 	'*pretends to be Dream Fairy*',
-// 	'*is hungry*',
-// 	'Are we there yet?',
-// 	'*pokes treasure chest*',
-// 	'*roars*',
-// 	'Will you be my friend?',
-// 	'*hehehe*',
-// 	'I don\'t like strangers',
-// 	"<:wow_silvie:918934079435583519>",
-// 	"<:shocked_silvie:918934079104245851>",
-// 	"<:cry_silvie:918934079481712690>",
-// 	"<:mad_silvie:985427397379776602>",
-// 	"<:anxious_silvie:985427396444434492>"
-// ]
 client.on('ready', () => {
     client.user.setActivity('Grand Archive', {
         name: 'Grand Archive TCG',
         type: 'PLAYING',
         url: 'https://grandarchivetcg.com'
     });
-    // let digCount = 0;
-    // const channel = client.channels.cache.get('990852268045787216');
-    // if (!channel) {
-    // 	return;
-    // }
-    // setInterval(() => {
-    // 	const digMessage = shuffleArray([...digMessages])[0];
-    // 	digCount = digCount + 1;
-    // 	(channel as TextChannel).send(`${digMessage} *(${digCount.toLocaleString()})*`);
-    // }, 90000);
+});
+client.on('guildMemberUpdate', async (oldMember, newMember) => {
+    const guildId = oldMember.guild.id;
+    if (guildId !== '930860482313736222') {
+        return;
+    }
+    const serverBoostRoleId = '1115384775834869801';
+    const oldMemberHasServerBoostRole = oldMember.roles.cache.has(serverBoostRoleId);
+    const newMemberHasServerBoostRole = newMember.roles.cache.has(serverBoostRoleId);
+    if (oldMemberHasServerBoostRole === newMemberHasServerBoostRole) {
+        return;
+    }
+    try {
+        const queryParams = new URLSearchParams({
+            id: oldMember.user.id,
+            status: newMemberHasServerBoostRole ? ServerBoostStatus.Added : ServerBoostStatus.Removed,
+        });
+        await (0, node_fetch_1.default)(`${commands_1.API_URL}/api/discord/server-boost?${queryParams.toString()}`).then(response => response.json());
+    }
+    catch (e) {
+        console.log(e);
+    }
 });
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() && !interaction.isAutocomplete())
