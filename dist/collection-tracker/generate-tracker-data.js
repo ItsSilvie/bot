@@ -177,6 +177,7 @@ const generateTrackerData = async () => {
         return entry
             .replace('interface', 'export interface')
             .replace('RootObject', 'GeneratedSet')
+            .replace(/name\: string\;\n  prefix\: string\;/, 'name: GeneratedSetName;\n  prefix: GeneratedSetPrefix;')
             .replace('Cards', 'GeneratedSetCardCount')
             .replace('Info', 'GeneratedSetInfo')
             .replace('Variants', 'GeneratedSetCardVariantCount')
@@ -184,11 +185,23 @@ const generateTrackerData = async () => {
     }).join('\n\n');
     const options = JSON.parse(fs.readFileSync('./src/api-data/options.json', 'utf8'));
     const optionTypes = Object.entries(options).reduce((arr, [key, values]) => {
+        let keyFormatter = (data) => pascalCase(data.text);
+        let typeFormatter = (key) => `Generated${capitalize(key)}`;
         let valueFormatter;
         switch (key) {
-            case 'set':
             case 'statOperator':
                 return arr;
+            case 'set':
+                return [
+                    ...arr,
+                    `export enum ${typeFormatter(key)}Prefix {
+  ${values.map((entry) => `${pascalCase(entry.value)} = "${entry.value}",`).join('\n  ')}
+}
+
+export enum ${typeFormatter(key)}Name {
+  ${values.map((entry) => `${pascalCase(entry.value)} = "${entry.text}",`).join('\n  ')}
+}`
+                ];
             case 'rarity':
                 valueFormatter = (value) => (0, rarity_1.getRarityCodeFromRarityId)(value);
                 break;
@@ -197,8 +210,8 @@ const generateTrackerData = async () => {
         }
         return [
             ...arr,
-            `export enum Generated${capitalize(key)} {
-  ${values.map(({ text, value }) => `${pascalCase(text)} = "${typeof valueFormatter === 'function' ? valueFormatter(value) : value}",`).join('\n  ')}
+            `export enum ${typeFormatter(key)} {
+  ${values.map((entry) => `${keyFormatter(entry)} = "${typeof valueFormatter === 'function' ? valueFormatter(entry.value) : entry.value}",`).join('\n  ')}
 }`
         ];
     }, [
