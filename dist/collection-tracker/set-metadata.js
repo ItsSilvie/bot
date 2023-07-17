@@ -19,6 +19,7 @@ var SetType;
     SetType["Deck"] = "deck";
     SetType["Promo"] = "promo";
     SetType["Sample"] = "sample";
+    SetType["Special"] = "special";
     SetType["Standard"] = "standard";
 })(SetType || (SetType = {}));
 const getSetInfo = (setPrefix) => {
@@ -33,6 +34,11 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Deck, SetType.Sample],
                 year: 2022,
             };
+        case 'DEMO23':
+            return {
+                type: [SetType.Deck],
+                year: 2023,
+            };
         case 'DOA 1st':
         case 'DOA Alter':
             return {
@@ -45,7 +51,6 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Standard],
                 year: 2023,
             };
-        case 'EVP':
         case 'GSC':
         case 'KS-Metal':
         case 'KSP':
@@ -57,6 +62,12 @@ const getSetInfo = (setPrefix) => {
             return {
                 type: [SetType.Sample],
                 year: 2021,
+            };
+        case 'EVP':
+        case 'SP1':
+            return {
+                type: [SetType.Special],
+                year: 2023,
             };
         case 'P22':
             return {

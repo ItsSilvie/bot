@@ -16,6 +16,7 @@ enum SetType {
   Deck = 'deck',
   Promo = 'promo',
   Sample = 'sample',
+  Special = 'special',
   Standard = 'standard',
 }
 
@@ -36,6 +37,12 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2022,
       }
 
+    case 'DEMO23':
+      return {
+        type: [SetType.Deck],
+        year: 2023,
+      }
+
     case 'DOA 1st':
     case 'DOA Alter':
       return {
@@ -50,7 +57,6 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2023,
       }
 
-    case 'EVP':
     case 'GSC':
     case 'KS-Metal':
     case 'KSP':
@@ -63,6 +69,13 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Sample],
         year: 2021,
+      }
+
+    case 'EVP':
+    case 'SP1':
+      return {
+        type: [SetType.Special],
+        year: 2023,
       }
 
     case 'P22':
