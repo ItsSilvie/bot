@@ -98,9 +98,7 @@ const generateTrackerData = async () => {
         const cardEdition = cardEditions[k];
         const cardEditionSet = cardEdition.set;
 
-        [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => {
-          console.log(circulationTemplate);
-          
+        [...cardEdition.circulationTemplates, ...cardEdition.circulations].map(circulationTemplate => {          
           const setCardDataObj = {
             anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase(),
             element: card.element,
@@ -222,7 +220,6 @@ const generateTrackerData = async () => {
   fs.writeFileSync(`${trackerDataPath}/collection-tracker/sets.json`, JSON.stringify(generatedSetData), 'utf-8');
 
   const setListSetDataType = JsonToTS(generatedSetData[0]).map(entry => {
-    console.log(entry);
     return entry
       .replace('interface', 'export interface')
       .replace('RootObject', 'GeneratedSet')

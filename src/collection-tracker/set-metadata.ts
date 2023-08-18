@@ -7,6 +7,10 @@ export const getSetLogo = (setPrefix) => {
     case 'DOApSP':
       return 'DOA.png';
 
+    case 'FTC':
+    case 'FTCA':
+      return 'FTC.png';
+
     default:
       return 'GA.png';
   }
@@ -57,6 +61,13 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2023,
       }
 
+    case 'FTC':
+    case 'FTCA':
+      return {
+        type: [SetType.Standard],
+        year: 2023,
+      }
+
     case 'GSC':
     case 'KS-Metal':
     case 'KSP':
@@ -82,6 +93,12 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Promo],
         year: 2022,
+      }
+
+    case 'P23':
+      return {
+        type: [SetType.Promo],
+        year: 2023,
       }
 
     default:

@@ -64,10 +64,10 @@ const generateEbayImages = async () => {
         }
         parseSet(allSets[i]);
     }
-    // for (let i = 0; i < setCardData.length; i++) {
-    //   const card = setCardData[i];
-    //   await getCardImage(card.slug, card.set, card.number, card.rarity);
-    // }
+    for (let i = 0; i < setCardData.length; i++) {
+        const card = setCardData[i];
+        await getCardImage(card.slug, card.set, card.number, card.rarity);
+    }
     for (let i = 0; i < allSets.length; i++) {
         const prefix = allSets[i].prefix;
         if (prefix === 'DOApSP') {
