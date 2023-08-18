@@ -69,7 +69,7 @@ const command = <BotCommand>{
       ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => {
         return [
           ...editionOutput,
-          ...edition.circulationTemplates.map(circulation => ([
+          ...[...edition.circulationTemplates, ...edition.circulations].map(circulation => ([
             match,
             edition,
             circulation

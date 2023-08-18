@@ -15,11 +15,10 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
     .setTitle(card.name)
     .setURL(`https://index.gatcg.com/edition/${edition.slug}`)
     .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${encodeURIComponent(set.prefix)})**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
-    .setColor(getEmbedColorFromElement(IndexCardElement[card.element]));
-
-  embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
-  embed.setThumbnail(`https://img.silvie.org/ga-logo.png`);
-  embed.setImage(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
+    .setColor(getEmbedColorFromElement(IndexCardElement[card.element]))
+    .setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
+    .setThumbnail(`https://img.silvie.org/ga-logo.png`)
+    .setImage(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
 
   if (edition.effect || card.effect_raw) {
     embed.addField('\u200B', `${edition.effect ? NodeHtmlMarkdown.translate(edition.effect) : card.effect_raw}\n\u200B`)
