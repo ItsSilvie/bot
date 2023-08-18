@@ -57,7 +57,7 @@ const command = {
         }
         const match = (0, array_1.shuffleArray)([...cards])[0];
         const edition = (0, array_1.shuffleArray)([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0];
-        const circulation = (0, array_1.shuffleArray)([...edition.circulationTemplates])[0];
+        const circulation = (0, array_1.shuffleArray)([...edition.circulationTemplates, ...edition.circulations])[0];
         return interaction.reply({
             embeds: [(0, gaIndex_1.default)(match, edition, circulation)],
             content: (0, array_1.shuffleArray)([...messages])[0],

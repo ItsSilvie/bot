@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
-const gaIndex_1 = require("../embeds/gaIndex");
-const array_1 = require("../utils/array");
 const sets = require("../api-data/sets.json");
+const discord_js_1 = require("discord.js");
+const options = require("../api-data/options.json");
+const cardEmbed_1 = require("../replies/cardEmbed");
 const command = {
     name: 'index',
     generator: (subcommand) => {
@@ -65,17 +66,27 @@ const command = {
                 ];
             }, [])
         ]), []);
-        if (allVariants.length > 2) {
-            const [card, edition, circulation] = (0, array_1.shuffleArray)(allVariants)[0];
+        if (!allVariants.length) {
             return interaction.reply({
-                embeds: [(0, gaIndex_1.default)(card, edition, circulation)],
-                content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}, but I don't want to spam chat so here is one of them picked at random:`,
+                content: 'I was unable to find any cards matching your request.',
             });
         }
-        return interaction.reply({
-            embeds: allVariants.map(([card, edition, circulation]) => (0, gaIndex_1.default)(card, edition, circulation)),
-            content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}:`,
-        });
+        if (allVariants.length > 1) {
+            const row = new discord_js_1.MessageActionRow()
+                .addComponents(...allVariants.map(([card, edition, circulation]) => {
+                return new discord_js_1.MessageButton()
+                    .setCustomId(`variant-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+                    .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
+                    .setStyle(1 /* PRIMARY */);
+            }));
+            return interaction.reply({
+                content: 'I found multiple variants, which one do you want to see?',
+                components: [row],
+                ephemeral: true,
+            });
+        }
+        const [card, edition, circulation] = allVariants[0];
+        return await (0, cardEmbed_1.embedCard)(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
     },
     handleAutocomplete: async (interaction) => {
         const { options } = interaction;

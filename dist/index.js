@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const node_fetch_1 = require("node-fetch");
 // Subcommand handlers.
 const subcommands = require("./commands");
+const cardEmbed_1 = require("./replies/cardEmbed");
 const commands_1 = require("./utils/commands");
 // Must match what is in (silvie-monorepo) /api/discord/server-boost
 var ServerBoostStatus;
@@ -50,6 +51,18 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
     }
 });
 client.on('interactionCreate', async (interaction) => {
+    if (interaction.isButton()) {
+        const buttonId = interaction.customId;
+        if (buttonId.includes('variant-select')) {
+            const parts = buttonId.replace('variant-select --- ', '').split('~~~');
+            if (parts.length !== 4) {
+                return;
+            }
+            const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+            return (0, cardEmbed_1.embedCard)(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+        }
+        return;
+    }
     if (!interaction.isCommand() && !interaction.isAutocomplete())
         return;
     const { commandName, options } = interaction;

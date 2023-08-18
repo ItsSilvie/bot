@@ -4,6 +4,10 @@ import indexEmbed from '../embeds/gaIndex';
 import { shuffleArray } from '../utils/array';
 import * as sets from '../api-data/sets.json';
 import { IndexCard, IndexCirculation, IndexEdition } from '../data/types';
+import { MessageActionRow, MessageButton } from 'discord.js';
+import { MessageButtonStyles } from 'discord.js/typings/enums';
+import * as options from '../api-data/options.json';
+import { embedCard } from '../replies/cardEmbed';
 
 const command = <BotCommand>{
   name: 'index',
@@ -78,19 +82,30 @@ const command = <BotCommand>{
       }, [])
     ]), []);
 
-    if (allVariants.length > 2) {
-      const [card, edition, circulation] = shuffleArray(allVariants)[0];
-
+    if (!allVariants.length) {
       return interaction.reply({
-        embeds: [indexEmbed(card, edition, circulation)],
-        content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}, but I don't want to spam chat so here is one of them picked at random:`,
+        content: 'I was unable to find any cards matching your request.',
       });
     }
 
-    return interaction.reply({
-      embeds: allVariants.map(([card, edition, circulation]) => indexEmbed(card, edition, circulation)),
-      content: `I found ${matches.length} card${matches.length === 1 ? '' : 's'} with ${allVariants.length} variant${allVariants.length === 1 ? '' : 's'}:`,
-    });
+    if (allVariants.length > 1) {
+      const row = new MessageActionRow()
+        .addComponents(...allVariants.map(([card, edition, circulation]) => {
+          return new MessageButton()
+            .setCustomId(`variant-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
+            .setStyle(MessageButtonStyles.PRIMARY)
+        }));
+
+      return interaction.reply({
+        content: 'I found multiple variants, which one do you want to see?',
+        components: [row],
+        ephemeral: true,
+      })
+    }
+
+    const [card, edition, circulation] = allVariants[0];
+    return await embedCard(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
   },
   handleAutocomplete: async (interaction) => {
     const { options } = interaction;

@@ -166,6 +166,7 @@ export type IndexCirculation = {
 
 export type IndexEdition = {
   card_id: string
+  circulations: IndexCirculation[];
   circulationTemplates: IndexCirculation[]
   collector_number: string
   effect: null
