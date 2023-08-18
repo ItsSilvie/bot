@@ -11,7 +11,9 @@ const command = {
             .setName(command.name)
             .setDescription('Reveals a Grand Archive card at random.')
             .addStringOption(option => {
-            Object.values(sets).forEach(({ name, prefix }) => {
+            [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
+                return aName < bName ? -1 : 1;
+            }).forEach(({ name, prefix }) => {
                 option.addChoice(name, prefix);
             });
             return option

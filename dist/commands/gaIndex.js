@@ -12,7 +12,9 @@ const command = {
             .setName(command.name)
             .setDescription('Search for a card in Grand Archive\'s Index by name and set.')
             .addStringOption(option => {
-            Object.values(sets).forEach(({ name, prefix }) => {
+            [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
+                return aName < bName ? -1 : 1;
+            }).forEach(({ name, prefix }) => {
                 option.addChoice(name, prefix);
             });
             return option
@@ -97,19 +99,21 @@ const command = {
         }
         const setData = await Promise.resolve().then(() => require(`../api-data/${set}.json`));
         let matchCount = 0;
-        return setData.filter((entry, index) => {
-            if (!card) {
-                return index < 25;
-            }
-            if (matchCount === 25 || entry.name.toLowerCase().indexOf(card.toLowerCase()) === -1) {
-                return;
-            }
-            matchCount += 1;
-            return true;
-        }).map(entry => ({
-            name: entry.name,
-            value: entry.name,
-        }));
+        return [...setData.filter((entry, index) => {
+                if (!card) {
+                    return index < 25;
+                }
+                if (matchCount === 25 || entry.name.toLowerCase().indexOf(card.toLowerCase()) === -1) {
+                    return;
+                }
+                matchCount += 1;
+                return true;
+            }).map(entry => ({
+                name: entry.name,
+                value: entry.name,
+            }))].sort(({ name: aName }, { name: bName }) => {
+            return aName < bName ? -1 : 1;
+        });
     }
 };
 exports.default = command;

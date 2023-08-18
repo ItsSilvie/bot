@@ -1,7 +1,5 @@
 import * as path from 'path';
 import { BotCommand } from './types';
-import indexEmbed from '../embeds/gaIndex';
-import { shuffleArray } from '../utils/array';
 import * as sets from '../api-data/sets.json';
 import { IndexCard, IndexCirculation, IndexEdition } from '../data/types';
 import { MessageActionRow, MessageButton } from 'discord.js';
@@ -16,7 +14,9 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Search for a card in Grand Archive\'s Index by name and set.')
       .addStringOption(option => {
-        Object.values(sets).forEach(({ name, prefix }) => {
+        [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
+          return aName < bName ? -1 : 1;
+        }).forEach(({ name, prefix }) => {
           option.addChoice(name, prefix)
         });
   
@@ -119,7 +119,7 @@ const command = <BotCommand>{
     const setData = await import(`../api-data/${set}.json`);
     let matchCount = 0;
 
-    return setData.filter((entry, index) => {
+    return [...setData.filter((entry, index) => {
       if (!card) {
         return index < 25;
       }
@@ -133,7 +133,9 @@ const command = <BotCommand>{
     }).map(entry => ({
       name: entry.name,
       value: entry.name,
-    }));
+    }))].sort(({ name: aName }, { name: bName }) => {
+      return aName < bName ? -1 : 1;
+    });
   }
 }
 
