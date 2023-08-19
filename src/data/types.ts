@@ -161,6 +161,7 @@ export type IndexCirculation = {
   name: string
   population: number
   population_operator: string
+  printing: boolean
   uuid: string
 }
 
@@ -201,6 +202,7 @@ export type IndexCard = {
   effect_raw: string
   element: keyof IndexCardElement
   flavor: string
+  last_update: string | null
   level: number | null
   life: number | null
   name: string
