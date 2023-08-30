@@ -32,6 +32,6 @@ const links = [{
         url: 'https://discord.gg/UQcCfrBFbd',
     }, {
         name: 'Merlin\'s Marketplace',
-        url: 'https://mee6.xyz/i/PnngYxM2K8',
+        url: 'https://discord.gg/bXV57zUcm4',
     }];
 exports.default = links;
