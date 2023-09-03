@@ -46,6 +46,7 @@ const getVariantFromCardData = (cardEdition, circulationTemplate) => {
     return Variant.NonFoil;
 };
 const generateTrackerData = async () => {
+    let champions = [];
     if (!fs.existsSync(trackerDataPath)) {
         fs.mkdirSync(trackerDataPath);
     }
@@ -66,6 +67,12 @@ const generateTrackerData = async () => {
             console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
             const cardEditions = card.editions.filter(entry => entry.set.prefix === baseSetCode);
+            if (card.types?.includes('CHAMPION') && !card.subtypes?.includes('SPIRIT')) {
+                const [championName] = card.name.split(',');
+                if (!champions.includes(championName)) {
+                    champions.push(championName);
+                }
+            }
             for (let k = 0; k < cardEditions.length; k++) {
                 console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
                 const cardEdition = cardEditions[k];
@@ -218,6 +225,9 @@ export enum ${typeFormatter(key)}Name {
 }`,
         `export enum GeneratedRarityLabel {
   ${Object.entries(rarity_1.Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
+}`,
+        `export enum GeneratedChampion {
+  ${[...champions].sort((a, b) => a > b ? 1 : -1).map((champion) => `${champion} = "${champion.replace(' ', '')}",`).join('\n  ')}
 }`
     ]).join('\n\n');
     fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setListSetDataType}\n\n${setPageSetDataType}`, 'utf-8');
