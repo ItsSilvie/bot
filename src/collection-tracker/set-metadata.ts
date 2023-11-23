@@ -83,6 +83,7 @@ export const getSetInfo: (setPrefix: string) => {
       }
 
     case 'EVP':
+    case 'PRXY':
     case 'SP1':
       return {
         type: [SetType.Special],

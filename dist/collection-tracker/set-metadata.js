@@ -73,6 +73,7 @@ const getSetInfo = (setPrefix) => {
                 year: 2021,
             };
         case 'EVP':
+        case 'PRXY':
         case 'SP1':
             return {
                 type: [SetType.Special],
