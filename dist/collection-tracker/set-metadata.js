@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSetMetadata = exports.getSetInfo = exports.getSetLogo = void 0;
 const getSetLogo = (setPrefix) => {
     switch (setPrefix) {
+        case 'ALC':
+        case 'ALC1E':
+        case 'ALCSD':
+            return 'FTC.png';
         case 'DOA 1st':
         case 'DOA Alter':
         case 'DOASD':
@@ -27,6 +31,17 @@ var SetType;
 })(SetType || (SetType = {}));
 const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
+        case 'ALC':
+        case 'ALC1E':
+            return {
+                type: [SetType.Standard],
+                year: 2024,
+            };
+        case 'ALCSD':
+            return {
+                type: [SetType.Deck],
+                year: 2024,
+            };
         case 'DEMO22':
             return {
                 type: [SetType.Deck],
@@ -88,6 +103,11 @@ const getSetInfo = (setPrefix) => {
             return {
                 type: [SetType.Promo],
                 year: 2023,
+            };
+        case 'P24':
+            return {
+                type: [SetType.Promo],
+                year: 2024,
             };
         default:
             throw new Error(`No set info specified for ${setPrefix}`);
