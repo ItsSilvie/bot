@@ -4,7 +4,7 @@ exports.getSetMetadata = exports.getSetInfo = exports.getSetLogo = void 0;
 const getSetLogo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
-        case 'ALC1E':
+        case 'ALC 1st':
         case 'ALCSD':
             return 'FTC.png';
         case 'DOA 1st':
@@ -32,7 +32,7 @@ var SetType;
 const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
-        case 'ALC1E':
+        case 'ALC 1st':
             return {
                 type: [SetType.Standard],
                 year: 2024,

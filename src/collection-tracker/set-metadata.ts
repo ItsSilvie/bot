@@ -1,7 +1,7 @@
 export const getSetLogo = (setPrefix) => {
   switch (setPrefix) {
     case 'ALC':
-    case 'ALC1E':
+    case 'ALC 1st':
     case 'ALCSD':
       return 'FTC.png';
 
@@ -35,7 +35,7 @@ export const getSetInfo: (setPrefix: string) => {
 } = (setPrefix) => {
   switch (setPrefix) {
     case 'ALC':
-    case 'ALC1E':
+    case 'ALC 1st':
       return {
         type: [SetType.Standard],
         year: 2024,
