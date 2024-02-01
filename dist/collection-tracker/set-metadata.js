@@ -105,6 +105,7 @@ const getSetInfo = (setPrefix) => {
                 year: 2023,
             };
         case 'P24':
+        case 'SLC':
             return {
                 type: [SetType.Promo],
                 year: 2024,
