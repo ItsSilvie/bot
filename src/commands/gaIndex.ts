@@ -71,6 +71,24 @@ const command = <BotCommand>{
     const allVariants: [IndexCard, IndexEdition, IndexCirculation][] = matches.reduce((output, match) => ([
       ...output,
       ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => {
+        if (!edition.circulationTemplates?.length && !edition.circulations?.length) {
+          return [
+            ...editionOutput,
+            [
+              match,
+              edition,
+              {
+                uuid: 'none',
+                name: 'none',
+                foil: false,
+                printing: false,
+                population_operator: '<=',
+                population: 0,
+              }
+            ]
+          ]
+        }
+
         return [
           ...editionOutput,
           ...[...edition.circulationTemplates, ...edition.circulations].map(circulation => ([

@@ -22,11 +22,21 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulat
             content: 'I was unable to find any cards matching your request.',
         });
     }
-    const circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
-    if (!circulationMatch) {
-        return interaction.reply({
-            content: 'I was unable to find any cards matching your request.',
-        });
+    let circulationMatch = {
+        uuid: 'none',
+        name: 'none',
+        foil: false,
+        printing: false,
+        population_operator: '<=',
+        population: 0,
+    };
+    if (circulationUUID !== 'none') {
+        circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
+        if (!circulationMatch) {
+            return interaction.reply({
+                content: 'I was unable to find any cards matching your request.',
+            });
+        }
     }
     return interaction.reply({
         embeds: [(0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch)],

@@ -46,7 +46,7 @@ const indexEmbed: IndexEmbed = (card, edition, circulationTemplate) => {
 
   embed.addField('Rarity', edition.rarity ? options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text: '-', true);
   embed.addField('Variant', circulationTemplate.foil ? 'Foil' : '-', true);
-  embed.addField('Population', `${circulationTemplate.population_operator ?? ''} ${circulationTemplate.population.toLocaleString()}` ?? '-', true);
+  embed.addField('Population', circulationTemplate.uuid = 'none' ? 'UNKNOWN' : `${circulationTemplate.population_operator ?? ''} ${circulationTemplate.population.toLocaleString()}` ?? '-', true);
 
 
   embed.addField('Illustrator', `${edition.illustrator ? `[${edition.illustrator}](https://index.gatcg.com/cards?illustrator=${encodeURIComponent(edition.illustrator)})` : '-'}`);

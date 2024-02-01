@@ -27,12 +27,23 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
     });
   }
 
-  const circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
+  let circulationMatch = {
+    uuid: 'none',
+    name: 'none',
+    foil: false,
+    printing: false,
+    population_operator: '<=',
+    population: 0,
+  }
 
-  if (!circulationMatch) {
-    return interaction.reply({
-      content: 'I was unable to find any cards matching your request.',
-    });
+  if (circulationUUID !== 'none') {
+    circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
+
+    if (!circulationMatch) {
+      return interaction.reply({
+        content: 'I was unable to find any cards matching your request.',
+      });
+    }
   }
   
   return interaction.reply({
