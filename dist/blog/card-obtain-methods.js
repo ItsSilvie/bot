@@ -27,6 +27,9 @@ const obtainMethods = {
         'There is a 1 in 30 case (1 in 714 pack) chance of pulling one of the 4 CSRs in this set',
     ],
     // DOASD
+    'doasd--en-006-c': [
+        '16,000 of these were included in <span class="dead-link"><a href="/FTC_(set)#starter-kit">Fractured Crown Sealed Kit</a></span>',
+    ],
     'doasd--en-006-csr': [
         'Features a stamped artist signature',
         'There is a 1 in 72 deck chance of pulling this from the Lorraine Starter Deck',
@@ -109,7 +112,7 @@ const obtainMethods = {
         'The foil version was also given out during a Christmas Discord event'
     ],
     'p22--en-006-pr': [
-        'Included in silver "Clumsy Apprentice" promo packs given to anyone who purchased merchandise at Anime Frontier (2nd-4th December 2022)',
+        'Included in silver "Clumsy Apprentice" promo packs given to anyone who purchased merchandise at Anime Frontier (2nd-4th December 2022) and on Discord',
     ],
     'p22--en-007-cpr': [
         'Features a stamped artist signature',
@@ -147,8 +150,29 @@ const obtainMethods = {
         'Artwork features Silvie at the KL Tower & Petronas Twin Towers, Kuala Lumpur',
     ],
     // P23
+    'p23--en-001-pr': [
+        'Included in silver "Merchandise Pack 1" promo packs given to anyone who purchased merchandise at conventions and on Discord between August and November 2023',
+    ],
+    'p23--en-005-pr': [
+        'Features printed AX 2023 Exclusive stamp',
+        'Given out at Anime Expo (1st-4th July 2023)',
+    ],
+    'p23--en-006-pr': [
+        'The non-foil version was awarded to anyone with over 40,000 overall score during Path of Silver at Ascent Houston, USA, October 2023',
+        'The foil version was awarded to anyone with over 70,000 overall score during Path of Silver at Ascent Houston, USA, October 2023'
+    ],
     'p23--en-006-cpr': [
         'Features a stamped artist signature',
+        'Awarded to the top 8 collectors for each of the 3 Thema categories in Path of Silver at Ascent Houston, USA, October 2023, with Ascent Charm, Grace or Valor stamps'
+    ],
+    'p23--en-007-pr': [
+        'The non-foil version was given to anyone who purchased the Regular Admission package for either Path of Steel or Path of Silver at Ascent Houston, USA, October 2023',
+        'The foil version was given to anyone who purchased the Champion\'s Package for Path of Steel or VIP Package for either Path of Steel or Path of Silver at Ascent Houston, USA, October 2023',
+    ],
+    'p23--en-008-pr': [
+        'Awarded to the top 32 players in Path of Steel at Ascent Houston, USA, October 2023, with Ascent Houston Top 32 stamp',
+        'Awarded to the top 32 players in Path of Steel at Ascent Auckland, New Zealand, December 2023, with Ascent Auckland Top 32 stamp',
+        'Awarded to the top 32 players in Path of Steel at Ascent Ontario, USA, February 2024, with Ascent Ontario Top 32 stamp',
     ],
     'p23--en-009-cpr': [
         'Features a stamped artist signature',
@@ -157,15 +181,48 @@ const obtainMethods = {
     ],
     'p23--en-010-cpr': [
         'Features a stamped artist signature',
-        'Awarded to the top 8 players in Path of Silver at Ascent Houston, USA, October 2023, with Ascent Houston 1st through 8th stamp',
+        'Awarded to the top 8 collectors in Path of Silver at Ascent Houston, USA, October 2023, with Ascent Houston 1st through 8th stamp',
     ],
     'p23--en-011-pr': [
-        'Features a stamped artist signature',
-        'Included in Fractured Crown Sealed Kits',
+        'Included in <span class="dead-link"><a href="/FTC_(set)#starter-kit">Fractured Crown Sealed Kits</a></span>',
+    ],
+    'p23--en-013-pr': [
+        'Dawn of Ashes season Regional and Ascent winner Nationals Entry card',
+        'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+        'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+        'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+        'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
+    ],
+    'p23--en-014-pr': [
+        'Dawn of Ashes season Store Championship winner Nationals Entry card',
+        'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+        'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+        'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+        'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
     ],
     'p23--en-015-cpr': [
         'Features a stamped artist signature',
         'Awarded to the top 8 players in Path of Steel at Ascent Ontario, USA, February 2024, with Ascent Ontario 1st through 8th stamp',
+    ],
+    'p23--en-017-pr': [
+        'Fractured Crown season Regional and Ascent winner Nationals Entry card',
+        'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+        'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+        'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+        'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
+    ],
+    'p23--en-018-pr': [
+        'Fractured Crown season Store Championship winner Nationals Entry card',
+        'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+        'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+        'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+        'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
+    ],
+    'p23--en-019-cpr': [
+        'Features a stamped artist signature',
+    ],
+    'p23--en-020-cpr': [
+        'Features a stamped artist signature',
     ],
     // P24
     'p24--en-007-pr': [
@@ -196,6 +253,9 @@ obtainMethods['doa 1st--en-005-cur'] = obtainMethods['doa 1st--en-004-cur'],
 obtainMethods['doa alter--en-017-csr'] = obtainMethods['doa alter--en-016-csr'];
 obtainMethods['doa alter--en-018-csr'] = obtainMethods['doa alter--en-016-csr'];
 obtainMethods['doa alter--en-019-csr'] = obtainMethods['doa alter--en-016-csr'];
+obtainMethods['doasd--en-009-c'] = obtainMethods['doasd--en-006-c'];
+obtainMethods['doasd--en-012-c'] = obtainMethods['doasd--en-006-c'];
+obtainMethods['doasd--en-013-c'] = obtainMethods['doasd--en-006-c'];
 obtainMethods['ftc--en-004b-csr'] = obtainMethods['ftc--en-004a-csr'];
 obtainMethods['ftc--en-026-csr'] = obtainMethods['ftc--en-023-csr'];
 obtainMethods['ftc--en-027-csr'] = obtainMethods['ftc--en-023-csr'];
@@ -233,6 +293,9 @@ obtainMethods['ksp--en-005-pr'] = obtainMethods['ksp--en-004-pr'];
 obtainMethods['ksp--en-006-pr'] = obtainMethods['ksp--en-004-pr'];
 obtainMethods['ksp--en-007-pr'] = obtainMethods['ksp--en-004-pr'];
 obtainMethods['ksp--en-008-pr'] = obtainMethods['ksp--en-004-pr'];
+obtainMethods['p23--en-002-pr'] = obtainMethods['p23--en-001-pr'];
+obtainMethods['p23--en-003-pr'] = obtainMethods['p23--en-001-pr'];
+obtainMethods['p23--en-004-pr'] = obtainMethods['p23--en-001-pr'];
 obtainMethods['p23--en-012-pr'] = obtainMethods['p23--en-011-pr'];
 obtainMethods['p24--en-012-pr'] = obtainMethods['p24--en-007-pr'];
 obtainMethods['p24--en-018-pr'] = obtainMethods['p24--en-007-pr'];

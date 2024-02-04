@@ -167,7 +167,7 @@ const generateBlogTemplates = async () => {
                     population: '',
                     slug: cardMatch.slug,
                     quantity: customSet.isDeck ? customSetCard.quantity : undefined,
-                    type: cardMatch.types[0],
+                    type: cardMatch.types.filter(entry => entry !== 'UNIQUE')[0],
                     editionSlug: cardEditionMatch.slug,
                 };
                 // #ksp--en-008-pr
@@ -179,8 +179,29 @@ const generateBlogTemplates = async () => {
             }
             const customSetTemplateEntries = [];
             let prevType = '';
-            for (let k = 0; k < customSetTemplateData.length; k++) {
-                const customSetTemplateDataEntry = customSetTemplateData[k];
+            let sortedCustomSetTemplateData = customSetTemplateData;
+            if (customSet.isDeck) {
+                const typeOrder = [
+                    'CHAMPION',
+                    'REGALIA',
+                    'ALLY',
+                    'ACTION',
+                    'ATTACK',
+                ];
+                sortedCustomSetTemplateData = [...customSetTemplateData].sort((a, b) => {
+                    const aIndex = typeOrder.findIndex(entry => entry === a.type);
+                    const bIndex = typeOrder.findIndex(entry => entry === b.type);
+                    if (aIndex === -1) {
+                        throw new Error(`Unhandled deck sort type: ${a.type}`);
+                    }
+                    if (bIndex === -1) {
+                        throw new Error(`Unhandled deck sort type: ${b.type}`);
+                    }
+                    return aIndex - bIndex;
+                });
+            }
+            for (let k = 0; k < sortedCustomSetTemplateData.length; k++) {
+                const customSetTemplateDataEntry = sortedCustomSetTemplateData[k];
                 if (customSet.isDeck && prevType !== customSetTemplateDataEntry.type) {
                     prevType = customSetTemplateDataEntry.type;
                     customSetTemplateEntries.push(`<tr>
