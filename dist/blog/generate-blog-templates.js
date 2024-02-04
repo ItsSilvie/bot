@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const rarity_1 = require("../utils/rarity");
+const card_obtain_methods_1 = require("./card-obtain-methods");
 const custom_sets_card_edition_uuids_1 = require("./custom-sets-card-edition-uuids");
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
@@ -94,7 +95,9 @@ const generateBlogTemplates = async () => {
         const setTemplateEntries = [];
         for (let j = 0; j < setTemplateData.length; j++) {
             const setTemplateDataEntry = setTemplateData[j];
-            const setTemplateEntry = `<tr>
+            const obtainMethod = card_obtain_methods_1.obtainMethods[setTemplateDataEntry.anchor];
+            const hasObtainMethods = Array.isArray(obtainMethod) && !!obtainMethod.length;
+            const setTemplateEntry = `<tr data-id="${setTemplateDataEntry.anchor}">
   <td class="set-list-card-number" style="text-align: left">
     ${setTemplateDataEntry.number}
   </td>
@@ -116,7 +119,14 @@ const generateBlogTemplates = async () => {
   <td class="set-list-card-population" style="text-align: right">
     ${setTemplateDataEntry.population}
   </td>
-</tr>`;
+</tr>${hasObtainMethods ? (`<tr class="set-list-card-obtain-method-row">
+  <td colspan="3">
+    <div class="set-list-card-obtain-method-row-content">
+      <div class="set-list-card-obtain-method-row-content-image" role="presentation" style="background-image: url('https://img.silvie.org/cdn/cards/${setTemplateDataEntry.set.prefix}/${setTemplateDataEntry.rarity}/${setTemplateDataEntry.number}.jpg')"></div>
+      <div class="set-list-card-obtain-method-row-content-text">${obtainMethod.join('\n')}</div>
+    </div>
+  </td>
+</tr>`) : ''}`;
             setTemplateEntries.push(setTemplateEntry);
         }
         fs.writeFileSync(`${blogTemplatesPath}/${setCode.replace(/ /g, '-')}.html`, `<table class="set-list">

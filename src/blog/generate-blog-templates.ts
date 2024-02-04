@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { getRarityCodeFromRarityId, Rarity } from '../utils/rarity';
+import { obtainMethods } from './card-obtain-methods';
 import customSets from './custom-sets-card-edition-uuids';
 
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
@@ -102,6 +103,7 @@ const generateBlogTemplates = async () => {
 
           // #ksp--en-008-pr
           setTemplateCardObj.anchor = `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase();
+          
           setTemplateCardObj.number = `${cardEditionSet.language}-${cardEdition.collector_number}`;
           setTemplateCardObj.rarity = getRarityCodeFromRarityId(cardEdition.rarity);
           setTemplateCardObj.population = [...cardEdition.circulationTemplates, ...cardEdition.circulations].sort((a, b) => a.foil ? 1 : -1).map(circulationTemplate => (
@@ -116,9 +118,11 @@ const generateBlogTemplates = async () => {
 
     for (let j = 0; j < setTemplateData.length; j++) {
       const setTemplateDataEntry = setTemplateData[j];
+      const obtainMethod = obtainMethods[setTemplateDataEntry.anchor];
+      const hasObtainMethods = Array.isArray(obtainMethod) && !!obtainMethod.length;
 
       const setTemplateEntry =
-`<tr>
+`<tr data-id="${setTemplateDataEntry.anchor}">
   <td class="set-list-card-number" style="text-align: left">
     ${setTemplateDataEntry.number}
   </td>
@@ -140,7 +144,16 @@ const generateBlogTemplates = async () => {
   <td class="set-list-card-population" style="text-align: right">
     ${setTemplateDataEntry.population}
   </td>
-</tr>`;
+</tr>${hasObtainMethods ? (
+  `<tr class="set-list-card-obtain-method-row">
+  <td colspan="3">
+    <div class="set-list-card-obtain-method-row-content">
+      <div class="set-list-card-obtain-method-row-content-image" role="presentation" style="background-image: url('https://img.silvie.org/cdn/cards/${setTemplateDataEntry.set.prefix}/${setTemplateDataEntry.rarity}/${setTemplateDataEntry.number}.jpg')"></div>
+      <div class="set-list-card-obtain-method-row-content-text">${obtainMethod.join('\n')}</div>
+    </div>
+  </td>
+</tr>`
+) : ''}`;
 
       setTemplateEntries.push(setTemplateEntry);
     }
