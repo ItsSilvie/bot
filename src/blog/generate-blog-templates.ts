@@ -224,16 +224,16 @@ const generateBlogTemplates = async () => {
       let prevType = '';
 
       let sortedCustomSetTemplateData = customSetTemplateData;
+      
+      const typeOrder = [
+        'CHAMPION',
+        'REGALIA',
+        'ALLY',
+        'ACTION',
+        'ATTACK',
+      ]
 
       if (customSet.isDeck) {
-        const typeOrder = [
-          'CHAMPION',
-          'REGALIA',
-          'ALLY',
-          'ACTION',
-          'ATTACK',
-        ]
-
         sortedCustomSetTemplateData = [...customSetTemplateData].sort((a, b) => {
           const aIndex = typeOrder.findIndex(entry => entry === a.type);
           const bIndex = typeOrder.findIndex(entry => entry === b.type);

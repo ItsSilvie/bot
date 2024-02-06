@@ -21,6 +21,9 @@ const obtainMethods: {
   'doa 1st--en-095-c': [
     'Every copy of this card is marked "DOA" instead of "DOA 1st" (see <a href="#missing-1st-prefix">Missing "1st" prefix</a> below)'
   ],
+  'doa 1st--en-264-sr': [
+    'A couple who backed the Grand Archive Kickstarter $10,000 Designer Tier, Sera and Triskit, worked with Hori to design the Triskit, Guidance Angel card',
+  ],
 
   // DOA Alter
   'doa alter--en-016-csr': [
@@ -230,16 +233,54 @@ const obtainMethods: {
     'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
     'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
   ],
+  'p23--en-019-pr': [
+    'Awarded through the Fractured Crown Set Redemption Event at various championship events',
+    'Trading in a complete FTC playset awarded 4 of these',
+  ],
   'p23--en-019-cpr': [
     'Features a stamped artist signature',
+    'Trading in three complete FTC playset awarded one of these as well as 4 of the 019 foil promos',
   ],
   'p23--en-020-cpr': [
     'Features a stamped artist signature',
+    'Awarded to the top 8 (TBC) players in Path of Steel at Ascent Worlds, USA, May 2024, with Ascent Worlds 1st through 8th (TBC) stamp',
   ],
 
   // P24
+  'p24--en-001-pr': [
+    'Randomly included in saphire "Alchemical Revolution Event Pack" promo packs given to participants of Regional events during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
   'p24--en-007-pr': [
     'Included in the ALC Launch Kit distributed to brick and mortar game stores, with Alchemical Revolution stamp',
+  ],
+  'p24--en-045-pr': [
+    'Alchemical Revolution season Store Championship winner Nationals Entry card (24th January to 17th May 2024)',
+    'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+    'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+    'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+    'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
+  ],
+  'p24--en-046-pr': [
+    'Alchemical Revolution season Regional and Ascent winner Nationals Entry card (24th January to 17th May 2024)',
+    'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
+    'Cards awarded at events in Oceania have a printed Oceania Nationals Qualifier stamp',
+    'Cards awarded at events in Southeast Asia have a printed Southeast Asia Nationals Qualifier stamp',
+    'Cards awarded at events in other regions have a printed Wildcard Nationals Qualifier stamp',
+  ],
+  'p24--en-048-cpr': [
+    'Features a stamped artist signature',
+  ],
+  'p24--en-049-pr': [
+    'Awarded to anyone who reached Bronze rank (600 CP) during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
+  'p24--en-050-pr': [
+    'Awarded to anyone who reached Silver rank (1,000 CP) during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
+  'p24--en-051-pr': [
+    'Awarded to anyone who reached Gold rank (1,500 CP) during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
+  'p24--en-051-cpr': [
+    'Awarded to anyone who reached Ascendant rank (top 100) during the Alchemical Revolution season (24th January to 17th May 2024)',
   ],
 
   // SLC
@@ -318,5 +359,14 @@ obtainMethods['p24--en-018-pr'] = obtainMethods['p24--en-007-pr'];
 obtainMethods['slc--cn-006-cpr'] = obtainMethods['slc--cn-003-cpr'];
 obtainMethods['slc--cn-008-cpr'] = obtainMethods['slc--cn-003-cpr'];
 obtainMethods['slc--cn-012-cpr'] = obtainMethods['slc--cn-003-cpr'];
+
+for (let i = 2; i < 41; i++) {
+  if (i === 7 || i === 12 || i === 18) {
+    continue;
+  }
+
+  console.log(i);
+  obtainMethods[`p24--en-${`${i}`.padStart(3, '0')}-pr`] = obtainMethods['p24--en-001-pr'];
+}
 
 export { obtainMethods };
