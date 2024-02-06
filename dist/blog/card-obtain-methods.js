@@ -22,7 +22,8 @@ const obtainMethods = {
         'Every copy of this card is marked "DOA" instead of "DOA 1st" (see <a href="#missing-1st-prefix">Missing "1st" prefix</a> below)'
     ],
     'doa 1st--en-264-sr': [
-        'A couple who backed the Grand Archive Kickstarter $10,000 Designer Tier, Sera and Triskit, worked with Hori to design the Triskit, Guidance Angel card',
+        'A couple who backed the 1/1 Grand Archive <a href="/kickstarter#designer">Kickstarter Designer Tier</a> for $10,000, Sera and Triskit, worked with Hori to design the Triskit, Guidance Angel card',
+        'The Kickstarter tier awarded a foil copy of this card signed by all of the game\'s developers, and as such this card has a 1 higher foil population than the other SR cards in the set',
     ],
     // DOA Alter
     'doa alter--en-016-csr': [
