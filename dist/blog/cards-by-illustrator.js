@@ -25,7 +25,7 @@ const allCards = async () => {
     }
 };
 exports.default = allCards();
-const generateNamedCardsTemplate = async () => {
+const generateCardsByIllustratorTemplate = async () => {
     if (!fs.existsSync(blogCustomTemplatesPath)) {
         fs.mkdirSync(blogCustomTemplatesPath);
     }
@@ -119,11 +119,11 @@ const generateNamedCardsTemplate = async () => {
         const variantsCount = countFoil.count + countNonFoil.count;
         templateData.push(`<tr>
   <td><a href="https://index.gatcg.com/cards?illustrator=${illustrator}">${illustrator}</a></td>
-  <td>
+  <td style="text-align: right">
     ${cards.toLocaleString()} card${cards === 1 ? '' : 's'}
     <div class="set-list-custom-by-illustrator-subrow">${editions.toLocaleString()} edition${editions === 1 ? '' : 's'}</div>
   </td>
-  <td>
+  <td style="text-align: right">
     ${variantsCount.toLocaleString()}
     <div class="set-list-custom-by-illustrator-subrow">${countFoil.count.toLocaleString()} foil</div>
   </td>
@@ -331,4 +331,4 @@ const generateNamedCardsTemplate = async () => {
   </tbody>
 </table>`, 'utf8');
 };
-generateNamedCardsTemplate();
+generateCardsByIllustratorTemplate();
