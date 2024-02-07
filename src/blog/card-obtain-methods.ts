@@ -361,7 +361,7 @@ obtainMethods['slc--cn-006-cpr'] = obtainMethods['slc--cn-003-cpr'];
 obtainMethods['slc--cn-008-cpr'] = obtainMethods['slc--cn-003-cpr'];
 obtainMethods['slc--cn-012-cpr'] = obtainMethods['slc--cn-003-cpr'];
 
-for (let i = 2; i < 41; i++) {
+for (let i = 2; i <= 41; i++) {
   if (i === 7 || i === 12 || i === 18) {
     continue;
   }
