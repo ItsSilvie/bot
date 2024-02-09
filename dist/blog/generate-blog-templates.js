@@ -167,7 +167,7 @@ const generateBlogTemplates = async () => {
                     population: '',
                     slug: cardMatch.slug,
                     quantity: customSet.isDeck ? customSetCard.quantity : undefined,
-                    type: cardMatch.types.filter(entry => entry !== 'UNIQUE')[0],
+                    type: customSetCard.token ? 'TOKEN' : cardMatch.types.filter(entry => entry !== 'UNIQUE')[0],
                     editionSlug: cardEditionMatch.slug,
                 };
                 // #ksp--en-008-pr
@@ -186,6 +186,9 @@ const generateBlogTemplates = async () => {
                 'ALLY',
                 'ACTION',
                 'ATTACK',
+                'ITEM',
+                'PHANTASIA',
+                'TOKEN',
             ];
             if (customSet.isDeck) {
                 sortedCustomSetTemplateData = [...customSetTemplateData].sort((a, b) => {

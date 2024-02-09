@@ -36,15 +36,15 @@ const obtainMethods = {
     ],
     'doasd--en-006-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Lorraine Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Lorraine Starter Deck',
     ],
     'doasd--en-009-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Rai Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Rai Starter Deck',
     ],
     'doasd--en-012-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Silvie Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Silvie Starter Deck',
     ],
     // FTC
     'ftc--en-004a-csr': [
@@ -68,15 +68,15 @@ const obtainMethods = {
     // ALCSD
     'alcsd--en-006-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Arisanna Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Arisanna Starter Deck',
     ],
     'alcsd--en-009-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Diana Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Diana Starter Deck',
     ],
     'alcsd--en-012-csr': [
         'Features a stamped artist signature',
-        'There is a 1 in 72 deck chance of pulling this from the Tonoris Starter Deck',
+        'There is a 1 in 72 deck chance of this card replacing the regular level 3 champion from the Tonoris Starter Deck',
     ],
     // Special sets
     // EVP
@@ -236,7 +236,7 @@ const obtainMethods = {
     ],
     // P24
     'p24--en-001-pr': [
-        'Randomly included in saphire "Alchemical Revolution Event Pack" promo packs given to participants of Regional events during the Alchemical Revolution season (24th January to 17th May 2024)',
+        'Randomly included in sapphire "Alchemical Revolution Event Pack" promo packs given to participants of Regional events during the Alchemical Revolution season (24th January to 17th May 2024)',
     ],
     'p24--en-007-pr': [
         'Included in the ALC Launch Kit distributed to brick and mortar game stores, with Alchemical Revolution stamp',

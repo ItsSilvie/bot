@@ -184,6 +184,7 @@ const generateBlogTemplates = async () => {
         const customSetCard = customSet.cards[k] as {
           id: string;
           quantity?: number;
+          token?: boolean;
         };
         const cardMatch = cardData.find(entry => entry.editions.find(resultEdition => resultEdition.uuid === customSetCard.id));
 
@@ -205,7 +206,7 @@ const generateBlogTemplates = async () => {
           population: '',
           slug: cardMatch.slug,
           quantity: customSet.isDeck ? customSetCard.quantity : undefined,
-          type: cardMatch.types.filter(entry => entry !== 'UNIQUE')[0],
+          type: customSetCard.token ? 'TOKEN' : cardMatch.types.filter(entry => entry !== 'UNIQUE')[0],
           editionSlug: cardEditionMatch.slug,
         };
 
@@ -231,6 +232,9 @@ const generateBlogTemplates = async () => {
         'ALLY',
         'ACTION',
         'ATTACK',
+        'ITEM',
+        'PHANTASIA',
+        'TOKEN',
       ]
 
       if (customSet.isDeck) {

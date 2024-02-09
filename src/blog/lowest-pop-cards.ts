@@ -171,7 +171,9 @@ const generateLowestPopCardsTemplate = async () => {
           ${setTemplateDataEntry.name}
         </a>
         <span class="name-wrapper-set-name">
-          ${setTemplateDataEntry.set.name}
+          <a href="/${setTemplateDataEntry.set.prefix.replace(/ /g, '-')}_(set)">
+            ${setTemplateDataEntry.set.name}
+          </a>
         </span>
       </span>
     </div>
