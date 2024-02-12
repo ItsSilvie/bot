@@ -71,11 +71,14 @@ var CardVariant;
 var IndexCardElement;
 (function (IndexCardElement) {
     IndexCardElement["ARCANE"] = "Arcane";
+    IndexCardElement["ASTRA"] = "Astra";
     IndexCardElement["CRUX"] = "Crux";
     IndexCardElement["FIRE"] = "Fire";
     IndexCardElement["LUXEM"] = "Luxem";
+    IndexCardElement["NEOS"] = "Neos";
     IndexCardElement["NORM"] = "Normal";
     IndexCardElement["TERA"] = "Tera";
+    IndexCardElement["UMBRA"] = "Umbra";
     IndexCardElement["WATER"] = "Water";
     IndexCardElement["WIND"] = "Wind";
 })(IndexCardElement = exports.IndexCardElement || (exports.IndexCardElement = {}));

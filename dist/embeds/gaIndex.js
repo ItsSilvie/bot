@@ -5,7 +5,25 @@ const node_html_markdown_1 = require("node-html-markdown");
 const types_1 = require("../data/types");
 const card_1 = require("../utils/card");
 const options = require("../api-data/options.json");
-const indexEmbed = (card, edition, circulationTemplate) => {
+const commands_1 = require("../utils/commands");
+const dayjs = require("dayjs");
+const relativeTimePlugin = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTimePlugin);
+const indexEmbed = async (card, edition, circulationTemplate) => {
+    let pricingData = undefined;
+    try {
+        const queryParams = new URLSearchParams({
+            id: edition.uuid,
+        });
+        const apiPricingData = await fetch(`${commands_1.API_URL}/api/pricing?${queryParams.toString()}`)
+            .then(res => res.json());
+        if (apiPricingData && !apiPricingData.error && Object.keys(apiPricingData).length > 0) {
+            pricingData = apiPricingData;
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
     const { collector_number, set, } = edition;
     const embed = new discord_js_1.MessageEmbed()
         .setTitle(card.name)
@@ -40,6 +58,23 @@ const indexEmbed = (card, edition, circulationTemplate) => {
     embed.addField('Illustrator', `${edition.illustrator ? `[${edition.illustrator}](https://index.gatcg.com/cards?illustrator=${encodeURIComponent(edition.illustrator)})` : '-'}`);
     if (Array.isArray(card.rule)) {
         embed.addField('Rules', card.rule.map(({ date_added, description, title }) => (`*${date_added}*${title ? ` · ${title}` : ''}\n${description}`)).join('\n\n'));
+    }
+    const variantPricing = pricingData?.prices[circulationTemplate.foil ? 'foil' : 'nonFoil'];
+    const pricingUpdated = !!pricingData ? `*Updated ${dayjs(pricingData.updated).fromNow()}*` : undefined;
+    const pricingLabel = 'TCGplayer market data';
+    if (variantPricing) {
+        const { highPrice, lowPrice, marketPrice, } = variantPricing;
+        const productURL = `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${circulationTemplate.foil ? 'Foil' : 'Normal'}`)}`;
+        embed.addField(pricingLabel, `${marketPrice ? `Recent average: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
+${lowPrice ? (`Available range: [$${lowPrice.toFixed(2)}](${productURL})${highPrice && highPrice ? ` to [$${highPrice.toFixed(2)}](${productURL})` : ''}`) : 'None available ([check](${productURL})'}
+${pricingUpdated}`);
+    }
+    else if (pricingData) {
+        embed.addField(pricingLabel, `This card has no ${circulationTemplate.foil ? 'foil' : 'non-foil'} market data available.
+${pricingUpdated}`);
+    }
+    else {
+        embed.addField(pricingLabel, 'This card is not yet available on TCGplayer.');
     }
     if (edition.flavor || card.flavor) {
         embed.setFooter({

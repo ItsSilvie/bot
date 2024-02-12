@@ -38,8 +38,9 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulat
             });
         }
     }
+    const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch);
     return interaction.reply({
-        embeds: [(0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch)],
+        embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,
     });
 };

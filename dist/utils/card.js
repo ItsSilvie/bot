@@ -70,6 +70,8 @@ const getEmbedColorFromElement = (element) => {
         case types_1.CardElement.Arcane:
         case types_1.IndexCardElement.ARCANE:
             return '#19ABC9';
+        case types_1.IndexCardElement.ASTRA:
+            return '#4b4d91';
         case types_1.CardElement.Crux:
         case types_1.IndexCardElement.CRUX:
             return '#C28FDD';
@@ -82,8 +84,12 @@ const getEmbedColorFromElement = (element) => {
         case types_1.IndexCardElement.NORM:
         default:
             return '#111111';
+        case types_1.IndexCardElement.NEOS:
+            return '#b97e3a';
         case types_1.IndexCardElement.TERA:
             return '#3DA6AC';
+        case types_1.IndexCardElement.UMBRA:
+            return '#906db0';
         case types_1.CardElement.Water:
         case types_1.IndexCardElement.WATER:
             return '#5FD0F8';

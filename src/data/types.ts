@@ -181,11 +181,14 @@ export type IndexEdition = {
 
 export enum IndexCardElement {
   ARCANE = 'Arcane',
+  ASTRA = 'Astra',
   CRUX = 'Crux',
   FIRE = 'Fire',
   LUXEM = 'Luxem',
+  NEOS = 'Neos',
   NORM = 'Normal',
   TERA = 'Tera',
+  UMBRA = 'Umbra',
   WATER = 'Water',
   WIND = 'Wind',
 }

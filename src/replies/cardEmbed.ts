@@ -45,9 +45,11 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
       });
     }
   }
+
+  const embed = await indexEmbed(cardMatch, editionMatch, circulationMatch);
   
   return interaction.reply({
-    embeds: [indexEmbed(cardMatch, editionMatch, circulationMatch)],
+    embeds: [embed],
     content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,
   });
 }

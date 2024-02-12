@@ -101,6 +101,9 @@ export const getEmbedColorFromElement: (element: CardElement | IndexCardElement)
     case CardElement.Arcane:
     case IndexCardElement.ARCANE:
       return '#19ABC9';
+
+    case IndexCardElement.ASTRA:
+      return '#4b4d91';
     
     case CardElement.Crux:
     case IndexCardElement.CRUX:
@@ -118,8 +121,14 @@ export const getEmbedColorFromElement: (element: CardElement | IndexCardElement)
     default:
       return '#111111';
 
+    case IndexCardElement.NEOS:
+      return '#b97e3a';
+
     case IndexCardElement.TERA:
       return '#3DA6AC';
+
+    case IndexCardElement.UMBRA:
+      return '#906db0';
 
     case CardElement.Water:
     case IndexCardElement.WATER:
