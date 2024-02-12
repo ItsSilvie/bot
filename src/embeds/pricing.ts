@@ -24,7 +24,10 @@ const pricingEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
     .setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
     .setColor(getEmbedColorFromElement(IndexCardElement[card.element]))
     .setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
-    .setThumbnail(`https://img.silvie.org/web/tcgplayer-logo.png`);
+    .setThumbnail(`https://img.silvie.org/web/tcgplayer-logo.png`)
+    .setFooter({
+      text: 'Affiliate links are used to help keep Silvie.org online.',
+    });
 
   if (pricingData.nonFoil) {
     embed.addField(`Non-foil`, pricingData.nonFoil);
