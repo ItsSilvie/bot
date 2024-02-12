@@ -57,33 +57,21 @@ const command = {
         }
         const allVariants = matches.reduce((output, match) => ([
             ...output,
-            ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => {
-                if (!edition.circulationTemplates?.length && !edition.circulations?.length) {
-                    return [
-                        ...editionOutput,
-                        [
-                            match,
-                            edition,
-                            {
-                                uuid: 'none',
-                                name: 'none',
-                                foil: false,
-                                printing: false,
-                                population_operator: '<=',
-                                population: 0,
-                            }
-                        ]
-                    ];
-                }
-                return [
-                    ...editionOutput,
-                    ...[...edition.circulationTemplates, ...edition.circulations].map(circulation => ([
-                        match,
-                        edition,
-                        circulation
-                    ]))
-                ];
-            }, [])
+            ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => ([
+                ...editionOutput,
+                [
+                    match,
+                    edition,
+                    {
+                        uuid: 'none',
+                        name: 'none',
+                        foil: false,
+                        printing: false,
+                        population_operator: '<=',
+                        population: 0,
+                    }
+                ]
+            ]), [])
         ]), []);
         if (!allVariants.length) {
             return interaction.reply({
@@ -94,8 +82,8 @@ const command = {
             const row = new discord_js_1.MessageActionRow()
                 .addComponents(...allVariants.map(([card, edition, circulation]) => {
                 return new discord_js_1.MessageButton()
-                    .setCustomId(`pricing-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-                    .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
+                    .setCustomId(`image-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+                    .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
                     .setStyle(1 /* PRIMARY */);
             }));
             return interaction.reply({

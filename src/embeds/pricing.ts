@@ -3,6 +3,7 @@ import { IndexCardElement } from "../data/types";
 import { getEmbedColorFromElement } from "../utils/card";
 import { IndexEmbed } from "./types";
 import { getPricingData } from "../utils/pricing";
+import * as options from '../api-data/options.json';
 
 const pricingEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
   const {
@@ -10,18 +11,28 @@ const pricingEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
     set,
   } = edition;
 
-  const pricingData = await getPricingData(edition.uuid, circulationTemplate.foil);
-  const pricingLabel = 'TCGplayer market data';
+  const pricingData = await getPricingData(edition.uuid, undefined) as {
+    nonFoil?: string;
+    foil?: string;
+    url: string;
+    updated: string;
+  };
   
   const embed = new MessageEmbed()
     .setTitle(card.name)
-    .setURL(pricingData.data.url)
-    .setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
+    .setURL(pricingData.url)
+    .setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
     .setColor(getEmbedColorFromElement(IndexCardElement[card.element]))
     .setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
     .setThumbnail(`https://img.silvie.org/web/tcgplayer-logo.png`);
 
-  embed.addField(pricingLabel, pricingData.formattedReply);
+  if (pricingData.nonFoil) {
+    embed.addField(`Non-foil`, pricingData.nonFoil);
+  }
+
+  if (pricingData.foil) {
+    embed.addField(`Foil`, pricingData.foil);
+  }
 
   return embed;
 }

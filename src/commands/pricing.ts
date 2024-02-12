@@ -71,34 +71,21 @@ const command = <BotCommand>{
 
     const allVariants: [IndexCard, IndexEdition, IndexCirculation][] = matches.reduce((output, match) => ([
       ...output,
-      ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => {
-        if (!edition.circulationTemplates?.length && !edition.circulations?.length) {
-          return [
-            ...editionOutput,
-            [
-              match,
-              edition,
-              {
-                uuid: 'none',
-                name: 'none',
-                foil: false,
-                printing: false,
-                population_operator: '<=',
-                population: 0,
-              }
-            ]
-          ]
-        }
-
-        return [
-          ...editionOutput,
-          ...[...edition.circulationTemplates, ...edition.circulations].map(circulation => ([
-            match,
-            edition,
-            circulation
-          ]))
+      ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => ([
+        ...editionOutput,
+        [
+          match,
+          edition,
+          {
+            uuid: 'none',
+            name: 'none',
+            foil: false,
+            printing: false,
+            population_operator: '<=',
+            population: 0,
+          }
         ]
-      }, [])
+      ]), [])
     ]), []);
 
     if (!allVariants.length) {
@@ -111,8 +98,8 @@ const command = <BotCommand>{
       const row = new MessageActionRow()
         .addComponents(...allVariants.map(([card, edition, circulation]) => {
           return new MessageButton()
-            .setCustomId(`pricing-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
+            .setCustomId(`image-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
             .setStyle(MessageButtonStyles.PRIMARY)
         }));
 

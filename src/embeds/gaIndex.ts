@@ -64,9 +64,12 @@ const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate, config
     )).join('\n\n'));
   }
 
-  const pricingData = await getPricingData(edition.uuid, circulationTemplate.foil);
-  const pricingLabel = 'TCGplayer market data';
-  embed.addField(pricingLabel, pricingData.formattedReply);
+  const pricingData = await getPricingData(edition.uuid, circulationTemplate.foil ?? false);
+  const pricingLabel = `TCGplayer market data (${circulationTemplate.foil ? 'foil' : 'non-foil'})`;
+
+  if ("formattedReply" in pricingData) {
+    embed.addField(pricingLabel, pricingData.formattedReply);
+  }
 
   if (edition.flavor || card.flavor) {
     embed.setFooter({
