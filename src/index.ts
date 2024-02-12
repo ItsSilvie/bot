@@ -76,6 +76,20 @@ client.on('interactionCreate', async interaction => {
 			return pricingReply(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
 		}
 
+		if (buttonId.includes('image-select')) {
+			const parts = buttonId.replace('image-select --- ', '').split('~~~');
+
+			if (parts.length !== 4) {
+				return;
+			}
+
+			const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+
+			return embedCard(interaction, setPrefix, cardUUID, editionUUID, circulationUUID, {
+				imageOnly: true,
+			});
+		}
+
 		if (buttonId.includes('variant-select')) {
 			const parts = buttonId.replace('variant-select --- ', '').split('~~~');
 

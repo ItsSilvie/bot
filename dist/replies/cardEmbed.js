@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.embedCard = void 0;
 const path = require("path");
 const gaIndex_1 = require("../embeds/gaIndex");
-const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulationUUID) => {
+const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulationUUID, config) => {
     const cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${setPrefix}.json`)));
     if (!cards) {
         return interaction.reply({
@@ -38,7 +38,7 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulat
             });
         }
     }
-    const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch);
+    const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch, config);
     return interaction.reply({
         embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,

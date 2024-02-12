@@ -6,7 +6,7 @@ import { IndexEmbed } from "./types";
 import * as options from '../api-data/options.json';
 import { getPricingData } from "../utils/pricing";
 
-const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
+const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate, config) => {
   const {
     collector_number,
     set,
@@ -14,12 +14,18 @@ const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
   
   const embed = new MessageEmbed()
     .setTitle(card.name)
-    .setURL(`https://index.gatcg.com/edition/${edition.slug}`)
-    .setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${encodeURIComponent(set.prefix)})**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
-    .setColor(getEmbedColorFromElement(IndexCardElement[card.element]))
-    .setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
-    .setThumbnail(`https://img.silvie.org/ga-logo.png`)
-    .setImage(`https://img.silvie.org/api-data/${edition.uuid}.jpg`);
+    .setImage(`https://img.silvie.org/api-data/${edition.uuid}.jpg`)
+    .setColor(getEmbedColorFromElement(IndexCardElement[card.element]));
+
+  if (config?.imageOnly) {
+    embed.setDescription(`${set.name}\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
+    return embed;
+  }
+
+  embed.setDescription(`**[${set.name}](https://index.gatcg.com/cards?prefix=${encodeURIComponent(set.prefix)})**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}`)
+  embed.setURL(`https://index.gatcg.com/edition/${edition.slug}`)
+  embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' })
+  embed.setThumbnail(`https://img.silvie.org/ga-logo.png`)
 
   if (edition.effect || card.effect_raw) {
     embed.addField('\u200B', `${edition.effect ? NodeHtmlMarkdown.translate(edition.effect) : card.effect_raw}\n\u200B`)
@@ -45,7 +51,7 @@ const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
     embed.addField('Life ', `${card.life ?? '-'}`, true);
   }
 
-  embed.addField('Rarity', edition.rarity ? options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text: '-', true);
+  embed.addField('Rarity', edition.rarity ? options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text : '-', true);
   embed.addField('Variant', circulationTemplate.foil ? 'Foil' : '-', true);
   embed.addField('Population', circulationTemplate.uuid = 'none' ? 'UNKNOWN' : `${circulationTemplate.population_operator ?? ''} ${circulationTemplate.population.toLocaleString()}` ?? '-', true);
 

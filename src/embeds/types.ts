@@ -6,5 +6,8 @@ export type CardEmbed = (card: Card, set: Set) => MessageEmbed
 export type IndexEmbed = (
   card: IndexCard, 
   edition: IndexEdition,
-  circulationTemplate: IndexCirculation
+  circulationTemplate: IndexCirculation,
+  config?: {
+    imageOnly?: boolean;
+  }
 ) => Promise<MessageEmbed>
