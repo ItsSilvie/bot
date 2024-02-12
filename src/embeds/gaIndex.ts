@@ -4,31 +4,9 @@ import { IndexCardElement } from "../data/types";
 import { getEmbedColorFromElement } from "../utils/card";
 import { IndexEmbed } from "./types";
 import * as options from '../api-data/options.json';
-import { PricingData } from "../types";
-import { API_URL } from "../utils/commands";
-import * as dayjs from 'dayjs';
-import * as relativeTimePlugin from 'dayjs/plugin/relativeTime';
-
-dayjs.extend(relativeTimePlugin);
+import { getPricingData } from "../utils/pricing";
 
 const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
-  let pricingData: PricingData | undefined = undefined;
-
-  try {				
-    const queryParams = new URLSearchParams({
-      id: edition.uuid,
-    });
-
-    const apiPricingData = await fetch(`${API_URL}/api/pricing?${queryParams.toString()}`)
-      .then(res => res.json())
-
-    if (apiPricingData && !apiPricingData.error && Object.keys(apiPricingData).length > 0) {
-      pricingData = apiPricingData;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-
   const {
     collector_number,
     set,
@@ -80,30 +58,9 @@ const indexEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
     )).join('\n\n'));
   }
 
-  const variantPricing = pricingData?.prices[circulationTemplate.foil ? 'foil' : 'nonFoil'];
-  const pricingUpdated = !!pricingData ? `*Updated ${dayjs(pricingData.updated).fromNow()}*` : undefined;
+  const pricingData = await getPricingData(edition.uuid, circulationTemplate.foil);
   const pricingLabel = 'TCGplayer market data';
-
-  if (variantPricing) {
-    const {
-      highPrice,
-      lowPrice,
-      marketPrice,
-    } = variantPricing;
-
-    const productURL = `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${circulationTemplate.foil ? 'Foil' : 'Normal'}`)}`;
-    
-    embed.addField(pricingLabel, `${marketPrice ? `Recent average: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
-${lowPrice ? (
-  `Available range: [$${lowPrice.toFixed(2)}](${productURL})${highPrice && highPrice ? ` to [$${highPrice.toFixed(2)}](${productURL})` : ''}`
-) : 'None available ([check](${productURL})'}
-${pricingUpdated}`);
-  } else if (pricingData) {
-    embed.addField(pricingLabel, `This card has no ${circulationTemplate.foil ? 'foil' : 'non-foil'} market data available.
-${pricingUpdated}`);
-  } else {
-    embed.addField(pricingLabel, 'This card is not yet available on TCGplayer.');
-  }
+  embed.addField(pricingLabel, pricingData.formattedReply);
 
   if (edition.flavor || card.flavor) {
     embed.setFooter({

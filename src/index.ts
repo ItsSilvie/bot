@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 // Subcommand handlers.
 import * as subcommands from './commands';
 import { embedCard } from './replies/cardEmbed';
+import { pricingReply } from './replies/pricingReply';
 import { shuffleArray } from './utils/array';
 import { API_URL } from './utils/commands';
 
@@ -62,6 +63,18 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 client.on('interactionCreate', async interaction => {
 	if (interaction.isButton()) {
 		const buttonId = interaction.customId;
+
+		if (buttonId.includes('pricing-select')) {
+			const parts = buttonId.replace('pricing-select --- ', '').split('~~~');
+
+			if (parts.length !== 4) {
+				return;
+			}
+
+			const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+
+			return pricingReply(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+		}
 
 		if (buttonId.includes('variant-select')) {
 			const parts = buttonId.replace('variant-select --- ', '').split('~~~');

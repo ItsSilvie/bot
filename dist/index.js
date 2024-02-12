@@ -6,6 +6,7 @@ const node_fetch_1 = require("node-fetch");
 // Subcommand handlers.
 const subcommands = require("./commands");
 const cardEmbed_1 = require("./replies/cardEmbed");
+const pricingReply_1 = require("./replies/pricingReply");
 const commands_1 = require("./utils/commands");
 // Must match what is in (silvie-monorepo) /api/discord/server-boost
 var ServerBoostStatus;
@@ -53,6 +54,14 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
 client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton()) {
         const buttonId = interaction.customId;
+        if (buttonId.includes('pricing-select')) {
+            const parts = buttonId.replace('pricing-select --- ', '').split('~~~');
+            if (parts.length !== 4) {
+                return;
+            }
+            const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+            return (0, pricingReply_1.pricingReply)(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+        }
         if (buttonId.includes('variant-select')) {
             const parts = buttonId.replace('variant-select --- ', '').split('~~~');
             if (parts.length !== 4) {
