@@ -26,15 +26,14 @@ const getPricingData = async (editionUUID, foil) => {
             formattedReply: 'This card is not yet available on TCGplayer.'
         };
     }
-    const pricingUpdated = !!pricingData ? `*Updated ${dayjs(pricingData.updated).fromNow()}*` : undefined;
-    let formattedReply = ``;
+    const pricingUpdated = !!pricingData ? dayjs(pricingData.updated).fromNow() : undefined;
     const getVariantPricing = (foil) => {
         const variantPricing = pricingData.prices[foil ? 'foil' : 'nonFoil'];
         if (variantPricing) {
-            const { highPrice, lowPrice, marketPrice, } = variantPricing;
+            const { highPrice, midPrice, lowPrice, marketPrice, } = variantPricing;
             const productURL = `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${foil ? 'Foil' : 'Normal'}`)}`;
-            return `${marketPrice ? `Recent average: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
-  ${lowPrice ? (`Available range: [$${lowPrice.toFixed(2)}](${productURL})${highPrice && highPrice ? ` to [$${highPrice.toFixed(2)}](${productURL})` : ''}`) : 'None available ([check](${productURL})'}`;
+            return `${marketPrice ? `Market price: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
+  ${lowPrice ? (`Low [$${lowPrice.toFixed(2)}](${productURL})${midPrice ? ` · Mid [$${midPrice.toFixed(2)}](${productURL})` : ''}${highPrice ? ` · High [$${highPrice.toFixed(2)}](${productURL})` : ''}`) : 'None available ([check](${productURL})'}`;
         }
         return `This card has no ${foil ? 'foil' : 'non-foil'} market data available.`;
     };
@@ -42,11 +41,11 @@ const getPricingData = async (editionUUID, foil) => {
         return {
             data: pricingData,
             formattedReply: `${getVariantPricing(foil)}
-${pricingUpdated}`
+*Updated ${pricingUpdated}*`
         };
     }
     const output = {
-        updated: pricingUpdated,
+        updated: `Updated ${pricingUpdated} - updates daily.`,
         url: pricingData.url,
     };
     if (pricingData.prices.foil) {

@@ -30,9 +30,7 @@ export const getPricingData = async (editionUUID: string, foil: boolean | undefi
     };
   }
 
-  const pricingUpdated = !!pricingData ? `*Updated ${dayjs(pricingData.updated).fromNow()}*` : undefined;
-
-  let formattedReply = ``;
+  const pricingUpdated = !!pricingData ? dayjs(pricingData.updated).fromNow() : undefined;
 
   const getVariantPricing = (foil: boolean) => {
     const variantPricing = pricingData.prices[foil ? 'foil' : 'nonFoil'];
@@ -40,15 +38,16 @@ export const getPricingData = async (editionUUID: string, foil: boolean | undefi
     if (variantPricing) {
       const {
         highPrice,
+        midPrice,
         lowPrice,
         marketPrice,
       } = variantPricing;
 
       const productURL = `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${foil ? 'Foil' : 'Normal'}`)}`;
       
-      return `${marketPrice ? `Recent average: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
+      return `${marketPrice ? `Market price: [$${marketPrice.toFixed(2)}](${productURL})` : 'No recent sales'}
   ${lowPrice ? (
-    `Available range: [$${lowPrice.toFixed(2)}](${productURL})${highPrice && highPrice ? ` to [$${highPrice.toFixed(2)}](${productURL})` : ''}`
+    `Low [$${lowPrice.toFixed(2)}](${productURL})${midPrice ? ` · Mid [$${midPrice.toFixed(2)}](${productURL})` : ''}${highPrice ? ` · High [$${highPrice.toFixed(2)}](${productURL})` : ''}`
   ) : 'None available ([check](${productURL})'}`;
     }
     
@@ -59,7 +58,7 @@ export const getPricingData = async (editionUUID: string, foil: boolean | undefi
     return {
       data: pricingData,
       formattedReply: `${getVariantPricing(foil)}
-${pricingUpdated}`
+*Updated ${pricingUpdated}*`
     };
   }
 
@@ -69,7 +68,7 @@ ${pricingUpdated}`
     updated: string;
     url: string;
   } = {
-    updated: pricingUpdated,
+    updated: `Updated ${pricingUpdated} - updates daily.`,
     url: pricingData.url,
   }
 
