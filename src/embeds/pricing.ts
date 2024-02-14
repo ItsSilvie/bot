@@ -5,13 +5,30 @@ import { IndexEmbed } from "./types";
 import { getPricingData } from "../utils/pricing";
 import * as options from '../api-data/options.json';
 
-const pricingEmbed: IndexEmbed = async (card, edition, circulationTemplate) => {
+const pricingEmbed: IndexEmbed = async (card, edition) => {
   const {
     collector_number,
     set,
   } = edition;
 
   const pricingData = await getPricingData(edition.uuid, undefined) as {
+    change?: {
+      nonFoil?: {
+        directLowPrice: number | null;
+        highPrice: number | null;
+        lowPrice: number | null;
+        marketPrice: number | null;
+        midPrice: number | null;
+      };
+      foil?: {
+        directLowPrice: number | null;
+        highPrice: number | null;
+        lowPrice: number | null;
+        marketPrice: number | null;
+        midPrice: number | null;
+      };
+      type: string;
+    }
     nonFoil?: string;
     foil?: string;
     url: string;

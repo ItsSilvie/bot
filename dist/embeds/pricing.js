@@ -5,7 +5,7 @@ const types_1 = require("../data/types");
 const card_1 = require("../utils/card");
 const pricing_1 = require("../utils/pricing");
 const options = require("../api-data/options.json");
-const pricingEmbed = async (card, edition, circulationTemplate) => {
+const pricingEmbed = async (card, edition) => {
     const { collector_number, set, } = edition;
     const pricingData = await (0, pricing_1.getPricingData)(edition.uuid, undefined);
     const embed = new discord_js_1.MessageEmbed()

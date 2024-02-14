@@ -5,7 +5,6 @@ import { IndexCard, IndexCirculation, IndexEdition } from '../data/types';
 import { MessageActionRow, MessageButton } from 'discord.js';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 import * as options from '../api-data/options.json';
-import { embedCard } from '../replies/cardEmbed';
 import { pricingReply } from '../replies/pricingReply';
 
 const command = <BotCommand>{
@@ -98,8 +97,8 @@ const command = <BotCommand>{
       const row = new MessageActionRow()
         .addComponents(...allVariants.map(([card, edition, circulation]) => {
           return new MessageButton()
-            .setCustomId(`image-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
+            .setCustomId(`pricing-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+            .setLabel(`${card.name} (${edition.collector_number}) [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
             .setStyle(MessageButtonStyles.PRIMARY)
         }));
 

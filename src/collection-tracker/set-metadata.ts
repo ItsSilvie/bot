@@ -16,6 +16,9 @@ export const getSetLogo = (setPrefix) => {
     case 'FTCA':
       return 'FTC.png';
 
+    case 'SLC':
+      return 'SLC.png';
+
     default:
       return 'GA.png';
   }

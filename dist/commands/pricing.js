@@ -82,8 +82,8 @@ const command = {
             const row = new discord_js_1.MessageActionRow()
                 .addComponents(...allVariants.map(([card, edition, circulation]) => {
                 return new discord_js_1.MessageButton()
-                    .setCustomId(`image-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-                    .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
+                    .setCustomId(`pricing-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
+                    .setLabel(`${card.name} (${edition.collector_number}) [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
                     .setStyle(1 /* PRIMARY */);
             }));
             return interaction.reply({
