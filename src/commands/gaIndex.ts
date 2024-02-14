@@ -111,7 +111,7 @@ const command = <BotCommand>{
         .addComponents(...allVariants.map(([card, edition, circulation]) => {
           return new MessageButton()
             .setCustomId(`variant-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
+            .setLabel(`${card.name} (${edition.collector_number}) [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text} · ${circulation.foil ? 'Foil' : 'Non-foil'}]`)
             .setStyle(MessageButtonStyles.PRIMARY)
         }));
 

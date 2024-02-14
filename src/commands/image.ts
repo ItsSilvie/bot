@@ -98,7 +98,7 @@ const command = <BotCommand>{
         .addComponents(...allVariants.map(([card, edition, circulation]) => {
           return new MessageButton()
             .setCustomId(`image-select --- ${set.prefix}~~~${card.uuid}~~~${edition.uuid}~~~${circulation.uuid}`)
-            .setLabel(`${card.name} [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
+            .setLabel(`${card.name} (${edition.collector_number}) [${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}]`)
             .setStyle(MessageButtonStyles.PRIMARY)
         }));
 
