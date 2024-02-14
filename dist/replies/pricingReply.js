@@ -38,7 +38,7 @@ const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID, circu
             });
         }
     }
-    const embed = await (0, pricing_1.default)(cardMatch, editionMatch, circulationMatch);
+    const embed = await (0, pricing_1.default)(cardMatch, editionMatch);
     return interaction.reply({
         embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,

@@ -22,23 +22,7 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulat
             content: 'I was unable to find any cards matching your request.',
         });
     }
-    let circulationMatch = {
-        uuid: 'none',
-        name: 'none',
-        foil: false,
-        printing: false,
-        population_operator: '<=',
-        population: 0,
-    };
-    if (circulationUUID !== 'none') {
-        circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
-        if (!circulationMatch) {
-            return interaction.reply({
-                content: 'I was unable to find any cards matching your request.',
-            });
-        }
-    }
-    const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, circulationMatch, config);
+    const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, config);
     return interaction.reply({
         embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,

@@ -173,6 +173,7 @@ export type IndexEdition = {
   effect: null
   flavor: null
   illustrator: string
+  last_update?: string | null;
   rarity: number
   set: IndexSet
   slug: string

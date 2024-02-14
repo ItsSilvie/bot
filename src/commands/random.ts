@@ -67,9 +67,8 @@ const command = <BotCommand>{
 
     const match = shuffleArray([...cards])[0] as IndexCard;
     const edition = shuffleArray([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0] as IndexEdition;
-    const circulation = shuffleArray([...edition.circulationTemplates, ...edition.circulations])[0] as IndexCirculation;
 
-    const embed = await indexEmbed(match, edition, circulation);
+    const embed = await indexEmbed(match, edition);
 
     return interaction.reply({
       embeds: [embed],

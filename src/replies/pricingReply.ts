@@ -46,7 +46,7 @@ export const pricingReply = async (interaction: ButtonInteraction | CommandInter
     }
   }
 
-  const embed = await pricingEmbed(cardMatch, editionMatch, circulationMatch);
+  const embed = await pricingEmbed(cardMatch, editionMatch);
   
   return interaction.reply({
     embeds: [embed],

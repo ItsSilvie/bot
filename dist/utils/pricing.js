@@ -5,15 +5,13 @@ const commands_1 = require("./commands");
 const dayjs = require("dayjs");
 const relativeTimePlugin = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTimePlugin);
-const getPricingData = async (editionUUID, foil) => {
+const getPricingData = async (editionUUID, condensed) => {
     let pricingData = undefined;
     try {
         const queryParams = new URLSearchParams({
             id: editionUUID,
+            history: 'daily',
         });
-        if (typeof foil !== 'boolean') {
-            queryParams.append('history', 'daily');
-        }
         const apiPricingData = await fetch(`${commands_1.API_URL}/api/pricing?${queryParams.toString()}`)
             .then(res => res.json());
         if (apiPricingData && !apiPricingData.error && Object.keys(apiPricingData).length > 0) {
@@ -22,12 +20,6 @@ const getPricingData = async (editionUUID, foil) => {
     }
     catch (e) {
         console.log(e);
-    }
-    if (!pricingData) {
-        return {
-            data: pricingData,
-            formattedReply: 'This card is not yet available on TCGplayer.'
-        };
     }
     const pricingUpdated = !!pricingData ? dayjs(pricingData.updated).fromNow() : undefined;
     const getPriceChange = (change) => {
@@ -48,30 +40,26 @@ const getPricingData = async (editionUUID, foil) => {
         if (variantPricing) {
             const { highPrice, midPrice, lowPrice, marketPrice, } = variantPricing;
             const marketPriceChange = getPriceChange(change?.marketPrice);
+            if (condensed) {
+                return `${marketPrice ? `Market price: $${marketPrice.toFixed(2)}${marketPriceChange ? ` ${marketPriceChange}` : ''}` : '*No recent sales data.*'}`;
+            }
             const lowPriceChange = getPriceChange(change?.lowPrice);
             const highPriceChange = getPriceChange(change?.highPrice);
             const midPriceChange = getPriceChange(change?.midPrice);
-            const productURL = `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${foil ? 'Foil' : 'Normal'}`)}`;
-            return `${marketPrice ? `Market price: [$${marketPrice.toFixed(2)}](${productURL})${marketPriceChange ? ` ${marketPriceChange}` : ''}` : 'No recent sales'}
-  ${lowPrice ? (`Low [$${lowPrice.toFixed(2)}](${productURL})${lowPriceChange ? ` ${lowPriceChange}` : ''}${midPrice ? `\nMid [$${midPrice.toFixed(2)}](${productURL})${midPriceChange ? ` ${midPriceChange}` : ''}` : ''}${highPrice ? `\nHigh [$${highPrice.toFixed(2)}](${productURL})${highPriceChange ? ` ${highPriceChange}` : ''}` : ''}`) : 'None available ([check](${productURL})'}`;
+            const productURL = pricingData?.url ? `${pricingData.url}${encodeURIComponent(`${pricingData.url.includes(encodeURIComponent('?')) ? '&' : '?'}Printing=${foil ? 'Foil' : 'Normal'}`)}` : '';
+            return `${marketPrice ? `Market price: [$${marketPrice.toFixed(2)}](${productURL})${marketPriceChange ? ` ${marketPriceChange}` : ''}` : '*No recent sales data.*'}
+  ${lowPrice ? (`Low [$${lowPrice.toFixed(2)}](${productURL})${lowPriceChange ? ` ${lowPriceChange}` : ''}${midPrice ? `\nMid [$${midPrice.toFixed(2)}](${productURL})${midPriceChange ? ` ${midPriceChange}` : ''}` : ''}${highPrice ? `\nHigh [$${highPrice.toFixed(2)}](${productURL})${highPriceChange ? ` ${highPriceChange}` : ''}` : ''}`) : `None available ([check](${productURL})`}`;
         }
         return `This card has no ${foil ? 'foil' : 'non-foil'} market data available.`;
     };
-    if (typeof foil === 'boolean') {
-        return {
-            data: pricingData,
-            formattedReply: `${getVariantPricing(foil)}
-*Updated ${pricingUpdated}*`
-        };
-    }
     const output = {
         updated: `Updated ${pricingUpdated} - updates daily.`,
-        url: pricingData.url,
+        url: pricingData?.url,
     };
-    if (pricingData.prices.foil) {
+    if (pricingData?.prices.foil) {
         output.foil = getVariantPricing(true);
     }
-    if (pricingData.prices.nonFoil) {
+    if (pricingData?.prices.nonFoil) {
         output.nonFoil = getVariantPricing(false);
     }
     return output;
