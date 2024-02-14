@@ -5,6 +5,7 @@ import { shuffleArray } from '../utils/array';
 import { BotCommand } from './types';
 import * as sets from '../api-data/sets.json';
 import indexEmbed from '../embeds/gaIndex';
+import { embedCard } from '../replies/cardEmbed';
 
 const command = <BotCommand>{
   name: 'random',
@@ -65,15 +66,29 @@ const command = <BotCommand>{
       });
     }
 
-    const match = shuffleArray([...cards])[0] as IndexCard;
-    const edition = shuffleArray([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0] as IndexEdition;
+    const randomCard = shuffleArray(cards)[0];
 
-    const embed = await indexEmbed(match, edition);
+    const allVariants: [IndexCard, IndexEdition, IndexCirculation][] = [randomCard].reduce((output, match) => ([
+      ...output,
+      ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => ([
+        ...editionOutput,
+        [
+          match,
+          edition,
+          {
+            uuid: 'none',
+            name: 'none',
+            foil: false,
+            printing: false,
+            population_operator: '<=',
+            population: 0,
+          }
+        ]
+      ]), [])
+    ]), []);
 
-    return interaction.reply({
-      embeds: [embed],
-      content: shuffleArray([...messages])[0],
-    });
+    const [card, edition] = shuffleArray(allVariants)[0];
+    return await embedCard(interaction, set.prefix, card.uuid, edition.uuid);
   },
 }
 

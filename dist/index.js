@@ -59,16 +59,16 @@ client.on('interactionCreate', async (interaction) => {
             if (parts.length !== 4) {
                 return;
             }
-            const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
-            return (0, pricingReply_1.pricingReply)(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+            const [setPrefix, cardUUID, editionUUID] = parts;
+            return (0, pricingReply_1.pricingReply)(interaction, setPrefix, cardUUID, editionUUID);
         }
         if (buttonId.includes('image-select')) {
             const parts = buttonId.replace('image-select --- ', '').split('~~~');
             if (parts.length !== 4) {
                 return;
             }
-            const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
-            return (0, cardEmbed_1.embedCard)(interaction, setPrefix, cardUUID, editionUUID, circulationUUID, {
+            const [setPrefix, cardUUID, editionUUID] = parts;
+            return (0, cardEmbed_1.embedCard)(interaction, setPrefix, cardUUID, editionUUID, {
                 imageOnly: true,
             });
         }
@@ -77,8 +77,8 @@ client.on('interactionCreate', async (interaction) => {
             if (parts.length !== 4) {
                 return;
             }
-            const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
-            return (0, cardEmbed_1.embedCard)(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+            const [setPrefix, cardUUID, editionUUID] = parts;
+            return (0, cardEmbed_1.embedCard)(interaction, setPrefix, cardUUID, editionUUID);
         }
         return;
     }

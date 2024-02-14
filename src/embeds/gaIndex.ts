@@ -34,7 +34,7 @@ const indexEmbed: IndexEmbed = async (card, edition, config) => {
   const pricingData = await getPricingData(edition.uuid, true);
 
   const foilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => entry.foil);
-  const nonFoilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => entry.foil === false);
+  const nonFoilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => !entry.foil);
 
   if (!!nonFoilCirculation) {
     embed.addField('Non-foil', `Population: ${nonFoilCirculation.population_operator ?? ''} ${nonFoilCirculation.population.toLocaleString()}${nonFoilCirculation.printing ? ' (printing)' : ''}${pricingData.nonFoil ? (
@@ -59,7 +59,7 @@ const indexEmbed: IndexEmbed = async (card, edition, config) => {
 
   if (!!pricingData.nonFoil || !!pricingData.foil) {
     embed.setFooter({
-      text: `${!!edition.last_update ? `Card updated on Index ${dayjs(edition.last_update).fromNow()}` : `Card has no last update date on Index.`}.\nPrices ${pricingData.updated.toLowerCase()}\nUse '/silvie pricing' for detailed market informaiton.`,
+      text: `${!!edition.last_update ? `Card updated on Index ${dayjs(edition.last_update).fromNow()}` : `Card has no last update date on Index`}.\nPrices ${pricingData.updated.toLowerCase()}\nUse '/silvie pricing' for detailed market informaiton.`,
     });
   }
 

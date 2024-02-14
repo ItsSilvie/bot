@@ -110,7 +110,7 @@ const command = <BotCommand>{
     }
 
     const [card, edition, circulation] = allVariants[0];
-    return await embedCard(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
+    return await embedCard(interaction, set.prefix, card.uuid, edition.uuid);
   },
   handleAutocomplete: async (interaction) => {
     const { options } = interaction;

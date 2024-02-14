@@ -92,8 +92,8 @@ const command = {
                 ephemeral: true,
             });
         }
-        const [card, edition, circulation] = allVariants[0];
-        return await (0, pricingReply_1.pricingReply)(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
+        const [card, edition] = allVariants[0];
+        return await (0, pricingReply_1.pricingReply)(interaction, set.prefix, card.uuid, edition.uuid);
     },
     handleAutocomplete: async (interaction) => {
         const { options } = interaction;

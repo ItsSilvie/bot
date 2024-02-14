@@ -109,8 +109,8 @@ const command = <BotCommand>{
       })
     }
 
-    const [card, edition, circulation] = allVariants[0];
-    return await pricingReply(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
+    const [card, edition] = allVariants[0];
+    return await pricingReply(interaction, set.prefix, card.uuid, edition.uuid);
   },
   handleAutocomplete: async (interaction) => {
     const { options } = interaction;

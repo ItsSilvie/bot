@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const array_1 = require("../utils/array");
 const sets = require("../api-data/sets.json");
-const gaIndex_1 = require("../embeds/gaIndex");
+const cardEmbed_1 = require("../replies/cardEmbed");
 const command = {
     name: 'random',
     generator: (subcommand) => {
@@ -57,13 +57,27 @@ const command = {
                 content: 'Something went wrong, please try again!',
             });
         }
-        const match = (0, array_1.shuffleArray)([...cards])[0];
-        const edition = (0, array_1.shuffleArray)([...match.editions.filter(edition => edition.set.prefix === set.prefix)])[0];
-        const embed = await (0, gaIndex_1.default)(match, edition);
-        return interaction.reply({
-            embeds: [embed],
-            content: (0, array_1.shuffleArray)([...messages])[0],
-        });
+        const randomCard = (0, array_1.shuffleArray)(cards)[0];
+        const allVariants = [randomCard].reduce((output, match) => ([
+            ...output,
+            ...match.editions.filter(edition => edition.set.prefix === set.prefix).reduce((editionOutput, edition) => ([
+                ...editionOutput,
+                [
+                    match,
+                    edition,
+                    {
+                        uuid: 'none',
+                        name: 'none',
+                        foil: false,
+                        printing: false,
+                        population_operator: '<=',
+                        population: 0,
+                    }
+                ]
+            ]), [])
+        ]), []);
+        const [card, edition] = (0, array_1.shuffleArray)(allVariants)[0];
+        return await (0, cardEmbed_1.embedCard)(interaction, set.prefix, card.uuid, edition.uuid);
     },
 };
 exports.default = command;

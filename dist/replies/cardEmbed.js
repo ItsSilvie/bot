@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.embedCard = void 0;
 const path = require("path");
 const gaIndex_1 = require("../embeds/gaIndex");
-const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, circulationUUID, config) => {
+const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, config) => {
     const cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${setPrefix}.json`)));
     if (!cards) {
         return interaction.reply({

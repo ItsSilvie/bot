@@ -71,9 +71,9 @@ client.on('interactionCreate', async interaction => {
 				return;
 			}
 
-			const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+			const [setPrefix, cardUUID, editionUUID] = parts;
 
-			return pricingReply(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+			return pricingReply(interaction, setPrefix, cardUUID, editionUUID);
 		}
 
 		if (buttonId.includes('image-select')) {
@@ -83,9 +83,9 @@ client.on('interactionCreate', async interaction => {
 				return;
 			}
 
-			const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+			const [setPrefix, cardUUID, editionUUID] = parts;
 
-			return embedCard(interaction, setPrefix, cardUUID, editionUUID, circulationUUID, {
+			return embedCard(interaction, setPrefix, cardUUID, editionUUID, {
 				imageOnly: true,
 			});
 		}
@@ -97,9 +97,9 @@ client.on('interactionCreate', async interaction => {
 				return;
 			}
 
-			const [setPrefix, cardUUID, editionUUID, circulationUUID] = parts;
+			const [setPrefix, cardUUID, editionUUID] = parts;
 
-			return embedCard(interaction, setPrefix, cardUUID, editionUUID, circulationUUID);
+			return embedCard(interaction, setPrefix, cardUUID, editionUUID);
 		}
 
 		return;

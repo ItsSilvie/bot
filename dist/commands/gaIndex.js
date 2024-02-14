@@ -93,7 +93,7 @@ const command = {
             });
         }
         const [card, edition, circulation] = allVariants[0];
-        return await (0, cardEmbed_1.embedCard)(interaction, set.prefix, card.uuid, edition.uuid, circulation.uuid);
+        return await (0, cardEmbed_1.embedCard)(interaction, set.prefix, card.uuid, edition.uuid);
     },
     handleAutocomplete: async (interaction) => {
         const { options } = interaction;

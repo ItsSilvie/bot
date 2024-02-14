@@ -23,7 +23,7 @@ const indexEmbed = async (card, edition, config) => {
     embed.setAuthor({ name: 'Grand Archive Index', url: 'https://index.gatcg.com' });
     const pricingData = await (0, pricing_1.getPricingData)(edition.uuid, true);
     const foilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => entry.foil);
-    const nonFoilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => entry.foil === false);
+    const nonFoilCirculation = [...edition.circulationTemplates, ...edition.circulations].find(entry => !entry.foil);
     if (!!nonFoilCirculation) {
         embed.addField('Non-foil', `Population: ${nonFoilCirculation.population_operator ?? ''} ${nonFoilCirculation.population.toLocaleString()}${nonFoilCirculation.printing ? ' (printing)' : ''}${pricingData.nonFoil ? (`\n${pricingData.nonFoil}`) : ''}`);
     }
@@ -36,7 +36,7 @@ const indexEmbed = async (card, edition, config) => {
     }
     if (!!pricingData.nonFoil || !!pricingData.foil) {
         embed.setFooter({
-            text: `${!!edition.last_update ? `Card updated on Index ${dayjs(edition.last_update).fromNow()}` : `Card has no last update date on Index.`}.\nPrices ${pricingData.updated.toLowerCase()}\nUse '/silvie pricing' for detailed market informaiton.`,
+            text: `${!!edition.last_update ? `Card updated on Index ${dayjs(edition.last_update).fromNow()}` : `Card has no last update date on Index`}.\nPrices ${pricingData.updated.toLowerCase()}\nUse '/silvie pricing' for detailed market informaiton.`,
         });
     }
     return embed;

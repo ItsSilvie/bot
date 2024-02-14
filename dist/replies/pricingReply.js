@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.pricingReply = void 0;
 const path = require("path");
 const pricing_1 = require("../embeds/pricing");
-const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID, circulationUUID) => {
+const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID) => {
     const cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${setPrefix}.json`)));
     if (!cards) {
         return interaction.reply({
@@ -21,22 +21,6 @@ const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID, circu
         return interaction.reply({
             content: 'I was unable to find any cards matching your request.',
         });
-    }
-    let circulationMatch = {
-        uuid: 'none',
-        name: 'none',
-        foil: false,
-        printing: false,
-        population_operator: '<=',
-        population: 0,
-    };
-    if (circulationUUID !== 'none') {
-        circulationMatch = [...editionMatch.circulationTemplates, ...editionMatch.circulations].find(entry => entry.uuid === circulationUUID);
-        if (!circulationMatch) {
-            return interaction.reply({
-                content: 'I was unable to find any cards matching your request.',
-            });
-        }
     }
     const embed = await (0, pricing_1.default)(cardMatch, editionMatch);
     return interaction.reply({

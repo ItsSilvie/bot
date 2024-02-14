@@ -2,7 +2,7 @@ import * as path from 'path';
 import { ButtonInteraction, CommandInteraction } from "discord.js";
 import indexEmbed from '../embeds/gaIndex';
 
-export const embedCard = async (interaction: ButtonInteraction | CommandInteraction, setPrefix: string, cardUUID: string, editionUUID: string, circulationUUID: string, config?: {
+export const embedCard = async (interaction: ButtonInteraction | CommandInteraction, setPrefix: string, cardUUID: string, editionUUID: string, config?: {
   imageOnly?: boolean;
 }) => {
   const cards = await import(path.resolve(__dirname, `../api-data/${setPrefix}.json`));
