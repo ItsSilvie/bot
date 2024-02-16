@@ -16,6 +16,7 @@ export const pricingReply = async (interaction: ButtonInteraction | CommandInter
   if (!cardMatch) {
     return interaction.reply({
       content: 'I was unable to find any cards matching your request.',
+      ephemeral: true,
     });
   }
 
@@ -24,6 +25,7 @@ export const pricingReply = async (interaction: ButtonInteraction | CommandInter
   if (!editionMatch) {
     return interaction.reply({
       content: 'I was unable to find any cards matching your request.',
+      ephemeral: true,
     });
   }
 

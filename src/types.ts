@@ -13,13 +13,32 @@ export interface PricingData {
     prices: {
       foil?: PricingDataCirculation;
       nonFoil?: PricingDataCirculation;
-    }
+    };
     type: string;
-  }
+  };
+  lowestPrice?: {
+    price: number;
+    saving: number;
+    url: string;
+  };
   prices: {
     foil?: PricingDataCirculation;
     nonFoil: PricingDataCirculation;
-  },
+  };
+  similar: {
+    quantity: number;
+    url: string;
+  };
   updated: number;
   url: string;
+}
+
+export interface PricingEmbedVariant {
+  marketPrice: string;
+  lowPrice?: string;
+  lowPriceChange: string;
+  midPrice?: string;
+  midPriceChange: string;
+  highPrice?: string;
+  highPriceChange: string;
 }

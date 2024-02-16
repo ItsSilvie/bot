@@ -14,12 +14,14 @@ const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID) => {
     if (!cardMatch) {
         return interaction.reply({
             content: 'I was unable to find any cards matching your request.',
+            ephemeral: true,
         });
     }
     const editionMatch = cardMatch.editions.find(entry => entry.uuid === editionUUID);
     if (!editionMatch) {
         return interaction.reply({
             content: 'I was unable to find any cards matching your request.',
+            ephemeral: true,
         });
     }
     const embed = await (0, pricing_1.default)(cardMatch, editionMatch);

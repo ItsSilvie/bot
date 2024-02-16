@@ -16,9 +16,6 @@ const links = [{
         name: 'GA Discord',
         url: 'https://discord.gg/nbgDk6UrFp',
     }, {
-        name: 'Silvie.org Discord',
-        url: 'https://discord.gg/bC6uWYvM4G',
-    }, {
         name: 'GA Facebook',
         url: 'https://www.facebook.com/grandarchivetcg',
     }, {
@@ -42,5 +39,8 @@ const links = [{
     }, {
         name: 'Silvie.org Collection Tracker',
         url: 'https://collect.silvie.org',
+    }, {
+        name: 'Silvie.org Discord',
+        url: 'https://discord.gg/bC6uWYvM4G',
     }];
 exports.default = links;

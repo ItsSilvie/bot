@@ -53,6 +53,7 @@ const command = {
         if (!matches.length) {
             return interaction.reply({
                 content: 'I was unable to find any cards matching your request.',
+                ephemeral: true,
             });
         }
         const allVariants = matches.reduce((output, match) => ([
@@ -76,6 +77,7 @@ const command = {
         if (!allVariants.length) {
             return interaction.reply({
                 content: 'I was unable to find any cards matching your request.',
+                ephemeral: true,
             });
         }
         if (allVariants.length > 1) {
@@ -114,7 +116,7 @@ const command = {
                 matchCount += 1;
                 return true;
             }).map(entry => ({
-                name: entry.name,
+                name: `${entry.name}`,
                 value: entry.name,
             }))].sort(({ name: aName }, { name: bName }) => {
             return aName < bName ? -1 : 1;

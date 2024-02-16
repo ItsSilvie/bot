@@ -18,6 +18,7 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
   if (!cardMatch) {
     return interaction.reply({
       content: 'I was unable to find any cards matching your request.',
+      ephemeral: true,
     });
   }
 
@@ -26,6 +27,7 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
   if (!editionMatch) {
     return interaction.reply({
       content: 'I was unable to find any cards matching your request.',
+      ephemeral: true,
     });
   }
 

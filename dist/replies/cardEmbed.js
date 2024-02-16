@@ -14,12 +14,14 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, config) 
     if (!cardMatch) {
         return interaction.reply({
             content: 'I was unable to find any cards matching your request.',
+            ephemeral: true,
         });
     }
     const editionMatch = cardMatch.editions.find(entry => entry.uuid === editionUUID);
     if (!editionMatch) {
         return interaction.reply({
             content: 'I was unable to find any cards matching your request.',
+            ephemeral: true,
         });
     }
     const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, config);

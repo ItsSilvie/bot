@@ -25,7 +25,6 @@ const getEVPCounts = (cards, setPrefix, evpCSRTotalPopulation) => {
         5, // UR
     ]).reduce((n, rarity) => n + getAllFoilCardsInSetByRarity(rarity).population, 0);
     const getTotalBoosterPackCount = () => (getAllNonFoilCardsInSetByRarity(2).population / 2);
-    console.log(getAllNonFoilCardsInSetByRarity(2));
     const totalFoilPopulation = getTotalFoilsInSet();
     const setBoosterPackCount = getTotalBoosterPackCount();
     const setBoosterBoxCount = setBoosterPackCount / 24;
