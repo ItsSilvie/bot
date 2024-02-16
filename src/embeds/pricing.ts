@@ -62,7 +62,7 @@ const pricingEmbed: IndexEmbed = async (card, edition) => {
 ${pricingData.lowestPrice ? (
         `Cheapest: [$${pricingData.lowestPrice.price.toFixed(2)}](${pricingData.lowestPrice.url})`
       ) : (
-        `This one has the lowest price.`
+        `This one has the lowest price`
       )}.`);
     }
   }

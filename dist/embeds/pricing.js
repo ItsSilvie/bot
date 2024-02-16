@@ -27,7 +27,7 @@ const pricingEmbed = async (card, edition) => {
         }
         else {
             embed.addField('Insights', `TCGplayer lists [${pricingData.similar.quantity} versions](${pricingData.similar.url}) of this card.
-${pricingData.lowestPrice ? (`Cheapest: [$${pricingData.lowestPrice.price.toFixed(2)}](${pricingData.lowestPrice.url})`) : (`This one has the lowest price.`)}.`);
+${pricingData.lowestPrice ? (`Cheapest: [$${pricingData.lowestPrice.price.toFixed(2)}](${pricingData.lowestPrice.url})`) : (`This one has the lowest price`)}.`);
         }
     }
     if (!pricingData?.nonFoil && !pricingData?.foil) {
