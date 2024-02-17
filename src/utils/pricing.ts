@@ -33,7 +33,7 @@ dayjs.updateLocale('en', {
 export const getPricingData = async (editionUUID: string, condensed: boolean | undefined) => {
   let pricingData: PricingData | undefined = undefined;
 
-  try {				
+  try {
     const queryParams = new URLSearchParams({
       id: editionUUID,
       history: 'daily',

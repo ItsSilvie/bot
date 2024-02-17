@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.whoami = exports.simulator = exports.random = exports.pricing = exports.links = exports.image = exports.index = void 0;
+exports.whoami = exports.simulator = exports.random = exports.pricing = exports.links = exports.image = exports.index = exports.deck = void 0;
+var deck_1 = require("./deck");
+Object.defineProperty(exports, "deck", { enumerable: true, get: function () { return deck_1.default; } });
 var gaIndex_1 = require("./gaIndex");
 Object.defineProperty(exports, "index", { enumerable: true, get: function () { return gaIndex_1.default; } });
 var image_1 = require("./image");

@@ -39,6 +39,7 @@ const generateShortenerWords = async () => {
 
   const ignoredWords = [
     'back',
+    'card',
     'copy',
     'dead',
     'dies',
@@ -51,6 +52,7 @@ const generateShortenerWords = async () => {
     'than',
     'that',
     'then',
+    'this',
     'with',
     'when',
     'will',

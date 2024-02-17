@@ -1,3 +1,4 @@
+export { default as deck } from './deck';
 export { default as index } from './gaIndex';
 export { default as image } from './image';
 export { default as links } from './links';

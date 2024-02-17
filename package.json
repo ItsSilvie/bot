@@ -31,7 +31,7 @@
     "build-api-data": "shx cp -r ./src/api-data/ ./dist/ & shx cp -r ./src/api-data/ ../silvie-monorepo/apps/api.silvie.org/src/",
     "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
-    "scrape": "node ./dist/api-scrape.js & yarn build-local & yarn update-static-files & yarn update-stocklist-files",
+    "scrape": "node ./dist/api-scrape.js & yarn build-local & yarn update-static-files & yarn update-stocklist-files & yarn update-misc-files",
     "start": "node .",
     "deploy": "git push heroku main",
     "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js & node ./dist/blog/lowest-pop-cards.js & node ./dist/blog/named-cards.js & node ./dist/blog/cards-by-illustrator.js & node ./dist/blog/cards-by-misc.js",

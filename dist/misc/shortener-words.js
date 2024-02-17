@@ -31,6 +31,7 @@ const generateShortenerWords = async () => {
     const uniqueWords = [];
     const ignoredWords = [
         'back',
+        'card',
         'copy',
         'dead',
         'dies',
@@ -41,10 +42,13 @@ const generateShortenerWords = async () => {
         'onto',
         'take',
         'than',
+        'that',
         'then',
+        'this',
         'with',
         'when',
         'will',
+        'your',
         'until',
     ];
     const processString = (string) => {
