@@ -1,5 +1,4 @@
 import { MessageAttachment, MessageEmbed } from "discord.js";
-import { API_URL } from "../utils/commands";
 import * as dayjs from 'dayjs';
 import * as relativeTimePlugin from 'dayjs/plugin/relativeTime';
 import * as advancedFormat from 'dayjs/plugin/advancedFormat';
