@@ -24,7 +24,6 @@ const allCards = async () => {
         console.error(e);
     }
 };
-exports.default = allCards();
 const generateCardsByMiscTemplate = async () => {
     if (!fs.existsSync(blogCustomTemplatesPath)) {
         fs.mkdirSync(blogCustomTemplatesPath);

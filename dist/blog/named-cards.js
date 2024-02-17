@@ -24,7 +24,6 @@ const allCards = async () => {
         console.error(e);
     }
 };
-exports.default = allCards();
 var CustomType;
 (function (CustomType) {
     CustomType["Champion"] = "Champions";

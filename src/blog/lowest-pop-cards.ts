@@ -33,8 +33,6 @@ const allCards = async () => {
   }
 }
 
-export default allCards();
-
 interface UniqueCard {
   card: IndexCard;
   edition: IndexEdition;

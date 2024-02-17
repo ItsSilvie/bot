@@ -30,8 +30,6 @@ const allCards = async () => {
   }
 }
 
-export default allCards();
-
 interface NamedCard {
   cards: IndexCard[];
   editions: number;

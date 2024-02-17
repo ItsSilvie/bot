@@ -40,7 +40,8 @@
     "ebay-images": "node ./dist/ebay/generate-ebay-images.js",
     "create-stocklists": "node ./dist/ebay/generate-blank-stocklist.js",
     "update-static-files": "yarn generate-deck-builder-data & yarn generate-tracker-data & yarn generate-blog-templates",
-    "update-stocklist-files": "yarn ebay-images & yarn create-stocklists"
+    "update-stocklist-files": "yarn ebay-images & yarn create-stocklists",
+    "update-misc-files": "node ./dist/misc/shortener-words.js"
   },
   "bugs": {
     "url": "https://github.com/ItsSilvie/bot/issues"
