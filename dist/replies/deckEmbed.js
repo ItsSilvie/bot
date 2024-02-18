@@ -37,11 +37,12 @@ const embedDeck = async (interaction, url, urlType) => {
             ephemeral: true,
         });
     }
+    await interaction.deferReply();
     const deckEmbedData = await (0, deck_1.default)(deckData, deckId, deckImage, revision ? Number(revision) : undefined);
     attachment = deckEmbedData.attachment;
     embed = deckEmbedData.embed;
     // }
-    return interaction.reply({
+    return interaction.editReply({
         files: [attachment],
         embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go ${deckData.champions.includes('Silvie') ? '<:anxious_silvie:985427396444434492>' : '<:wow_silvie:918934079435583519>'}`,
