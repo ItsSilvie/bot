@@ -254,6 +254,15 @@ const obtainMethods: {
   'p24--en-007-pr': [
     'Included in the ALC Launch Kit distributed to brick and mortar game stores, with Alchemical Revolution stamp',
   ],
+  'p24--en-024-pr': [
+    'Included in the ALC Launch Kit distributed to brick and mortar game stores, with Alchemical Revolution stamp',
+  ],
+  'p24--en-36-pr': [
+    'Participation award for Store Championship events during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
+  'p24--en-044-pr': [
+    'Awarded to event judges during the Alchemical Revolution season (24th January to 17th May 2024)',
+  ],
   'p24--en-045-pr': [
     'Alchemical Revolution season Store Championship winner Nationals Entry card (24th January to 17th May 2024)',
     'Cards awarded at events in North America have a printed North American Nationals Qualifier stamp',
@@ -362,7 +371,7 @@ obtainMethods['slc--cn-008-cpr'] = obtainMethods['slc--cn-003-cpr'];
 obtainMethods['slc--cn-012-cpr'] = obtainMethods['slc--cn-003-cpr'];
 
 for (let i = 2; i <= 41; i++) {
-  if (i === 7 || i === 12 || i === 18) {
+  if (i === 7 || i === 12 || i === 18 || i === 36) {
     continue;
   }
 

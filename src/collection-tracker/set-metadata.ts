@@ -3,7 +3,7 @@ export const getSetLogo = (setPrefix) => {
     case 'ALC':
     case 'ALC 1st':
     case 'ALCSD':
-      return 'FTC.png';
+      return 'ALC.png';
 
     case 'DOA 1st':
     case 'DOA Alter':
