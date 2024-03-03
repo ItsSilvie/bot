@@ -244,7 +244,7 @@ const obtainMethods = {
     'p24--en-024-pr': [
         'Included in the ALC Launch Kit distributed to brick and mortar game stores, with Alchemical Revolution stamp',
     ],
-    'p24--en-36-pr': [
+    'p24--en-036-pr': [
         'Participation award for Store Championship events during the Alchemical Revolution season (24th January to 17th May 2024)',
     ],
     'p24--en-044-pr': [
