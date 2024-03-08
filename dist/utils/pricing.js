@@ -4,31 +4,7 @@ exports.getPricingData = void 0;
 const commands_1 = require("./commands");
 const dayjs = require("dayjs");
 const relativeTime = require("dayjs/plugin/relativeTime");
-const updateLocale = require("dayjs/plugin/updateLocale");
-dayjs.extend(updateLocale);
-dayjs.extend(relativeTime, {
-    thresholds: [
-        { l: 's', r: 1 },
-        { l: 'ss', r: 59, d: 'second' },
-        { l: 'm', r: 1 },
-        { l: 'mm', r: 59, d: 'minute' },
-        { l: 'h', r: 1 },
-        { l: 'hh', r: 48, d: 'hour' },
-        { l: 'd', r: 9999, d: 'day' },
-    ]
-});
-dayjs.updateLocale('en', {
-    relativeTime: {
-        future: "in %s",
-        past: "%s ago",
-        s: 'a few seconds',
-        m: "a minute",
-        mm: "%d minutes",
-        h: "an hour",
-        hh: "%d hours",
-        d: "%d days",
-    }
-});
+dayjs.extend(relativeTime);
 const getPricingData = async (editionUUID, condensed) => {
     let pricingData = undefined;
     try {

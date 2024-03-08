@@ -2,33 +2,8 @@ import { PricingData } from "../types";
 import { API_URL } from "./commands";
 import * as dayjs from 'dayjs';
 import * as relativeTime from 'dayjs/plugin/relativeTime';
-import * as updateLocale from 'dayjs/plugin/updateLocale';
 
-dayjs.extend(updateLocale);
-dayjs.extend(relativeTime, {
-  thresholds: [
-    { l: 's', r: 1 },
-    { l: 'ss', r: 59, d: 'second' },
-    { l: 'm', r: 1 },
-    { l: 'mm', r: 59, d: 'minute' },
-    { l: 'h', r: 1 },
-    { l: 'hh', r: 48, d: 'hour' },
-    { l: 'd', r: 9999, d: 'day' },
-  ]
-});
-
-dayjs.updateLocale('en', {
-  relativeTime: {
-    future: "in %s",
-    past: "%s ago",
-    s: 'a few seconds',
-    m: "a minute",
-    mm: "%d minutes",
-    h: "an hour",
-    hh: "%d hours",
-    d: "%d days",
-  }
-})
+dayjs.extend(relativeTime)
 
 export const getPricingData = async (editionUUID: string, condensed: boolean | undefined) => {
   let pricingData: PricingData | undefined = undefined;
