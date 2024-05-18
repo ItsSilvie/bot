@@ -129,7 +129,7 @@ const generateBlogTemplates = async () => {
   <td style="text-align: left">
     <div class="set-list-card-name">
       <span class="card-cost card-cost-${setTemplateDataEntry.costType}">
-        ${setTemplateDataEntry.cost}
+        ${setTemplateDataEntry.cost === -1 ? 'X' : setTemplateDataEntry.cost}
       </span>
       <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
       <abbr class="card-rarity-label card-rarity-label-${setTemplateDataEntry.rarity}" title="${Rarity[setTemplateDataEntry.rarity]}">${setTemplateDataEntry.rarity}</abbr>
@@ -272,7 +272,7 @@ const generateBlogTemplates = async () => {
     <td style="text-align: left">
       <div class="set-list-card-name">
         <span class="card-cost card-cost-${customSetTemplateDataEntry.costType}">
-          ${customSetTemplateDataEntry.cost}
+          ${customSetTemplateDataEntry.cost === -1 ? 'X' : customSetTemplateDataEntry.cost}
         </span>
         <img class="image-element" src="https://img.silvie.org/misc/elements/${customSetTemplateDataEntry.element.toLowerCase()}.png" alt="${customSetTemplateDataEntry.element} element" />
         <abbr class="card-rarity-label card-rarity-label-${customSetTemplateDataEntry.rarity}" title="${Rarity[customSetTemplateDataEntry.rarity]}">${customSetTemplateDataEntry.rarity}</abbr>

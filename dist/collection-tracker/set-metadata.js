@@ -6,6 +6,9 @@ const getSetLogo = (setPrefix) => {
         case 'ALC':
         case 'ALC 1st':
         case 'ALCSD':
+        case 'MRC':
+        case 'ReC-SHD':
+        case 'ReC-SLM':
             return 'ALC.png';
         case 'DOA 1st':
         case 'DOA Alter':
@@ -35,11 +38,14 @@ const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
         case 'ALC 1st':
+        case 'MRC':
             return {
                 type: [SetType.Standard],
                 year: 2024,
             };
         case 'ALCSD':
+        case 'ReC-SHD':
+        case 'ReC-SLM':
             return {
                 type: [SetType.Deck],
                 year: 2024,

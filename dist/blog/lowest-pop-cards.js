@@ -123,7 +123,7 @@ const generateLowestPopCardsTemplate = async () => {
   <td style="text-align: left">
     <div class="set-list-card-name">
       <span class="card-cost card-cost-${setTemplateDataEntry.costType}">
-        ${setTemplateDataEntry.cost}
+        ${setTemplateDataEntry.cost === -1 ? 'X' : setTemplateDataEntry.cost}
       </span>
       <img class="image-element" src="https://img.silvie.org/misc/elements/${setTemplateDataEntry.element.toLowerCase()}.png" alt="${setTemplateDataEntry.element} element" />
       <abbr class="card-rarity-label card-rarity-label-${setTemplateDataEntry.rarity}" title="${rarity_1.Rarity[setTemplateDataEntry.rarity]}">${setTemplateDataEntry.rarity}</abbr>
