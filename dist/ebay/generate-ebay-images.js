@@ -39,8 +39,8 @@ const generateEbayImages = async () => {
         console.log(`Parsing set ${setCode}`);
         const cardData = options.cardData ?? JSON.parse(fs.readFileSync(`./src/api-data/${baseSetCode}.json`, 'utf8'));
         for (let j = 0; j < cardData.length; j++) {
-            console.log(`    ...card ${j + 1}/${cardData.length}...`);
             const card = cardData[j];
+            console.log(`    ...card ${j + 1}/${cardData.length} (${card.name})...`);
             const cardEditions = card.editions.filter(entry => entry.set.prefix === baseSetCode);
             for (let k = 0; k < cardEditions.length; k++) {
                 console.log(`      ...edition ${k + 1}/${card.editions.length}...`);
