@@ -1,4 +1,14 @@
 // ONLY include the card result_edition UUID
+
+// To extract the deck from the v2 deck builder:
+// JSON.stringify([...temp1.material.map(card => ({
+//   id: card.edition.uuid,
+//   quantity: card.quantity,
+// })), ...temp1.main.map(card => ({
+//   id: card.edition.uuid,
+//   quantity: card.quantity,
+// }))])
+
 export default [{
   setCode: 'DOAp',
   filename: 'lorraine-starter-deck',
@@ -493,4 +503,16 @@ export default [{
   name: 'Tonoris Starter Deck',
   isDeck: true,
   cards: [{ "id": "t5vygy62ec", "quantity": 1 }, { "id": "o17zliihla", "quantity": 1 }, { "id": "fkvedohjev", "quantity": 1 }, { "id": "f0zmetmgpw", "quantity": 1 }, { "id": "153bnn23aq", "quantity": 1 }, { "id": "dx8vzcibxt", "quantity": 1 }, { "id": "tvp6qc1yq4", "quantity": 1 }, { "id": "irr2460isn", "quantity": 1 }, { "id": "ct4ynbdrbe", "quantity": 1 }, { "id": "vgx9r9hdqe", "quantity": 1 }, { "id": "yfbvxjo17z", "quantity": 1 }, { "id": "liihlafkve", "quantity": 1 }, { "id": "km4wuq31hw", "quantity": 4 }, { "id": "o9jwaokcy5", "quantity": 4 }, { "id": "460isnc01f", "quantity": 4 }, { "id": "m6t5vygy62", "quantity": 4 }, { "id": "ecs7ojgo0a", "quantity": 3 }, { "id": "voaggfjz38", "quantity": 4 }, { "id": "nbdrbenl9i", "quantity": 4 }, { "id": "6s8ltljfrp", "quantity": 4 }, { "id": "fqtvp6qc1y", "quantity": 4 }, { "id": "qeuiqurzbl", "quantity": 3 }, { "id": "rsyfbvxjo1", "quantity": 4 }, { "id": "7zliihlafk", "quantity": 3 }, { "id": "vedohjevf0", "quantity": 2 }, { "id": "zmetmgpwkk", "quantity": 3 }, { "id": "18wwndwcku", "quantity": 1 }, { "id": "hwdhemozde", "quantity": 3 }, { "id": "1fz2cjy7yp", "quantity": 3 }, { "id": "7nm6t5vygy", "quantity": 3 }, { "id": "u09s6s8ltl", "quantity": 3 }, { "id": "htkm4wuq31", "quantity": 1 }, { "id": "lso9jwaokc", "quantity": 1 }, { "id": "y5547xsxir", "quantity": 1 }, { "id": "rx319Jnnx2", "quantity": 1 }],
+}, {
+  setCode: 'ReC-SLM',
+  filename: 'silvie-recollection-slime-sovereign',
+  name: 'Silvie Re:Collection, Slime Sovereign',
+  isDeck: true,
+  cards: [{"id":"oldrleovjj","quantity":1},{"id":"1yq5ys18ww","quantity":1},{"id":"tqixqkt0oo","quantity":1},{"id":"f6p4dnamcf","quantity":1},{"id":"xpnjwt9o59","quantity":1},{"id":"7fhr67elh1","quantity":1},{"id":"cp3gc5rxyx","quantity":1},{"id":"0qlqbkjuxz","quantity":1},{"id":"talg5su8sv","quantity":1},{"id":"5cq0rh0gfy","quantity":1},{"id":"lxor8ryu75","quantity":1},{"id":"l0hb9hs3i9","quantity":1},{"id":"gwsde1eioh","quantity":4},{"id":"2998brw1mv","quantity":4},{"id":"v68a4mwrg4","quantity":3},{"id":"5j36ge2btt","quantity":4},{"id":"chqan9q2k2","quantity":3},{"id":"a6i7mbjnks","quantity":2},{"id":"4ejkr74opc","quantity":4},{"id":"guzsebbad3","quantity":2},{"id":"8do76hac6o","quantity":3},{"id":"8tsf7lf8ip","quantity":3},{"id":"dd44nt2lzk","quantity":2},{"id":"1dmdc7kiyn","quantity":4},{"id":"39i1f1hucu","quantity":3},{"id":"2xaye3aeck","quantity":2},{"id":"w6bcjzvgh4","quantity":3},{"id":"8lrk62325v","quantity":2},{"id":"vvY316lUg0","quantity":2},{"id":"8ohovrLf9B","quantity":2},{"id":"23c8lTGAdN","quantity":3},{"id":"nymuibGANq","quantity":2},{"id":"1dmec8kiyn","quantity":3}],
+}, {
+  setCode: 'ReC-SHD',
+  filename: 'tristan-recollection-shadowdancer',
+  name: 'Tristan Re:Collection, Shadowdancer',
+  isDeck: true,
+  cards: [{"id":"liaohbksgf","quantity":1},{"id":"7xgv4e1d36","quantity":1},{"id":"ogeanl0gx1","quantity":1},{"id":"y68ixy5c8s","quantity":1},{"id":"3gu84wiopo","quantity":1},{"id":"rhch2bamoq","quantity":1},{"id":"k2c7wjlzjm","quantity":1},{"id":"w3hri8r76p","quantity":1},{"id":"dpfi0iqlyw","quantity":1},{"id":"cr8208ku90","quantity":1},{"id":"7nj45s69f8","quantity":1},{"id":"u00z3jnsdm","quantity":1},{"id":"mx01wdni7v","quantity":4},{"id":"63wa3x6d21","quantity":4},{"id":"39h1e0htbt","quantity":3},{"id":"1xaye2aebj","quantity":1},{"id":"v5bciyvfh3","quantity":4},{"id":"7lqj52214u","quantity":3},{"id":"z4fyx813xf","quantity":2},{"id":"zkj6yc6z9g","quantity":2},{"id":"44vvektcqb","quantity":4},{"id":"s5d53zb9pe","quantity":3},{"id":"lpnv67mnta","quantity":4},{"id":"xhsejw2vgd","quantity":4},{"id":"dcg516r9za","quantity":2},{"id":"df9qawliao","quantity":4},{"id":"hbksgf7xgv","quantity":2},{"id":"4e1d36ogea","quantity":3},{"id":"nl0gx1y68i","quantity":2},{"id":"4wioporhch","quantity":3},{"id":"2bamoqk2c7","quantity":3},{"id":"wjlzjmw3hr","quantity":3}],
 }]
