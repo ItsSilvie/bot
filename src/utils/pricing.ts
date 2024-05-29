@@ -5,7 +5,7 @@ import * as relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime)
 
-export const getPricingData = async (editionUUID: string, condensed: boolean | undefined) => {
+export const getPricingData = async (editionUUID: string, condensed: boolean | undefined, sealedProduct?: boolean) => {
   let pricingData: PricingData | undefined = undefined;
 
   try {
@@ -14,8 +14,12 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
       history: 'daily',
     });
 
-    if (!condensed) {
+    if (!sealedProduct && !condensed) {
       queryParams.append('lowest', 'true');
+    }
+
+    if (sealedProduct) {
+      queryParams.append('sealed', 'true');
     }
 
     const apiPricingData = await fetch(`${API_URL}/api/pricing?${queryParams.toString()}`)
@@ -82,6 +86,7 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
     lowestPrice?: PricingData["lowestPrice"];
     nonFoil?: string;
     foil?: string;
+    image?: PricingData["image"];
     similar?: PricingData["similar"];
     updated: string;
     url: PricingData["url"];

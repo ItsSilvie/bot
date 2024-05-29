@@ -1,11 +1,22 @@
 import * as path from 'path';
 import { BotCommand } from './types';
 import * as sets from '../api-data/sets.json';
+import * as sealedProducts from '../data/tcgPlayerSealedProducts.json';
 import { IndexCard, IndexCirculation, IndexEdition } from '../data/types';
 import { MessageActionRow, MessageButton } from 'discord.js';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 import * as options from '../api-data/options.json';
 import { pricingReply } from '../replies/pricingReply';
+
+export const fakeSealedSet = {
+  prefix: 'SEALED',
+  name: 'Sealed Product (Booster Boxes, etc.)',
+}
+
+const setsWithSealedProduct = {
+  ...sets,
+  'SEALED': fakeSealedSet,
+}
 
 const command = <BotCommand>{
   name: 'pricing',
@@ -14,7 +25,15 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Get a card\'s TCGplayer pricing data.')
       .addStringOption(option => {
-        [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
+        [...Object.values(setsWithSealedProduct)].sort(({ name: aName }, { name: bName }) => {
+          if (aName === fakeSealedSet.name) {
+            return 1;
+          }
+
+          if (bName === fakeSealedSet.name) {
+            return -1;
+          }
+
           return aName < bName ? -1 : 1;
         }).forEach(({ name, prefix }) => {
           option.addChoice(name, prefix)
@@ -37,15 +56,24 @@ const command = <BotCommand>{
     const filename = interaction.options.getString('set');
     const name = interaction.options.getString('card');
   
-    const set = sets[filename];
+    const set = setsWithSealedProduct[filename];
 
     if (!filename || !set) {
       return interaction.reply({
         content: 'I can\'t find that set.',
+        ephemeral: true,
       });
     }
 
-    const cards = await import(path.resolve(__dirname, `../api-data/${filename}.json`));
+    let cards;
+
+    const isSealedProductsSelected = set.prefix === fakeSealedSet.prefix;
+
+    if (isSealedProductsSelected) {
+      cards = sealedProducts;
+    } else {
+      cards = await import(path.resolve(__dirname, `../api-data/${filename}.json`));
+    }
 
     if (!cards) {
       return interaction.reply({
@@ -67,6 +95,10 @@ const command = <BotCommand>{
         content: 'I was unable to find any cards matching your request.',
         ephemeral: true,
       });
+    }
+
+    if (isSealedProductsSelected) {
+      return await pricingReply(interaction, set.prefix, matches[0].productId, null);
     }
 
     const allVariants: [IndexCard, IndexEdition, IndexCirculation][] = matches.reduce((output, match) => ([
@@ -119,11 +151,17 @@ const command = <BotCommand>{
     const set = options.getString('set');
     const card = options.getString('card');
 
-    if (!set || Object.keys(sets).indexOf(set) === -1) {
+    if (!set || Object.keys(setsWithSealedProduct).indexOf(set) === -1) {
       return;
     }
   
-    const setData = await import(`../api-data/${set}.json`);
+    let setData;
+
+    if (set === fakeSealedSet.prefix) {
+      setData = [...sealedProducts].sort((a, b) => a.productId - b.productId);
+    } else {
+      setData = await import(`../api-data/${set}.json`);
+    }
     let matchCount = 0;
 
     return [...setData.filter((entry, index) => {
@@ -138,10 +176,15 @@ const command = <BotCommand>{
       matchCount += 1;
       return true;
     }).map(entry => ({
+      productId: entry.productId,
       name: `${entry.name}`,
       value: entry.name,
-    }))].sort(({ name: aName }, { name: bName }) => {
-      return aName < bName ? -1 : 1;
+    }))].sort((a, b) => {
+      if (!!a.productId) {
+        return a.productId - b.productId;
+      }
+
+      return a.name < b.name ? -1 : 1;
     });
   }
 }

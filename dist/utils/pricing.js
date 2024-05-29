@@ -5,15 +5,18 @@ const commands_1 = require("./commands");
 const dayjs = require("dayjs");
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
-const getPricingData = async (editionUUID, condensed) => {
+const getPricingData = async (editionUUID, condensed, sealedProduct) => {
     let pricingData = undefined;
     try {
         const queryParams = new URLSearchParams({
             id: editionUUID,
             history: 'daily',
         });
-        if (!condensed) {
+        if (!sealedProduct && !condensed) {
             queryParams.append('lowest', 'true');
+        }
+        if (sealedProduct) {
+            queryParams.append('sealed', 'true');
         }
         const apiPricingData = await fetch(`${commands_1.API_URL}/api/pricing?${queryParams.toString()}`)
             .then(res => res.json());

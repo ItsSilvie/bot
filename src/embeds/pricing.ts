@@ -1,18 +1,28 @@
 import { MessageEmbed } from "discord.js";
-import { IndexCardElement } from "../data/types";
+import { IndexCard, IndexCardElement, IndexEdition } from "../data/types";
 import { getEmbedColorFromElement } from "../utils/card";
-import { IndexEmbed } from "./types";
 import { getPricingData } from "../utils/pricing";
 import * as options from '../api-data/options.json';
 import { PricingData } from "../types";
 
-const pricingEmbed: IndexEmbed = async (card, edition) => {
-  const {
-    collector_number,
-    set,
-  } = edition;
+const pricingEmbed: (card: IndexCard | {
+  productId: number;
+  name: string;
+}, edition: IndexEdition | 'SEALED') => Promise<MessageEmbed> = async (card, edition) => {
+  const collector_number = edition !== 'SEALED' ? edition.collector_number : '000';
+  const set = edition !== 'SEALED' ? edition.set : undefined;
 
-  const pricingData = await getPricingData(edition.uuid, undefined) as {
+  let id;
+
+  if ("productId" in card) {
+    id = card.productId;
+  } else if (edition !== 'SEALED') {
+    id = edition.uuid;
+  } else {
+    throw new Error('Mismatched parameters.');
+  }
+
+  const pricingData = await getPricingData(id, undefined, edition === 'SEALED') as {
     change?: {
       nonFoil?: {
         directLowPrice: number | null;
@@ -41,9 +51,15 @@ const pricingEmbed: IndexEmbed = async (card, edition) => {
   const embed = new MessageEmbed()
     .setTitle(card.name)
     .setURL(pricingData?.url)
-    .setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
-    .setColor(getEmbedColorFromElement(IndexCardElement[card.element]))
     .setAuthor({ name: 'TCGplayer Market Data', url: `https://tcgplayer.pxf.io/KjAXg9?u=${encodeURIComponent('https://www.tcgplayer.com/search/grand-archive/product?productLineName=grand-archive&view=grid')}` });
+
+  if ("rarity" in card && edition !== 'SEALED') {
+    embed.setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
+  }
+
+  if ("element" in card) {
+    embed.setColor(getEmbedColorFromElement(IndexCardElement[card.element]));
+  }
 
   if (pricingData?.nonFoil) {
     embed.addField(`Non-foil`, pricingData.nonFoil);

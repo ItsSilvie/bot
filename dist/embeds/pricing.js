@@ -6,14 +6,31 @@ const card_1 = require("../utils/card");
 const pricing_1 = require("../utils/pricing");
 const options = require("../api-data/options.json");
 const pricingEmbed = async (card, edition) => {
-    const { collector_number, set, } = edition;
-    const pricingData = await (0, pricing_1.getPricingData)(edition.uuid, undefined);
+    const collector_number = edition !== 'SEALED' ? edition.collector_number : '000';
+    const set = edition !== 'SEALED' ? edition.set : undefined;
+    let id;
+    if ("productId" in card) {
+        id = card.productId;
+    }
+    else if (edition !== 'SEALED') {
+        id = edition.uuid;
+    }
+    else {
+        throw new Error('Mismatched parameters.');
+    }
+    console.log(id);
+    const pricingData = await (0, pricing_1.getPricingData)(id, undefined, edition === 'SEALED');
+    console.log(pricingData);
     const embed = new discord_js_1.MessageEmbed()
         .setTitle(card.name)
         .setURL(pricingData?.url)
-        .setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
-        .setColor((0, card_1.getEmbedColorFromElement)(types_1.IndexCardElement[card.element]))
         .setAuthor({ name: 'TCGplayer Market Data', url: `https://tcgplayer.pxf.io/KjAXg9?u=${encodeURIComponent('https://www.tcgplayer.com/search/grand-archive/product?productLineName=grand-archive&view=grid')}` });
+    if ("rarity" in card && edition !== 'SEALED') {
+        embed.setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`);
+    }
+    if ("element" in card) {
+        embed.setColor((0, card_1.getEmbedColorFromElement)(types_1.IndexCardElement[card.element]));
+    }
     if (pricingData?.nonFoil) {
         embed.addField(`Non-foil`, pricingData.nonFoil);
     }
