@@ -86,7 +86,6 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
     lowestPrice?: PricingData["lowestPrice"];
     nonFoil?: string;
     foil?: string;
-    image?: PricingData["image"];
     similar?: PricingData["similar"];
     updated: string;
     url: PricingData["url"];

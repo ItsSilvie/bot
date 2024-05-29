@@ -18,9 +18,7 @@ const pricingEmbed = async (card, edition) => {
     else {
         throw new Error('Mismatched parameters.');
     }
-    console.log(id);
     const pricingData = await (0, pricing_1.getPricingData)(id, undefined, edition === 'SEALED');
-    console.log(pricingData);
     const embed = new discord_js_1.MessageEmbed()
         .setTitle(card.name)
         .setURL(pricingData?.url)
