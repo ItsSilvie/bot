@@ -9,20 +9,21 @@ const pricingEmbed: (card: IndexCard | {
   productId: number;
   name: string;
 }, edition: IndexEdition | 'SEALED') => Promise<MessageEmbed> = async (card, edition) => {
-  const collector_number = edition !== 'SEALED' ? edition.collector_number : '000';
-  const set = edition !== 'SEALED' ? edition.set : undefined;
+  const isSealedProduct = edition === 'SEALED';
+  const collector_number = !isSealedProduct ? edition.collector_number : '000';
+  const set = !isSealedProduct ? edition.set : undefined;
 
   let id;
 
   if ("productId" in card) {
     id = card.productId;
-  } else if (edition !== 'SEALED') {
+  } else if (!isSealedProduct) {
     id = edition.uuid;
   } else {
     throw new Error('Mismatched parameters.');
   }
 
-  const pricingData = await getPricingData(id, undefined, edition === 'SEALED') as {
+  const pricingData = await getPricingData(id, undefined, isSealedProduct) as {
     change?: {
       nonFoil?: {
         directLowPrice: number | null;
@@ -62,7 +63,7 @@ const pricingEmbed: (card: IndexCard | {
   }
 
   if (pricingData?.nonFoil) {
-    embed.addField(`Non-foil`, pricingData.nonFoil);
+    embed.addField(isSealedProduct ? 'Sealed' : 'Non-foil', pricingData.nonFoil);
   }
 
   if (pricingData?.foil) {
@@ -74,7 +75,7 @@ const pricingEmbed: (card: IndexCard | {
       // This is the only edition of this card.
       embed.addField('Insights', `This is [the only version](${pricingData.similar.url}) on TCGplayer.`);
     } else {
-      embed.addField('Insights', `TCGplayer lists [${pricingData.similar.quantity} versions](${pricingData.similar.url}) of this card.
+      embed.addField('Insights', `TCGplayer lists [${pricingData.similar.quantity} versions](${pricingData.similar.url}) of this ${isSealedProduct ? 'sealed product' : 'card'}.
 ${pricingData.lowestPrice ? (
         `Cheapest: [$${pricingData.lowestPrice.price.toFixed(2)}](${pricingData.lowestPrice.url})`
       ) : (
