@@ -6,19 +6,20 @@ const card_1 = require("../utils/card");
 const pricing_1 = require("../utils/pricing");
 const options = require("../api-data/options.json");
 const pricingEmbed = async (card, edition) => {
-    const collector_number = edition !== 'SEALED' ? edition.collector_number : '000';
-    const set = edition !== 'SEALED' ? edition.set : undefined;
+    const isSealedProduct = edition === 'SEALED';
+    const collector_number = !isSealedProduct ? edition.collector_number : '000';
+    const set = !isSealedProduct ? edition.set : undefined;
     let id;
     if ("productId" in card) {
         id = card.productId;
     }
-    else if (edition !== 'SEALED') {
+    else if (!isSealedProduct) {
         id = edition.uuid;
     }
     else {
         throw new Error('Mismatched parameters.');
     }
-    const pricingData = await (0, pricing_1.getPricingData)(id, undefined, edition === 'SEALED');
+    const pricingData = await (0, pricing_1.getPricingData)(id, undefined, isSealedProduct);
     const embed = new discord_js_1.MessageEmbed()
         .setTitle(card.name)
         .setURL(pricingData?.url)
@@ -30,7 +31,7 @@ const pricingEmbed = async (card, edition) => {
         embed.setColor((0, card_1.getEmbedColorFromElement)(types_1.IndexCardElement[card.element]));
     }
     if (pricingData?.nonFoil) {
-        embed.addField(`Non-foil`, pricingData.nonFoil);
+        embed.addField(isSealedProduct ? 'Sealed' : 'Non-foil', pricingData.nonFoil);
     }
     if (pricingData?.foil) {
         embed.addField(`Foil`, pricingData.foil);
@@ -41,7 +42,7 @@ const pricingEmbed = async (card, edition) => {
             embed.addField('Insights', `This is [the only version](${pricingData.similar.url}) on TCGplayer.`);
         }
         else {
-            embed.addField('Insights', `TCGplayer lists [${pricingData.similar.quantity} versions](${pricingData.similar.url}) of this card.
+            embed.addField('Insights', `TCGplayer lists [${pricingData.similar.quantity} versions](${pricingData.similar.url}) of this ${isSealedProduct ? 'sealed product' : 'card'}.
 ${pricingData.lowestPrice ? (`Cheapest: [$${pricingData.lowestPrice.price.toFixed(2)}](${pricingData.lowestPrice.url})`) : (`This one has the lowest price`)}.`);
         }
     }

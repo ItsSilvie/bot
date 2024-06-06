@@ -6,10 +6,11 @@ const getSetLogo = (setPrefix) => {
         case 'ALC':
         case 'ALC 1st':
         case 'ALCSD':
+            return 'ALC.png';
         case 'MRC':
         case 'ReC-SHD':
         case 'ReC-SLM':
-            return 'ALC.png';
+            return 'MRC.png';
         case 'DOA 1st':
         case 'DOA Alter':
         case 'DOASD':
