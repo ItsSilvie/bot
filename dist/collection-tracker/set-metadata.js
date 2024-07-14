@@ -119,6 +119,11 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Promo],
                 year: 2024,
             };
+        case 'SP2':
+            return {
+                type: [SetType.Special],
+                year: 2024,
+            };
         default:
             throw new Error(`No set info specified for ${setPrefix}`);
     }
