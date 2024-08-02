@@ -19,7 +19,7 @@ enum ServerBoostStatus {
 dotenv.config();
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES] });
+const client = new Client({ intents: [] });
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
@@ -32,32 +32,6 @@ client.on('ready', () => {
 		type: 'PLAYING',
 		url: 'https://grandarchivetcg.com'
 	});
-});
-
-client.on('guildMemberUpdate', async (oldMember, newMember) => {
-	const guildId = oldMember.guild.id;
-	if (guildId !== '930860482313736222') {
-		return;
-	}
-
-	const serverBoostRoleId = '1115384775834869801';
-	const oldMemberHasServerBoostRole = oldMember.roles.cache.has(serverBoostRoleId);
-	const newMemberHasServerBoostRole = newMember.roles.cache.has(serverBoostRoleId);
-
-	if (oldMemberHasServerBoostRole === newMemberHasServerBoostRole) {
-		return;
-	}
-
-	try {
-    const queryParams = new URLSearchParams({
-      id: oldMember.user.id,
-			status: newMemberHasServerBoostRole ? ServerBoostStatus.Added : ServerBoostStatus.Removed,
-    });
-	
-		await fetch(`${API_URL}/api/discord/server-boost?${queryParams.toString()}`).then(response => response.json());
-	} catch (e) {
-		console.log(e);
-	}
 });
 
 client.on('interactionCreate', async interaction => {

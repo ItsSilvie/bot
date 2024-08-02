@@ -2,12 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const dotenv = require("dotenv");
-const node_fetch_1 = require("node-fetch");
 // Subcommand handlers.
 const subcommands = require("./commands");
 const cardEmbed_1 = require("./replies/cardEmbed");
 const pricingReply_1 = require("./replies/pricingReply");
-const commands_1 = require("./utils/commands");
 // Must match what is in (silvie-monorepo) /api/discord/server-boost
 var ServerBoostStatus;
 (function (ServerBoostStatus) {
@@ -17,7 +15,7 @@ var ServerBoostStatus;
 // For local development, make sure the .env file is set up in the root dir.
 dotenv.config();
 // Create a new client instance
-const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MEMBERS, discord_js_1.Intents.FLAGS.GUILD_PRESENCES] });
+const client = new discord_js_1.Client({ intents: [] });
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
     console.log('Ready!');
@@ -28,28 +26,6 @@ client.on('ready', () => {
         type: 'PLAYING',
         url: 'https://grandarchivetcg.com'
     });
-});
-client.on('guildMemberUpdate', async (oldMember, newMember) => {
-    const guildId = oldMember.guild.id;
-    if (guildId !== '930860482313736222') {
-        return;
-    }
-    const serverBoostRoleId = '1115384775834869801';
-    const oldMemberHasServerBoostRole = oldMember.roles.cache.has(serverBoostRoleId);
-    const newMemberHasServerBoostRole = newMember.roles.cache.has(serverBoostRoleId);
-    if (oldMemberHasServerBoostRole === newMemberHasServerBoostRole) {
-        return;
-    }
-    try {
-        const queryParams = new URLSearchParams({
-            id: oldMember.user.id,
-            status: newMemberHasServerBoostRole ? ServerBoostStatus.Added : ServerBoostStatus.Removed,
-        });
-        await (0, node_fetch_1.default)(`${commands_1.API_URL}/api/discord/server-boost?${queryParams.toString()}`).then(response => response.json());
-    }
-    catch (e) {
-        console.log(e);
-    }
 });
 client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton()) {
