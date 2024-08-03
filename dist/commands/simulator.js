@@ -138,13 +138,13 @@ const command = {
             })() : '';
             const personalScoreString = (() => {
                 if (!data.pb || !data.pw) {
-                    return 'You\'ve set their first score for this category. <:wow_silvie:918934079435583519>';
+                    return 'You\'ve set your first score for this category!';
                 }
                 if (data.score > data.pb) {
-                    return `You beat your previous personal best by ${(data.score - data.pb).toLocaleString()}. <:wow_silvie:918934079435583519>`;
+                    return `You beat your previous personal best by ${(data.score - data.pb).toLocaleString()}!`;
                 }
                 if (data.score < data.pw) {
-                    return `You beat your previous personal worst by ${(data.pw - data.score).toLocaleString()}. <:cry_silvie:918934079481712690>`;
+                    return `You beat your previous personal worst by ${(data.pw - data.score).toLocaleString()}...!`;
                 }
                 return `Your personal best is ${data.pb} and worst is ${data.pw}.`;
             })();

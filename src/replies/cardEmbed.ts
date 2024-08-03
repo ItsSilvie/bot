@@ -35,6 +35,6 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
   
   return interaction.reply({
     embeds: [embed],
-    content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,
+    content: `<@${interaction.member.user.id}> here you go!`,
   });
 }

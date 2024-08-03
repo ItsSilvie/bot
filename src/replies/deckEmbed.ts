@@ -55,6 +55,6 @@ export const embedDeck = async (interaction: ButtonInteraction | CommandInteract
   return interaction.editReply({
     files: [attachment],
     embeds: [embed],
-    content: `<@${interaction.member.user.id}> here you go ${deckData.champions.includes('Silvie') ? '<:anxious_silvie:985427396444434492>' : '<:wow_silvie:918934079435583519>'}`,
+    content: `<@${interaction.member.user.id}> here you go!`,
   });
 }

@@ -27,7 +27,7 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, config) 
     const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, config);
     return interaction.reply({
         embeds: [embed],
-        content: `<@${interaction.member.user.id}> here you go <:wow_silvie:918934079435583519>`,
+        content: `<@${interaction.member.user.id}> here you go!`,
     });
 };
 exports.embedCard = embedCard;

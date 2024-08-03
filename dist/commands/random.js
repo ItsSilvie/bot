@@ -23,21 +23,6 @@ const command = {
         });
     },
     handler: async (interaction, client) => {
-        let messages = [];
-        if (interaction.guild.me.permissions.has('USE_EXTERNAL_EMOJIS')) {
-            messages = [
-                "<:wow_silvie:918934079435583519>",
-                "<:shocked_silvie:918934079104245851>",
-                "<:cry_silvie:918934079481712690>",
-            ];
-        }
-        else {
-            messages = [
-                'Here you go!',
-                'Check this out!',
-                'Look what I found!'
-            ];
-        }
         const filename = interaction.options.getString('set');
         let set;
         if (filename) {
