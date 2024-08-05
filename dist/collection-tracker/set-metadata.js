@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSetMetadata = exports.getSetInfo = exports.getSetLogo = void 0;
+exports.getSetMetadata = exports.getSetInfo = exports.getSetCategory = exports.getSetLogo = void 0;
 const getSetLogo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
@@ -27,6 +27,42 @@ const getSetLogo = (setPrefix) => {
     }
 };
 exports.getSetLogo = getSetLogo;
+const getSetCategory = (setPrefix) => {
+    switch (setPrefix) {
+        case 'ALC':
+        case 'ALC 1st':
+        case 'ALCSD':
+        case 'MRC':
+        case 'ReC-SHD':
+        case 'ReC-SLM':
+            return 'Alchemical Revolution';
+        case 'DOA 1st':
+        case 'DOA Alter':
+        case 'DOASD':
+        case 'DOAp':
+        case 'DOApSP':
+        case 'FTC':
+        case 'FTCA':
+            return 'Dawn of Ashes';
+        case 'GSC':
+        case 'EVP':
+        case 'KSP':
+        case 'P22':
+        case 'P23':
+        case 'P24':
+        case 'SLC':
+            return 'SLC.png';
+        case 'DEMO22':
+        case 'DEMO23':
+            return 'Demo decks';
+        case 'SAMPLE':
+        case 'DEMO22-SAMPLE':
+            return 'Samples';
+        default:
+            return 'Miscellaneous';
+    }
+};
+exports.getSetCategory = getSetCategory;
 var SetType;
 (function (SetType) {
     SetType["Deck"] = "deck";

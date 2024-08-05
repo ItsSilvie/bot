@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import JsonToTS from 'json-to-ts';
 import { getRarityCodeFromRarityId, Rarity } from '../utils/rarity';
 import nonIndexSets from './non-index-sets';
-import { getSetInfo, getSetLogo, getSetMetadata } from './set-metadata';
+import { getSetCategory, getSetInfo, getSetLogo, getSetMetadata } from './set-metadata';
 
 const TRACKER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const TRACKER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
@@ -154,6 +154,7 @@ const generateTrackerData = async () => {
         }, {}),
         total: setCardData.length,
       },
+      category: null,
       logo: null,
       info: null,
     }
@@ -162,6 +163,12 @@ const generateTrackerData = async () => {
 
     if (setLogo) {
       setListSetData.logo = setLogo;
+    }
+
+    const setCategory = getSetCategory(setCode);
+
+    if (setCategory) {
+      setListSetData.category = setCategory;
     }
 
     const setInfo = getSetInfo(setCode);

@@ -120,12 +120,17 @@ const generateTrackerData = async () => {
                 }, {}),
                 total: setCardData.length,
             },
+            category: null,
             logo: null,
             info: null,
         };
         const setLogo = (0, set_metadata_1.getSetLogo)(setCode);
         if (setLogo) {
             setListSetData.logo = setLogo;
+        }
+        const setCategory = (0, set_metadata_1.getSetCategory)(setCode);
+        if (setCategory) {
+            setListSetData.category = setCategory;
         }
         const setInfo = (0, set_metadata_1.getSetInfo)(setCode);
         if (setInfo) {
