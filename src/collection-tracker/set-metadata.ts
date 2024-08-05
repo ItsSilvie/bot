@@ -55,7 +55,7 @@ export const getSetCategory = (setPrefix) => {
     case 'P23':
     case 'P24':
     case 'SLC':
-      return 'SLC.png';
+      return 'Promotional';
 
     case 'DEMO22':
     case 'DEMO23':
