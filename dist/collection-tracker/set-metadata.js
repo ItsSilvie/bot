@@ -8,6 +8,7 @@ const getSetLogo = (setPrefix) => {
         case 'ALCSD':
             return 'ALC.png';
         case 'MRC':
+        case 'MRC 1st':
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'MRC.png';
@@ -33,6 +34,7 @@ const getSetCategory = (setPrefix) => {
         case 'ALC 1st':
         case 'ALCSD':
         case 'MRC':
+        case 'MRC 1st':
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'Alchemical Revolution';
@@ -76,6 +78,7 @@ const getSetInfo = (setPrefix) => {
         case 'ALC':
         case 'ALC 1st':
         case 'MRC':
+        case 'MRC 1st':
             return {
                 type: [SetType.Standard],
                 year: 2024,
