@@ -6,6 +6,7 @@ import { MessageActionRow, MessageButton } from 'discord.js';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 import * as options from '../api-data/options.json';
 import { embedCard } from '../replies/cardEmbed';
+import { handleSetAutocomplete } from '../utils/commands';
 
 const command = <BotCommand>{
   name: 'index',
@@ -14,16 +15,11 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Search for a card in Grand Archive\'s Index by name and set.')
       .addStringOption(option => {
-        [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
-          return aName < bName ? -1 : 1;
-        }).forEach(({ name, prefix }) => {
-          option.addChoice(name, prefix)
-        });
-  
         return option
           .setName('set')
           .setDescription('Which set is the card part of?')
-          .setRequired(true);
+          .setRequired(true)
+          .setAutocomplete(true);
       })
       .addStringOption(option => 
         option
@@ -115,6 +111,12 @@ const command = <BotCommand>{
     return await embedCard(interaction, set.prefix, card.uuid, edition.uuid);
   },
   handleAutocomplete: async (interaction) => {
+		const focusedOption = interaction.options.getFocused(true);
+
+    if (focusedOption.name === 'set') {
+      return handleSetAutocomplete(interaction);
+    }
+
     const { options } = interaction;
     const set = options.getString('set');
     const card = options.getString('card');

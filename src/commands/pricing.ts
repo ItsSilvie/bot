@@ -7,6 +7,7 @@ import { MessageActionRow, MessageButton } from 'discord.js';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 import * as options from '../api-data/options.json';
 import { pricingReply } from '../replies/pricingReply';
+import { handleSetAutocomplete } from '../utils/commands';
 
 export const fakeSealedSet = {
   prefix: 'SEALED',
@@ -25,24 +26,11 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Get a card\'s TCGplayer pricing data.')
       .addStringOption(option => {
-        [...Object.values(setsWithSealedProduct)].sort(({ name: aName }, { name: bName }) => {
-          if (aName === fakeSealedSet.name) {
-            return 1;
-          }
-
-          if (bName === fakeSealedSet.name) {
-            return -1;
-          }
-
-          return aName < bName ? -1 : 1;
-        }).forEach(({ name, prefix }) => {
-          option.addChoice(name, prefix)
-        });
-  
         return option
           .setName('set')
           .setDescription('Which set is the card part of?')
-          .setRequired(true);
+          .setRequired(true)
+          .setAutocomplete(true);
       })
       .addStringOption(option => 
         option
@@ -147,6 +135,12 @@ const command = <BotCommand>{
     return await pricingReply(interaction, set.prefix, card.uuid, edition.uuid);
   },
   handleAutocomplete: async (interaction) => {
+		const focusedOption = interaction.options.getFocused(true);
+
+    if (focusedOption.name === 'set') {
+      return handleSetAutocomplete(interaction, setsWithSealedProduct);
+    }
+    
     const { options } = interaction;
     const set = options.getString('set');
     const card = options.getString('card');

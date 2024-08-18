@@ -4,6 +4,7 @@ const path = require("path");
 const array_1 = require("../utils/array");
 const sets = require("../api-data/sets.json");
 const cardEmbed_1 = require("../replies/cardEmbed");
+const commands_1 = require("../utils/commands");
 const command = {
     name: 'random',
     generator: (subcommand) => {
@@ -11,15 +12,11 @@ const command = {
             .setName(command.name)
             .setDescription('Reveals a Grand Archive card at random.')
             .addStringOption(option => {
-            [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
-                return aName < bName ? -1 : 1;
-            }).forEach(({ name, prefix }) => {
-                option.addChoice(name, prefix);
-            });
             return option
                 .setName('set')
                 .setDescription('Only include cards from a certain set?')
-                .setRequired(false);
+                .setRequired(false)
+                .setAutocomplete(true);
         });
     },
     handler: async (interaction, client) => {
@@ -64,5 +61,11 @@ const command = {
         const [card, edition] = (0, array_1.shuffleArray)(allVariants)[0];
         return await (0, cardEmbed_1.embedCard)(interaction, set.prefix, card.uuid, edition.uuid);
     },
+    handleAutocomplete: async (interaction) => {
+        const focusedOption = interaction.options.getFocused(true);
+        if (focusedOption.name === 'set') {
+            return (0, commands_1.handleSetAutocomplete)(interaction);
+        }
+    }
 };
 exports.default = command;

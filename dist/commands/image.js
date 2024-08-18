@@ -5,6 +5,7 @@ const sets = require("../api-data/sets.json");
 const discord_js_1 = require("discord.js");
 const options = require("../api-data/options.json");
 const cardEmbed_1 = require("../replies/cardEmbed");
+const commands_1 = require("../utils/commands");
 const command = {
     name: 'img',
     generator: (subcommand) => {
@@ -12,15 +13,11 @@ const command = {
             .setName(command.name)
             .setDescription('Search for a card image in Grand Archive\'s Index by name and set.')
             .addStringOption(option => {
-            [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
-                return aName < bName ? -1 : 1;
-            }).forEach(({ name, prefix }) => {
-                option.addChoice(name, prefix);
-            });
             return option
                 .setName('set')
                 .setDescription('Which set is the card part of?')
-                .setRequired(true);
+                .setRequired(true)
+                .setAutocomplete(true);
         })
             .addStringOption(option => option
             .setName('card')
@@ -100,6 +97,10 @@ const command = {
         });
     },
     handleAutocomplete: async (interaction) => {
+        const focusedOption = interaction.options.getFocused(true);
+        if (focusedOption.name === 'set') {
+            return (0, commands_1.handleSetAutocomplete)(interaction);
+        }
         const { options } = interaction;
         const set = options.getString('set');
         const card = options.getString('card');

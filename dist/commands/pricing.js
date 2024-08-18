@@ -7,6 +7,7 @@ const sealedProducts = require("../data/tcgPlayerSealedProducts.json");
 const discord_js_1 = require("discord.js");
 const options = require("../api-data/options.json");
 const pricingReply_1 = require("../replies/pricingReply");
+const commands_1 = require("../utils/commands");
 exports.fakeSealedSet = {
     prefix: 'SEALED',
     name: 'Sealed Product (Booster Boxes, etc.)',
@@ -22,21 +23,11 @@ const command = {
             .setName(command.name)
             .setDescription('Get a card\'s TCGplayer pricing data.')
             .addStringOption(option => {
-            [...Object.values(setsWithSealedProduct)].sort(({ name: aName }, { name: bName }) => {
-                if (aName === exports.fakeSealedSet.name) {
-                    return 1;
-                }
-                if (bName === exports.fakeSealedSet.name) {
-                    return -1;
-                }
-                return aName < bName ? -1 : 1;
-            }).forEach(({ name, prefix }) => {
-                option.addChoice(name, prefix);
-            });
             return option
                 .setName('set')
                 .setDescription('Which set is the card part of?')
-                .setRequired(true);
+                .setRequired(true)
+                .setAutocomplete(true);
         })
             .addStringOption(option => option
             .setName('card')
@@ -125,6 +116,10 @@ const command = {
         return await (0, pricingReply_1.pricingReply)(interaction, set.prefix, card.uuid, edition.uuid);
     },
     handleAutocomplete: async (interaction) => {
+        const focusedOption = interaction.options.getFocused(true);
+        if (focusedOption.name === 'set') {
+            return (0, commands_1.handleSetAutocomplete)(interaction, setsWithSealedProduct);
+        }
         const { options } = interaction;
         const set = options.getString('set');
         const card = options.getString('card');

@@ -6,6 +6,7 @@ import { BotCommand } from './types';
 import * as sets from '../api-data/sets.json';
 import indexEmbed from '../embeds/gaIndex';
 import { embedCard } from '../replies/cardEmbed';
+import { handleSetAutocomplete } from '../utils/commands';
 
 const command = <BotCommand>{
   name: 'random',
@@ -14,16 +15,11 @@ const command = <BotCommand>{
       .setName(command.name)
       .setDescription('Reveals a Grand Archive card at random.')
       .addStringOption(option => {
-        [...Object.values(sets)].sort(({ name: aName }, { name: bName }) => {
-          return aName < bName ? -1 : 1;
-        }).forEach(({ name, prefix }) => {
-          option.addChoice(name, prefix)
-        });
-  
         return option
           .setName('set')
           .setDescription('Only include cards from a certain set?')
-          .setRequired(false);
+          .setRequired(false)
+          .setAutocomplete(true);
       })
   },
   handler: async (interaction, client) => {
@@ -74,6 +70,13 @@ const command = <BotCommand>{
     const [card, edition] = shuffleArray(allVariants)[0];
     return await embedCard(interaction, set.prefix, card.uuid, edition.uuid);
   },
+  handleAutocomplete: async (interaction) => {
+		const focusedOption = interaction.options.getFocused(true);
+
+    if (focusedOption.name === 'set') {
+      return handleSetAutocomplete(interaction);
+    }
+  }
 }
 
 export default command;
