@@ -22,10 +22,18 @@ const chartPlugin = {
     }
 };
 const generateCanva = async (title, subtitle, labels, datasetNonFoilMarketPrice, datasetNonFoilLowPrice, datasetNonFoilMidPrice, datasetFoilMarketPrice, datasetFoilLowPrice, datasetFoilMidPrice, isSealedProduct) => {
+    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
     const sharedDatasetOptions = {
         cubicInterpolationMode: 'monotone',
         pointRadius: 0,
         pointStyle: 'false',
+        segment: {
+            backgroundColor: ctx => skipped(ctx, 'transparent'),
+            borderColor: ctx => skipped(ctx, 'rgba(255, 255, 255, 0.2)'),
+            borderWidth: ctx => skipped(ctx, 1),
+            borderDash: ctx => skipped(ctx, [6, 6]),
+        },
+        spanGaps: true,
     };
     const gridColors = {
         color: 'rgba(255, 255, 255, 0.25)',
