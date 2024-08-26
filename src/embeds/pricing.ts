@@ -32,7 +32,8 @@ const generateCanva = async (
   datasetNonFoilMidPrice,
   datasetFoilMarketPrice,
   datasetFoilLowPrice,
-  datasetFoilMidPrice
+  datasetFoilMidPrice,
+  isSealedProduct
 ) => {
   const sharedDatasetOptions = {
     cubicInterpolationMode: 'monotone',
@@ -147,16 +148,16 @@ const generateCanva = async (
       grace: '10%',
       grid: gridColors,
       title: {
-        color: 'rgba(255, 147, 130, 1)',
+        color: isSealedProduct ? 'rgba(96, 189, 124, 1)' : 'rgba(255, 147, 130, 1)',
         display: true,
         font: {
           size: 17,
         },
-        text: 'Non-foil',
+        text: isSealedProduct ? 'Sealed' : 'Non-foil',
       },
       ticks: {
         ...sharedYAxisTicks,
-        color: 'rgba(255, 147, 130, 1)',
+        color: isSealedProduct ? 'rgba(96, 189, 124, 1)' : 'rgba(255, 147, 130, 1)',
       },
       type: 'linear',
       offset: true,
@@ -171,8 +172,8 @@ const generateCanva = async (
         ...sharedDatasetOptions,
         label: 'Market',
         data: datasetNonFoilMarketPrice,
-        backgroundColor: 'rgba(255, 147, 130, 0.05)',
-        borderColor: 'rgba(255, 147, 130, 1)',
+        backgroundColor: isSealedProduct ? 'rgba(96, 189, 124, 0.05)' : 'rgba(255, 147, 130, 0.05)',
+        borderColor: isSealedProduct ? 'rgba(96, 189, 124, 1)' : 'rgba(255, 147, 130, 1)',
         yAxisID: 'y',
         fill: 'start',
       },
@@ -180,7 +181,7 @@ const generateCanva = async (
         ...sharedDatasetOptions,
         label: 'Mid',
         data: datasetNonFoilMidPrice,
-        borderColor: 'rgba(255, 147, 130, 1)',
+        borderColor: isSealedProduct ? 'rgba(96, 189, 124, 1)' : 'rgba(255, 147, 130, 1)',
         borderDash: [5],
         yAxisID: 'y',
       },
@@ -188,7 +189,7 @@ const generateCanva = async (
         ...sharedDatasetOptions,
         label: 'Low',
         data: datasetNonFoilLowPrice,
-        borderColor: 'rgba(255, 147, 130, 1)',
+        borderColor: isSealedProduct ? 'rgba(96, 189, 124, 1)' : 'rgba(255, 147, 130, 1)',
         borderDash: [2],
         yAxisID: 'y',
       },
@@ -388,7 +389,7 @@ ${pricingData.lowestPrice ? (
     const canva = await generateCanva(
       card.name,
       // @ts-ignore
-      `${edition !== 'SEALED' ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${getRarityCodeFromRarityId(edition.rarity)}` : 'Sealed product'} — Price history (31 days)`,
+      `${!isSealedProduct ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${getRarityCodeFromRarityId(edition.rarity)}` : 'Sealed product'} — Price history (31 days)`,
       labels,
       reversedHistory.map(entry => {
         if (entry.prices.nonFoil?.marketPrice) {
@@ -426,7 +427,8 @@ ${pricingData.lowestPrice ? (
         }
         
         return NaN;
-      })
+      }),
+      isSealedProduct
     );
 
     embed.setImage('attachment://graph.png');
