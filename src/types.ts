@@ -8,6 +8,15 @@ export interface PricingDataCirculation {
   subTypeName: number;
 }
 
+export interface PricingHistory {
+  prices: {
+    foil?: PricingDataCirculation;
+    nonFoil?: PricingDataCirculation;
+  };
+  type: string;
+  updated: number;
+}
+
 export interface PricingData {
   change?: {
     prices: {
@@ -16,6 +25,7 @@ export interface PricingData {
     };
     type: string;
   };
+  history: PricingHistory[];
   lowestPrice?: {
     price: number;
     saving: number;

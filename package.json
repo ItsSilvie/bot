@@ -7,11 +7,14 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "18.x",
+    "node": "20.x",
     "yarn": "1.x"
   },
   "dependencies": {
     "@discordjs/rest": "^0.2.0-canary.0",
+    "canvas": "^3.0.0-rc2",
+    "chart.js": "3.9.1",
+    "chartjs-node-canvas": "^4.1.6",
     "dayjs": "^1.11.10",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.1",

@@ -11,6 +11,7 @@ const getPricingData = async (editionUUID, condensed, sealedProduct) => {
         const queryParams = new URLSearchParams({
             id: editionUUID,
             history: 'daily',
+            unlimited: 'true',
         });
         if (!sealedProduct && !condensed) {
             queryParams.append('lowest', 'true');
@@ -58,6 +59,7 @@ const getPricingData = async (editionUUID, condensed, sealedProduct) => {
         return `This card has no ${foil ? 'foil' : 'non-foil'} market data available.`;
     };
     const output = {
+        history: pricingData?.history,
         similar: pricingData?.similar,
         updated: `Updated ${pricingUpdated} - updates daily.`,
         url: pricingData?.url,
@@ -67,6 +69,19 @@ const getPricingData = async (editionUUID, condensed, sealedProduct) => {
     }
     if (pricingData?.prices.nonFoil) {
         output.nonFoil = getVariantPricing(false);
+    }
+    if (output.history) {
+        output.history = [
+            {
+                prices: {
+                    nonFoil: pricingData?.prices.nonFoil,
+                    foil: pricingData?.prices.foil,
+                },
+                type: 'daily',
+                updated: pricingData.updated,
+            },
+            ...output.history,
+        ];
     }
     if (pricingData?.lowestPrice) {
         output.lowestPrice = pricingData.lowestPrice;

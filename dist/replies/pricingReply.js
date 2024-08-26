@@ -40,8 +40,15 @@ const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID) => {
         }
         embed = await (0, pricing_1.default)(cardMatch, editionMatch);
     }
+    if (embed.attachment) {
+        return interaction.reply({
+            embeds: [embed.embed],
+            files: [embed.attachment],
+            content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,
+        });
+    }
     return interaction.reply({
-        embeds: [embed],
+        embeds: [embed.embed],
         content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,
     });
 };
