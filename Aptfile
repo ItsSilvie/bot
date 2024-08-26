@@ -1,3 +1,4 @@
-libc6
-libcairo2
-python-cairo
+cairo-devel
+pango-devel
+libjpeg-turbo-devel
+giflib-devel
