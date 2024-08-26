@@ -310,7 +310,7 @@ ${pricingData.lowestPrice ? (`Cheapest: [$${pricingData.lowestPrice.price.toFixe
         });
         const canva = await generateCanva(card.name, 
         // @ts-ignore
-        `${!isSealedProduct ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${(0, rarity_1.getRarityCodeFromRarityId)(edition.rarity)}` : 'Sealed product'} — Price history (31 days)`, labels, reversedHistory.map(entry => {
+        `${!isSealedProduct ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${(0, rarity_1.getRarityCodeFromRarityId)(edition.rarity)}` : 'Sealed product'} — Price history`, labels, reversedHistory.map(entry => {
             if (entry.prices.nonFoil?.marketPrice) {
                 return entry.prices.nonFoil?.marketPrice;
             }
