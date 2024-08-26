@@ -11,6 +11,7 @@ const getPricingData = async (editionUUID, condensed, sealedProduct) => {
         const queryParams = new URLSearchParams({
             id: editionUUID,
             history: 'daily',
+            unlimited: 'true',
         });
         if (!sealedProduct && !condensed) {
             queryParams.append('lowest', 'true');

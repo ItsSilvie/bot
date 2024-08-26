@@ -12,6 +12,7 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
     const queryParams = new URLSearchParams({
       id: editionUUID,
       history: 'daily',
+      unlimited: 'true',
     });
 
     if (!sealedProduct && !condensed) {

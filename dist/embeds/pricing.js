@@ -298,10 +298,16 @@ ${pricingData.lowestPrice ? (`Cheapest: [$${pricingData.lowestPrice.price.toFixe
             text: `${pricingData?.updated}\nAffiliate links help keep Silvie.org online.`,
         });
     }
-    console.log(edition);
-    if (pricingData?.history && edition !== 'SEALED' && edition.uuid === 'lo6bC9AWKJ') {
+    if (pricingData?.history) {
         const reversedHistory = [...pricingData.history].reverse();
-        const labels = reversedHistory.map(entry => (dayjs(entry.updated).format('Do MMM')));
+        const currentYear = (new Date()).getFullYear();
+        const labels = reversedHistory.map(entry => {
+            const labelYear = new Date(entry.updated).getFullYear();
+            if (labelYear !== currentYear) {
+                return dayjs(entry.updated).format('Do MMM YY');
+            }
+            return dayjs(entry.updated).format('Do MMM');
+        });
         const canva = await generateCanva(card.name, 
         // @ts-ignore
         `${edition !== 'SEALED' ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${(0, rarity_1.getRarityCodeFromRarityId)(edition.rarity)}` : 'Sealed product'} — Price history (31 days)`, labels, reversedHistory.map(entry => {
