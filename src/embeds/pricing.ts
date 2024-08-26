@@ -333,7 +333,7 @@ const pricingEmbed: (card: IndexCard | {
     .setURL(pricingData?.url)
     .setAuthor({ name: 'TCGplayer Market Data', url: `https://tcgplayer.pxf.io/KjAXg9?u=${encodeURIComponent('https://www.tcgplayer.com/search/grand-archive/product?productLineName=grand-archive&view=grid')}` });
 
-  if ("rarity" in card && edition !== 'SEALED') {
+  if (edition !== 'SEALED') {
     embed.setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
   }
 
