@@ -86,10 +86,12 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
     lowestPrice?: PricingData["lowestPrice"];
     nonFoil?: string;
     foil?: string;
+    history?: PricingData["history"];
     similar?: PricingData["similar"];
     updated: string;
     url: PricingData["url"];
   } = {
+    history: pricingData?.history,
     similar: pricingData?.similar,
     updated: `Updated ${pricingUpdated} - updates daily.`,
     url: pricingData?.url,
@@ -101,6 +103,20 @@ export const getPricingData = async (editionUUID: string, condensed: boolean | u
 
   if (pricingData?.prices.nonFoil) {
     output.nonFoil = getVariantPricing(false);
+  }
+
+  if (output.history) {
+    output.history = [
+      {
+        prices: {
+          nonFoil: pricingData?.prices.nonFoil,
+          foil: pricingData?.prices.foil,
+        },
+        type: 'daily',
+        updated: pricingData.updated,
+      },
+      ...output.history,
+    ]
   }
 
   if (pricingData?.lowestPrice) {
