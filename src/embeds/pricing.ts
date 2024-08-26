@@ -389,7 +389,7 @@ ${pricingData.lowestPrice ? (
     const canva = await generateCanva(
       card.name,
       // @ts-ignore
-      `${!isSealedProduct ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${getRarityCodeFromRarityId(edition.rarity)}` : 'Sealed product'} — Price history (31 days)`,
+      `${!isSealedProduct ? `${edition.set.prefix} ${edition.set.language}-${edition.collector_number} ${getRarityCodeFromRarityId(edition.rarity)}` : 'Sealed product'} — Price history`,
       labels,
       reversedHistory.map(entry => {
         if (entry.prices.nonFoil?.marketPrice) {
