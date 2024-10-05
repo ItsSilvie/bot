@@ -38,6 +38,10 @@ const getSetCategory = (setPrefix) => {
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'Alchemical Revolution';
+        case 'AMB':
+        case 'AMB 1st':
+        case 'AMBSD':
+            return 'Mortal Ambition';
         case 'DOA 1st':
         case 'DOA Alter':
         case 'DOASD':
@@ -77,6 +81,8 @@ const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
         case 'ALC 1st':
+        case 'AMB':
+        case 'AMB 1st':
         case 'MRC':
         case 'MRC 1st':
             return {
@@ -84,6 +90,7 @@ const getSetInfo = (setPrefix) => {
                 year: 2024,
             };
         case 'ALCSD':
+        case 'AMBSD':
         case 'ReC-SHD':
         case 'ReC-SLM':
             return {
