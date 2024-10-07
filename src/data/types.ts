@@ -184,6 +184,7 @@ export enum IndexCardElement {
   ARCANE = 'Arcane',
   ASTRA = 'Astra',
   CRUX = 'Crux',
+  EXIA = 'Exia',
   FIRE = 'Fire',
   LUXEM = 'Luxem',
   NEOS = 'Neos',

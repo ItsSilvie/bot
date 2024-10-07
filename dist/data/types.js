@@ -73,6 +73,7 @@ var IndexCardElement;
     IndexCardElement["ARCANE"] = "Arcane";
     IndexCardElement["ASTRA"] = "Astra";
     IndexCardElement["CRUX"] = "Crux";
+    IndexCardElement["EXIA"] = "Exia";
     IndexCardElement["FIRE"] = "Fire";
     IndexCardElement["LUXEM"] = "Luxem";
     IndexCardElement["NEOS"] = "Neos";

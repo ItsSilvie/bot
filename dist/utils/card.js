@@ -75,6 +75,8 @@ const getEmbedColorFromElement = (element) => {
         case types_1.CardElement.Crux:
         case types_1.IndexCardElement.CRUX:
             return '#C28FDD';
+        case types_1.IndexCardElement.EXIA:
+            return '#65191b';
         case types_1.CardElement.Fire:
         case types_1.IndexCardElement.FIRE:
             return '#E3462A';

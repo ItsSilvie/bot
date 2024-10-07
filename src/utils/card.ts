@@ -109,6 +109,9 @@ export const getEmbedColorFromElement: (element: CardElement | IndexCardElement)
     case IndexCardElement.CRUX:
       return '#C28FDD';
 
+    case IndexCardElement.EXIA:
+      return '#65191b';
+
     case CardElement.Fire:
     case IndexCardElement.FIRE:
       return '#E3462A';
