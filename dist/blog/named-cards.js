@@ -30,6 +30,7 @@ var CustomType;
     CustomType["Ally"] = "Allies";
     CustomType["Location"] = "Places";
     CustomType["Item"] = "Items";
+    CustomType["Phantasia"] = "Phantasia";
 })(CustomType || (CustomType = {}));
 const getCustomTypeFromType = (type) => {
     switch (type) {
@@ -43,6 +44,8 @@ const getCustomTypeFromType = (type) => {
         case 'ACTION':
         case 'ATTACK':
             return CustomType.Item;
+        case 'PHANTASIA':
+            return CustomType.Phantasia;
     }
 };
 const generateNamedCardsTemplate = async () => {
@@ -85,6 +88,8 @@ const generateNamedCardsTemplate = async () => {
         if (a.type !== b.type) {
             const aIndex = typeOrder.findIndex(entry => entry === a.type);
             const bIndex = typeOrder.findIndex(entry => entry === b.type);
+            console.log('a', a.name, a.type);
+            console.log('b', b.name, b.type);
             if (aIndex === -1) {
                 throw new Error(`Unhandled deck sort type: ${a.type}`);
             }

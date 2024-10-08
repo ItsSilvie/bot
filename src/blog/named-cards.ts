@@ -43,6 +43,7 @@ enum CustomType {
   Ally = 'Allies',
   Location = 'Places',
   Item = 'Items',
+  Phantasia = 'Phantasia',
 }
 
 const getCustomTypeFromType = (type: string) => {
@@ -60,6 +61,9 @@ const getCustomTypeFromType = (type: string) => {
     case 'ACTION':
     case 'ATTACK':
       return CustomType.Item;
+
+    case 'PHANTASIA':
+      return CustomType.Phantasia;
   }
 }
 

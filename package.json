@@ -34,18 +34,19 @@
     "build-api-data": "shx cp -r ./src/api-data/ ./dist/ & shx cp -r ./src/api-data/ ../silvie-monorepo/apps/api.silvie.org/src/",
     "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
-    "scrape": "node ./dist/api-scrape.js & yarn build-local & yarn update-static-files & yarn update-stocklist-files & yarn update-misc-files",
+    "scrape": "node ./dist/api-scrape.js",
+    "parse": "yarn update-static-files & yarn update-stocklist-files & yarn update-misc-files",
     "start": "node .",
     "deploy": "git push heroku main",
-    "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js & node ./dist/blog/lowest-pop-cards.js & node ./dist/blog/named-cards.js & node ./dist/blog/cards-by-illustrator.js & node ./dist/blog/cards-by-misc.js",
-    "generate-deck-builder-data": "node ./dist/deck-builder/generate-deck-builder-data.js",
-    "generate-tracker-data": "echo \"Tracker data will be built in silvie-monorepo.\" & node ./dist/collection-tracker/generate-tracker-data.js",
-    "ebay-images": "node ./dist/ebay/generate-ebay-images.js",
-    "create-shopify-import": "node ./dist/shopify/generate-product-import.js",
-    "create-stocklists": "node ./dist/ebay/generate-blank-stocklist.js",
+    "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js --trace-warnings & node ./dist/blog/lowest-pop-cards.js --trace-warnings & node ./dist/blog/named-cards.js --trace-warnings & node ./dist/blog/cards-by-illustrator.js --trace-warnings & node ./dist/blog/cards-by-misc.js --trace-warnings",
+    "generate-deck-builder-data": "node ./dist/deck-builder/generate-deck-builder-data.js --trace-warnings",
+    "generate-tracker-data": "echo \"Tracker data will be built in silvie-monorepo.\" & node ./dist/collection-tracker/generate-tracker-data.js --trace-warnings",
+    "ebay-images": "node ./dist/ebay/generate-ebay-images.js --trace-warnings",
+    "create-shopify-import": "node ./dist/shopify/generate-product-import.js --trace-warnings",
+    "create-stocklists": "node ./dist/ebay/generate-blank-stocklist.js --trace-warnings",
     "update-static-files": "yarn generate-deck-builder-data & yarn generate-tracker-data & yarn generate-blog-templates",
     "update-stocklist-files": "yarn ebay-images & yarn create-stocklists & yarn create-shopify-import",
-    "update-misc-files": "node ./dist/misc/shortener-words.js"
+    "update-misc-files": "node ./dist/misc/shortener-words.js --trace-warnings"
   },
   "bugs": {
     "url": "https://github.com/ItsSilvie/bot/issues"
