@@ -234,6 +234,7 @@ const generateBlogTemplates = async () => {
         'ATTACK',
         'ITEM',
         'PHANTASIA',
+        'DOMAIN',
         'TOKEN',
       ]
 

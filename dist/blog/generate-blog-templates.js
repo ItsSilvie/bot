@@ -188,6 +188,7 @@ const generateBlogTemplates = async () => {
                 'ATTACK',
                 'ITEM',
                 'PHANTASIA',
+                'DOMAIN',
                 'TOKEN',
             ];
             if (customSet.isDeck) {
