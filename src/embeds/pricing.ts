@@ -341,7 +341,7 @@ const pricingEmbed: (card: IndexCard | {
   const embed = new MessageEmbed()
     .setTitle(card.name)
     .setURL(pricingData?.url)
-    .setAuthor({ name: 'TCGplayer Market Data', url: `https://tcgplayer.pxf.io/KjAXg9?u=${encodeURIComponent('https://www.tcgplayer.com/search/grand-archive/product?productLineName=grand-archive&view=grid')}` });
+    .setAuthor({ name: 'TCGplayer Market Data', url: `https://partner.tcgplayer.com/silviebot?u=${encodeURIComponent('https://www.tcgplayer.com/search/grand-archive/product?productLineName=grand-archive&view=grid')}` });
 
   if (edition !== 'SEALED') {
     embed.setDescription(`**${set.name}**\n${set.prefix} · ${set.language} — ${collector_number ?? 'Unnumbered'}${edition.rarity ? ` · ${options.rarity.find(entry => `${entry.value}` === `${edition.rarity}`).text}` : '-'}`)
