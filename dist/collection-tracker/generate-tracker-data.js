@@ -232,7 +232,7 @@ export enum ${typeFormatter(key)}Name {
   ${Object.entries(rarity_1.Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`,
         `export enum GeneratedChampion {
-  ${[...champions].sort((a, b) => a > b ? 1 : -1).map((champion) => `${champion} = "${champion.replace(' ', '')}",`).join('\n  ')}
+  ${[...champions].sort((a, b) => a > b ? 1 : -1).map((champion) => `${champion.replace(/ /g, '')} = "${champion}",`).join('\n  ')}
 }`
     ]).join('\n\n');
     fs.writeFileSync(`${TRACKER_REPO_LOCAL_PATH}/collection-tracker.ts`, `${optionTypes}\n\n${setListSetDataType}\n\n${setPageSetDataType}`, 'utf-8');

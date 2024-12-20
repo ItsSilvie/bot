@@ -32,6 +32,7 @@ const getSetCategory = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
         case 'ALC 1st':
+        case 'ALC Alter':
         case 'ALCSD':
         case 'MRC':
         case 'MRC 1st':
@@ -41,6 +42,7 @@ const getSetCategory = (setPrefix) => {
         case 'AMB':
         case 'AMB 1st':
         case 'AMBSD':
+        case 'AMBDP':
             return 'Mortal Ambition';
         case 'DOA 1st':
         case 'DOA Alter':
@@ -81,6 +83,7 @@ const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
         case 'ALC 1st':
+        case 'ALC Alter':
         case 'AMB':
         case 'AMB 1st':
         case 'MRC':
@@ -166,6 +169,7 @@ const getSetInfo = (setPrefix) => {
                 year: 2024,
             };
         case 'SP2':
+        case 'AMBDP':
             return {
                 type: [SetType.Special],
                 year: 2024,

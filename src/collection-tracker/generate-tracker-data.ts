@@ -296,7 +296,7 @@ export enum ${typeFormatter(key)}Name {
   ${Object.entries(Rarity).map(([key, value]) => `${key} = "${value}",`).join('\n  ')}
 }`,
 `export enum GeneratedChampion {
-  ${[...champions].sort((a, b) => a > b ? 1 : -1).map((champion) => `${champion} = "${champion.replace(' ', '')}",`).join('\n  ')}
+  ${[...champions].sort((a, b) => a > b ? 1 : -1).map((champion) => `${champion.replace(/ /g, '')} = "${champion}",`).join('\n  ')}
 }`
   ]).join('\n\n');
   
