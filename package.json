@@ -45,7 +45,7 @@
     "create-shopify-import": "node ./dist/shopify/generate-product-import.js --trace-warnings",
     "create-stocklists": "node ./dist/ebay/generate-blank-stocklist.js --trace-warnings",
     "update-static-files": "yarn generate-deck-builder-data & yarn generate-tracker-data & yarn generate-blog-templates",
-    "update-stocklist-files": "yarn ebay-images & yarn create-stocklists & yarn create-shopify-import",
+    "update-stocklist-files": "yarn create-stocklists & yarn create-shopify-import",
     "update-misc-files": "node ./dist/misc/shortener-words.js --trace-warnings"
   },
   "bugs": {
