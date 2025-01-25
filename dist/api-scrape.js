@@ -10,7 +10,7 @@ const httpsAgent = new https.Agent({
 const apiScrape = async () => {
     const [_, __, cardSetArg] = process.argv;
     const getOptions = async () => {
-        const response = await (0, node_fetch_1.default)(`https://api.gatcg.com/option/search`, {
+        const response = await (0, node_fetch_1.default)(`${constants_1.API_BASE}/option/search`, {
             agent: httpsAgent,
         }).then(response => response.json());
         return response;
@@ -39,8 +39,8 @@ const apiScrape = async () => {
         }
         return getAllPaginatedResults(url, response, page + 1, totalPages);
     };
-    const getCardImage = async (slug, uuid) => {
-        await (0, node_fetch_1.default)(`${constants_1.IMAGE_BASE}/${slug}.jpg`, {
+    const getCardImage = async (imagePath, uuid) => {
+        await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}`, {
             agent: httpsAgent,
         }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
             flags: 'w',
@@ -48,7 +48,7 @@ const apiScrape = async () => {
     };
     const getAllCards = async (cardSet) => {
         console.log('  ...getting cards...');
-        const response = await getAllPaginatedResults(`https://api.gatcg.com/cards/search?prefix=${cardSet}`);
+        const response = await getAllPaginatedResults(`${constants_1.API_BASE}/cards/search?prefix=${cardSet}`);
         return response;
     };
     const updatedSetsOutput = {};
@@ -66,7 +66,7 @@ const apiScrape = async () => {
             for (let j = 0; j < cardEditionsInSet.length; j++) {
                 console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
                 const cardEdition = cardEditionsInSet[j];
-                await getCardImage(cardEdition.slug, cardEdition.uuid);
+                await getCardImage(cardEdition.image, cardEdition.uuid);
             }
         }
         updatedSetsOutput[cardSet] = cardData[0].editions.find(edition => edition.set.prefix === cardSet).set;

@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
 import { getRarityCodeFromRarityId, Rarity } from '../utils/rarity';
-import { IMAGE_BASE } from '../utils/constants';
+import { API_BASE } from '../utils/constants';
 
 const EBAY_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
 const ebayDataPath = `${EBAY_CDN_REPO_LOCAL_PATH}/cdn`;
@@ -11,7 +11,7 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const getCardImage = async (slug: string, setPrefix: string, number: string, rarity: string) => {
+const getCardImage = async (imagePath: string, setPrefix: string, number: string, rarity: string) => {
   const setPrefixPath = `../img.silvie.org/docs/cdn/cards/${setPrefix}`;
 
   if (!fs.existsSync(setPrefixPath)) {
@@ -24,7 +24,7 @@ const getCardImage = async (slug: string, setPrefix: string, number: string, rar
     fs.mkdirSync(rarityPath);
   }
 
-  await fetch(`${IMAGE_BASE}/${slug}.jpg`, {
+  await fetch(`${API_BASE}${imagePath}`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
     fs.createWriteStream(`${rarityPath}/${number}.jpg`)
@@ -73,6 +73,7 @@ const generateEbayImages = async () => {
         const cardEditionSet = cardEdition.set;
 
         const setCardDataObj = {
+          image: cardEdition.image,
           name: card.name,
           number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
           rarity: getRarityCodeFromRarityId(cardEdition.rarity),
@@ -97,7 +98,7 @@ const generateEbayImages = async () => {
   for (let i = 0; i < setCardData.length; i++) {
     const card = setCardData[i];
 
-    await getCardImage(card.slug, card.set, card.number, card.rarity);
+    await getCardImage(card.image, card.set, card.number, card.rarity);
   }
 
 

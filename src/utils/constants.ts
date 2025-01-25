@@ -1,1 +1,1 @@
-export const IMAGE_BASE = `https://ga-index-public.s3.us-west-2.amazonaws.com/cards`;
+export const API_BASE = `https://index-api-nu.vercel.app`; // `https://api.gatcg.com`;

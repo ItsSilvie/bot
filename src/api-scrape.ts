@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
-import { IMAGE_BASE } from './utils/constants';
+import { API_BASE } from './utils/constants';
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
@@ -11,7 +11,7 @@ const apiScrape = async () => {
   const [_, __, cardSetArg] = process.argv;
 
   const getOptions = async () => {
-    const response = await fetch(`https://api.gatcg.com/option/search`, {
+    const response = await fetch(`${API_BASE}/option/search`, {
       agent: httpsAgent,
     }).then(response => response.json())
     return response;
@@ -53,8 +53,8 @@ const apiScrape = async () => {
     return getAllPaginatedResults(url, response, page + 1, totalPages);
   }
 
-  const getCardImage = async (slug: string, uuid: string) => {
-    await fetch(`${IMAGE_BASE}/${slug}.jpg`, {
+  const getCardImage = async (imagePath: string, uuid: string) => {
+    await fetch(`${API_BASE}${imagePath}`, {
       agent: httpsAgent,
     }).then(response => response.body.pipe(
       fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
@@ -65,7 +65,7 @@ const apiScrape = async () => {
 
   const getAllCards = async (cardSet) => {
     console.log('  ...getting cards...');
-    const response = await getAllPaginatedResults(`https://api.gatcg.com/cards/search?prefix=${cardSet}`);
+    const response = await getAllPaginatedResults(`${API_BASE}/cards/search?prefix=${cardSet}`);
     return response;
   }
 
@@ -87,7 +87,7 @@ const apiScrape = async () => {
       for (let j = 0; j < cardEditionsInSet.length; j++) {
         console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
         const cardEdition = cardEditionsInSet[j];
-        await getCardImage(cardEdition.slug, cardEdition.uuid);
+        await getCardImage(cardEdition.image, cardEdition.uuid);
       }
     }
 

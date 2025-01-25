@@ -10,7 +10,7 @@ const ebayDataPath = `${EBAY_CDN_REPO_LOCAL_PATH}/cdn`;
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
-const getCardImage = async (slug, setPrefix, number, rarity) => {
+const getCardImage = async (imagePath, setPrefix, number, rarity) => {
     const setPrefixPath = `../img.silvie.org/docs/cdn/cards/${setPrefix}`;
     if (!fs.existsSync(setPrefixPath)) {
         fs.mkdirSync(setPrefixPath);
@@ -19,7 +19,7 @@ const getCardImage = async (slug, setPrefix, number, rarity) => {
     if (!fs.existsSync(rarityPath)) {
         fs.mkdirSync(rarityPath);
     }
-    await (0, node_fetch_1.default)(`${constants_1.IMAGE_BASE}/${slug}.jpg`, {
+    await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}`, {
         agent: httpsAgent,
     }).then(response => response.body.pipe(fs.createWriteStream(`${rarityPath}/${number}.jpg`)));
 };
@@ -47,6 +47,7 @@ const generateEbayImages = async () => {
                 const cardEdition = cardEditions[k];
                 const cardEditionSet = cardEdition.set;
                 const setCardDataObj = {
+                    image: cardEdition.image,
                     name: card.name,
                     number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
                     rarity: (0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity),
@@ -66,7 +67,7 @@ const generateEbayImages = async () => {
     }
     for (let i = 0; i < setCardData.length; i++) {
         const card = setCardData[i];
-        await getCardImage(card.slug, card.set, card.number, card.rarity);
+        await getCardImage(card.image, card.set, card.number, card.rarity);
     }
     for (let i = 0; i < allSets.length; i++) {
         const prefix = allSets[i].prefix;

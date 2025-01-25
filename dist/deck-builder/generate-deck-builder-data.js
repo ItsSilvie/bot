@@ -12,8 +12,8 @@ const deckBuilderDataPath = `${DECK_BUILDER_CDN_REPO_LOCAL_PATH}/cdn`;
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
-const getCardImage = async (slug, uuid, nonIndexImage) => {
-    await (0, node_fetch_1.default)(nonIndexImage ?? `${constants_1.IMAGE_BASE}/${slug}.jpg`, {
+const getCardImage = async (imagePath, uuid, nonIndexImage) => {
+    await (0, node_fetch_1.default)(nonIndexImage ?? `${constants_1.API_BASE}${imagePath}`, {
         agent: httpsAgent,
     }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)));
 };
@@ -57,9 +57,9 @@ const generateDeckBuilderData = async () => {
                 // Exclude matches that have already been seen in other sets.
                 continue;
             }
-            const { slug, } = (card.editions || card.result_editions)[0];
+            const { image, } = (card.editions || card.result_editions)[0];
             console.log(`      ...image ${j + 1}/${cardData.length}...`);
-            await getCardImage(slug, card.uuid, card.nonIndexImage);
+            await getCardImage(image, card.uuid, card.nonIndexImage);
             cardSearchData.push(cardSearchDataObj);
             fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/${card.uuid}.json`, JSON.stringify(card), 'utf-8');
         }

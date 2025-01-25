@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as https from 'https';
 import { CardSearchData, CardSearchDataKeys, CardSearchDataValues, CardSearchFilterKeys } from './types';
 import nonIndexSets from './non-index-sets';
-import { IMAGE_BASE } from '../utils/constants';
+import { API_BASE } from '../utils/constants';
 
 const DECK_BUILDER_REPO_LOCAL_PATH = '../silvie-monorepo/packages/@types/src/generated';
 const DECK_BUILDER_CDN_REPO_LOCAL_PATH = '../img.silvie.org/docs';
@@ -13,8 +13,8 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const getCardImage = async (slug: string, uuid: string, nonIndexImage?: string) => {
-  await fetch(nonIndexImage ?? `${IMAGE_BASE}/${slug}.jpg`, {
+const getCardImage = async (imagePath: string, uuid: string, nonIndexImage?: string) => {
+  await fetch(nonIndexImage ?? `${API_BASE}${imagePath}`, {
     agent: httpsAgent,
   }).then(response => response.body.pipe(
     fs.createWriteStream(`../img.silvie.org/docs/cdn/deck-builder/${uuid}.jpg`)
@@ -83,11 +83,11 @@ const generateDeckBuilderData = async () => {
         continue;
       }
       const {
-        slug,
+        image,
       } = (card.editions || card.result_editions)[0];
 
       console.log(`      ...image ${j + 1}/${cardData.length}...`)
-      await getCardImage(slug, card.uuid, card.nonIndexImage);
+      await getCardImage(image, card.uuid, card.nonIndexImage);
 
       cardSearchData.push(cardSearchDataObj);
       fs.writeFileSync(`${deckBuilderDataPath}/deck-builder/${card.uuid}.json`, JSON.stringify(card), 'utf-8');
