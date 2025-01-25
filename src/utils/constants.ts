@@ -1,1 +1,1 @@
-export const API_BASE = `https://index-api-nu.vercel.app`; // `https://api.gatcg.com`;
+export const API_BASE = `https://api.gatcg.com`;
