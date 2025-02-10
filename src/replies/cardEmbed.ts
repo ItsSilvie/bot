@@ -32,6 +32,13 @@ export const embedCard = async (interaction: ButtonInteraction | CommandInteract
   }
 
   const embed = await indexEmbed(cardMatch, editionMatch, config);
+
+  if (!embed) {
+    return interaction.reply({
+      content: 'Something went wrong, please try again!',
+      ephemeral: true,
+    });
+  }
   
   return interaction.reply({
     embeds: [embed],

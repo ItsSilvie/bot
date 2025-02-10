@@ -25,6 +25,12 @@ const embedCard = async (interaction, setPrefix, cardUUID, editionUUID, config) 
         });
     }
     const embed = await (0, gaIndex_1.default)(cardMatch, editionMatch, config);
+    if (!embed) {
+        return interaction.reply({
+            content: 'Something went wrong, please try again!',
+            ephemeral: true,
+        });
+    }
     return interaction.reply({
         embeds: [embed],
         content: `<@${interaction.member.user.id}> here you go!`,
