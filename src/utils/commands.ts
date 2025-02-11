@@ -25,6 +25,6 @@ export const handleSetAutocomplete = async (interaction:  AutocompleteInteractio
   });
   
   return await interaction.respond(
-    filtered.map(choice => ({ name: choice.name, value: choice.prefix })),
+    filtered.map(choice => ({ name: choice.name, value: choice.prefix })).filter((entry, index) => index < 25),
   );
 }

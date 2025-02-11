@@ -156,18 +156,16 @@ const command = <BotCommand>{
     } else {
       setData = await import(`../api-data/${set}.json`);
     }
-    let matchCount = 0;
 
     return [...setData.filter((entry, index) => {
       if (!card) {
         return index < 25;
       }
 
-      if (matchCount === 25 || entry.name.toLowerCase().indexOf(card.toLowerCase()) === -1) {
-        return;
+      if (entry.name.toLowerCase().indexOf(card.toLowerCase()) === -1) {
+        return false;
       }
 
-      matchCount += 1;
       return true;
     }).map(entry => ({
       productId: entry.productId,
@@ -179,7 +177,7 @@ const command = <BotCommand>{
       }
 
       return a.name < b.name ? -1 : 1;
-    });
+    }).filter((entry, index) => index < 25);
   }
 }
 

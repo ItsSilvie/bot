@@ -15,6 +15,6 @@ const handleSetAutocomplete = async (interaction, setListOverride) => {
         }
         return choice.name.toLowerCase().includes(`${focusedOption.value}`.toLowerCase()) || choice.prefix.toLowerCase().includes(`${focusedOption.value}`.toLowerCase());
     });
-    return await interaction.respond(filtered.map(choice => ({ name: choice.name, value: choice.prefix })));
+    return await interaction.respond(filtered.map(choice => ({ name: choice.name, value: choice.prefix })).filter((entry, index) => index < 25));
 };
 exports.handleSetAutocomplete = handleSetAutocomplete;

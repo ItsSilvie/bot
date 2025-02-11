@@ -8,48 +8,56 @@ const pricing_2 = require("../commands/pricing");
 const pricingReply = async (interaction, setPrefix, cardUUID, editionUUID) => {
     let cards;
     const isSealedProductsSelected = setPrefix === pricing_2.fakeSealedSet.prefix;
-    if (isSealedProductsSelected) {
-        cards = sealedProducts;
-    }
-    else {
-        cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${setPrefix}.json`)));
-    }
-    if (!cards) {
-        return interaction.reply({
-            content: 'Something went wrong, please try again!',
-        });
-    }
-    const cardMatch = cards.find(entry => entry.uuid === cardUUID || entry.productId === cardUUID);
-    if (!cardMatch) {
-        return interaction.reply({
-            content: 'I was unable to find any cards matching your request.',
-            ephemeral: true,
-        });
-    }
-    let embed;
-    if (isSealedProductsSelected) {
-        embed = await (0, pricing_1.default)(cardMatch, 'SEALED');
-    }
-    else {
-        const editionMatch = cardMatch.editions.find(entry => entry.uuid === editionUUID);
-        if (!editionMatch) {
+    try {
+        if (isSealedProductsSelected) {
+            cards = sealedProducts;
+        }
+        else {
+            cards = await Promise.resolve().then(() => require(path.resolve(__dirname, `../api-data/${setPrefix}.json`)));
+        }
+        if (!cards) {
+            return interaction.reply({
+                content: 'Something went wrong, please try again!',
+            });
+        }
+        const cardMatch = cards.find(entry => entry.uuid === cardUUID || entry.productId === cardUUID);
+        if (!cardMatch) {
             return interaction.reply({
                 content: 'I was unable to find any cards matching your request.',
                 ephemeral: true,
             });
         }
-        embed = await (0, pricing_1.default)(cardMatch, editionMatch);
-    }
-    if (embed.attachment) {
+        let embed;
+        if (isSealedProductsSelected) {
+            embed = await (0, pricing_1.default)(cardMatch, 'SEALED');
+        }
+        else {
+            const editionMatch = cardMatch.editions.find(entry => entry.uuid === editionUUID);
+            if (!editionMatch) {
+                return interaction.reply({
+                    content: 'I was unable to find any cards matching your request.',
+                    ephemeral: true,
+                });
+            }
+            embed = await (0, pricing_1.default)(cardMatch, editionMatch);
+        }
+        if (embed.attachment) {
+            return interaction.reply({
+                embeds: [embed.embed],
+                files: [embed.attachment],
+                content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,
+            });
+        }
         return interaction.reply({
             embeds: [embed.embed],
-            files: [embed.attachment],
             content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,
         });
     }
-    return interaction.reply({
-        embeds: [embed.embed],
-        content: `<@${interaction.member.user.id}> here you go :chart_with_upwards_trend:`,
-    });
+    catch (e) {
+        console.log(e);
+        return interaction.reply({
+            content: 'Something went wrong, please try again!',
+        });
+    }
 };
 exports.pricingReply = pricingReply;
