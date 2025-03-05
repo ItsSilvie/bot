@@ -5,6 +5,7 @@ const getSetLogo = (setPrefix) => {
     switch (setPrefix) {
         case 'ALC':
         case 'ALC 1st':
+        case 'ALC Alter':
         case 'ALCSD':
             return 'ALC.png';
         case 'MRC':
@@ -12,6 +13,16 @@ const getSetLogo = (setPrefix) => {
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'MRC.png';
+        case 'AMB':
+        case 'AMB 1st':
+        case 'AMBSD':
+        case 'AMBDP':
+            return 'AMB.png';
+        case 'HVN':
+        case 'HVN 1st':
+        case 'ReC-HVF':
+        case 'ReC-IDY':
+            return 'HVN.png';
         case 'DOA 1st':
         case 'DOA Alter':
         case 'DOASD':
@@ -89,7 +100,7 @@ const getSetInfo = (setPrefix) => {
         case 'HVN 1st':
             return {
                 type: [SetType.Standard],
-                year: 2024,
+                year: 2025,
             };
         case 'ReC-HVF':
         case 'ReC-IDY':
