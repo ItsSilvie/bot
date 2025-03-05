@@ -88,6 +88,13 @@ const apiScrape = async () => {
         console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
         const cardEdition = cardEditionsInSet[j];
         await getCardImage(cardEdition.image, cardEdition.uuid);
+
+        const cardOrientationsInEdition = cardEdition.other_orientations ?? [];
+        for (let k = 0; k < cardOrientationsInEdition.length; k++) {
+          console.log(`        ...orientation image ${k + 1}/${cardOrientationsInEdition.length}...`);
+          const editionOrientation = cardOrientationsInEdition[k];
+          await getCardImage(editionOrientation.edition.image, editionOrientation.edition.uuid);
+        }
       }
     }
 
