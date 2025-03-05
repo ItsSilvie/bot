@@ -43,6 +43,10 @@ const getSetCategory = (setPrefix) => {
         case 'AMB 1st':
         case 'AMBSD':
         case 'AMBDP':
+        case 'HVN':
+        case 'HVN 1st':
+        case 'ReC-HVF':
+        case 'ReC-IDY':
             return 'Mortal Ambition';
         case 'DOA 1st':
         case 'DOA Alter':
@@ -81,6 +85,18 @@ var SetType;
 })(SetType || (SetType = {}));
 const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
+        case 'HVN':
+        case 'HVN 1st':
+            return {
+                type: [SetType.Standard],
+                year: 2024,
+            };
+        case 'ReC-HVF':
+        case 'ReC-IDY':
+            return {
+                type: [SetType.Deck],
+                year: 2025,
+            };
         case 'ALC':
         case 'ALC 1st':
         case 'ALC Alter':
@@ -167,6 +183,11 @@ const getSetInfo = (setPrefix) => {
             return {
                 type: [SetType.Promo],
                 year: 2024,
+            };
+        case 'P25':
+            return {
+                type: [SetType.Promo],
+                year: 2025,
             };
         case 'SP2':
         case 'AMBDP':

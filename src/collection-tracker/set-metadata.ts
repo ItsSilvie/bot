@@ -46,6 +46,10 @@ export const getSetCategory = (setPrefix) => {
     case 'AMB 1st':
     case 'AMBSD':
     case 'AMBDP':
+    case 'HVN':
+    case 'HVN 1st':
+    case 'ReC-HVF':
+    case 'ReC-IDY':
       return 'Mortal Ambition';
 
     case 'DOA 1st':
@@ -92,6 +96,20 @@ export const getSetInfo: (setPrefix: string) => {
   year: number;
 } = (setPrefix) => {
   switch (setPrefix) {
+    case 'HVN':
+    case 'HVN 1st':
+      return {
+        type: [SetType.Standard],
+        year: 2024,
+      }
+
+    case 'ReC-HVF':
+    case 'ReC-IDY':
+      return {
+        type: [SetType.Deck],
+        year: 2025,
+      }
+
     case 'ALC':
     case 'ALC 1st':
     case 'ALC Alter':
@@ -191,6 +209,12 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Promo],
         year: 2024,
+      }
+
+    case 'P25':
+      return {
+        type: [SetType.Promo],
+        year: 2025,
       }
 
     case 'SP2':
