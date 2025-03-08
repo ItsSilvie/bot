@@ -7,8 +7,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "20.x",
-    "yarn": "1.x"
+    "node": "20.x"
   },
   "dependencies": {
     "@discordjs/rest": "^0.2.0-canary.0",
