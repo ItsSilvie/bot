@@ -54,7 +54,7 @@ const apiScrape = async () => {
   }
 
   const getCardImage = async (imagePath: string, uuid: string) => {
-    await fetch(`${API_BASE}${imagePath}`, {
+    await fetch(`${API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
       agent: httpsAgent,
     }).then(response => response.body.pipe(
       fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {

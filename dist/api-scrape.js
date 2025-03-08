@@ -40,7 +40,7 @@ const apiScrape = async () => {
         return getAllPaginatedResults(url, response, page + 1, totalPages);
     };
     const getCardImage = async (imagePath, uuid) => {
-        await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}`, {
+        await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
             agent: httpsAgent,
         }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
             flags: 'w',
