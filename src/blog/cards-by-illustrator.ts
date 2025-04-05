@@ -58,10 +58,10 @@ const generateCardsByIllustratorTemplate = async () => {
   const cardsByIllustrator = cards.reduce((cardsArr, card) => {
     return card.editions.reduce((editionsArr, edition, index) => {
       const illustrator = edition.illustrator?.trim() ?? 'Unknown';
-      const isFirstOfCardFromIllustrator = card.editions.findIndex(entry => entry.illustrator.toLowerCase() === illustrator.toLowerCase()) === index;
-      const isFirstOfCardRarityFromIllustrator = card.editions.findIndex(entry => entry.illustrator.toLowerCase() === illustrator.toLowerCase() && entry.rarity === edition.rarity) === index;
+      const isFirstOfCardFromIllustrator = card.editions.findIndex(entry => (entry.illustrator?.toLowerCase() ?? 'unknown') === illustrator.toLowerCase()) === index;
+      const isFirstOfCardRarityFromIllustrator = card.editions.findIndex(entry => (entry.illustrator?.toLowerCase() ?? 'unknown') === illustrator.toLowerCase() && entry.rarity === edition.rarity) === index;
 
-      const illustratorMatchIndex = editionsArr.findIndex(entry => entry.illustrator.toLowerCase() === illustrator.toLowerCase());
+      const illustratorMatchIndex = editionsArr.findIndex(entry => (entry.illustrator?.toLowerCase() ?? 'unknown') === illustrator.toLowerCase());
       const circulations = [...edition.circulationTemplates, ...edition.circulations];
       const variantCount = circulations.length;
       const variantPopulation = circulations.reduce((n, entry) => n + entry.population, 0);

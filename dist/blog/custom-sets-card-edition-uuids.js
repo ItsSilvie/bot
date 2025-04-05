@@ -2,10 +2,10 @@
 // ONLY include the card result_edition UUID
 Object.defineProperty(exports, "__esModule", { value: true });
 // To extract the deck from the v2 deck builder:
-// JSON.stringify([...temp1.material.map(card => ({
+// JSON.stringify([...temp1.cards.material.map(card => ({
 //   id: card.edition.uuid,
 //   quantity: card.quantity,
-// })), ...temp1.main.map(card => ({
+// })), ...temp1.cards.main.map(card => ({
 //   id: card.edition.uuid,
 //   quantity: card.quantity,
 // }))])
@@ -527,4 +527,16 @@ exports.default = [{
         name: 'Kongming Starter Deck',
         isDeck: true,
         cards: [{ "id": "00l179vfuk", "quantity": 1 }, { "id": "l32upjqx6r", "quantity": 1 }, { "id": "3cgnan9rsn", "quantity": 1 }, { "id": "szxvtybonb", "quantity": 1 }, { "id": "bvmb21uzkx", "quantity": 1 }, { "id": "vl856hq82d", "quantity": 1 }, { "id": "4g6kz00rl9", "quantity": 1 }, { "id": "28r9eblwgh", "quantity": 1 }, { "id": "u5aoo02e5k", "quantity": 1 }, { "id": "bo837qlniw", "quantity": 1 }, { "id": "11hv1z4amv", "quantity": 1 }, { "id": "4yl91czfut", "quantity": 1 }, { "id": "mmf7ro4mzu", "quantity": 4 }, { "id": "yt3zjeoeav", "quantity": 4 }, { "id": "izvm9ynmxh", "quantity": 4 }, { "id": "96g8mweivc", "quantity": 4 }, { "id": "jujhz4fyy9", "quantity": 2 }, { "id": "z7ec1d35b1", "quantity": 4 }, { "id": "4936z2zp60", "quantity": 3 }, { "id": "hkqzv0kpzg", "quantity": 3 }, { "id": "iotzag28r5", "quantity": 4 }, { "id": "hmntxbkdrd", "quantity": 3 }, { "id": "1nxwz9n1zq", "quantity": 3 }, { "id": "02vbsxhuwa", "quantity": 4 }, { "id": "32nwmlaefh", "quantity": 3 }, { "id": "miypycl3b9", "quantity": 2 }, { "id": "c0tn2hx995", "quantity": 4 }, { "id": "zmidtgu8ji", "quantity": 3 }, { "id": "z5f6uza5yi", "quantity": 1 }, { "id": "ijied5rcqw", "quantity": 2 }, { "id": "8kusuum5tf", "quantity": 3 }],
+    }, {
+        setCode: 'ReC-HVF',
+        filename: 'deck',
+        name: 'Guo Jia Re:Collection, Heaven\'s Favored',
+        isDeck: true,
+        cards: [{ "id": "no4wcw25h3", "quantity": 1 }, { "id": "2yr65s6q1a", "quantity": 1 }, { "id": "x6j0x56zey", "quantity": 1 }, { "id": "ibhbmoq8bo", "quantity": 1 }, { "id": "hruce0671w", "quantity": 1 }, { "id": "2aringyntk", "quantity": 1 }, { "id": "ezo91jmxvw", "quantity": 1 }, { "id": "ux5e7o8ic2", "quantity": 1 }, { "id": "g0p6y1q5e7", "quantity": 1 }, { "id": "vhb9itqagp", "quantity": 1 }, { "id": "o1yp6dnpyk", "quantity": 1 }, { "id": "zhcn84wn9c", "quantity": 1 }, { "id": "l51jtpmz99", "quantity": 4 }, { "id": "fnmebi9g1z", "quantity": 4 }, { "id": "trtb5xyrgp", "quantity": 3 }, { "id": "pvt3dyd9hl", "quantity": 4 }, { "id": "u9l38tmum7", "quantity": 4 }, { "id": "oluwo3s3w0", "quantity": 2 }, { "id": "qlmcz7bacd", "quantity": 4 }, { "id": "afgr8ou03k", "quantity": 2 }, { "id": "0lmnsfevkg", "quantity": 4 }, { "id": "jx4upqwo2y", "quantity": 4 }, { "id": "oq4thcay04", "quantity": 4 }, { "id": "4aj7co2hgc", "quantity": 2 }, { "id": "k3vi17q38q", "quantity": 4 }, { "id": "oevi6kde7s", "quantity": 2 }, { "id": "d8j0llj2we", "quantity": 3 }, { "id": "4qlu3h72ef", "quantity": 4 }, { "id": "xe51drhxy8", "quantity": 3 }, { "id": "f7whf346mo", "quantity": 3 }],
+    }, {
+        setCode: 'ReC-IDY',
+        filename: 'deck',
+        name: 'Diao Chan Re:Collection, Idyll Corsage',
+        isDeck: true,
+        cards: [{ "id": "1b8kg4tjyx", "quantity": 1 }, { "id": "5smk6umbtp", "quantity": 1 }, { "id": "9h1uuowrks", "quantity": 1 }, { "id": "7kids4tc20", "quantity": 1 }, { "id": "fl6ntwk2g7", "quantity": 1 }, { "id": "8ss64n906a", "quantity": 1 }, { "id": "f2sxo3tm5m", "quantity": 1 }, { "id": "boktsrbc5l", "quantity": 1 }, { "id": "zotp3ynolt", "quantity": 1 }, { "id": "3xfzdefqea", "quantity": 1 }, { "id": "323y2w1vfh", "quantity": 1 }, { "id": "8x1l36bv6l", "quantity": 1 }, { "id": "ltzidzhs2i", "quantity": 3 }, { "id": "vlbzfg1qkp", "quantity": 2 }, { "id": "xbtdpjlisf", "quantity": 3 }, { "id": "kppfuh7fp4", "quantity": 3 }, { "id": "vollnmkz3x", "quantity": 3 }, { "id": "6yml8p3mte", "quantity": 3 }, { "id": "q0w7px8xn1", "quantity": 4 }, { "id": "5rwlyi05x4", "quantity": 4 }, { "id": "htmfs6s6uh", "quantity": 3 }, { "id": "d4rr72foeh", "quantity": 2 }, { "id": "of3q7y43bi", "quantity": 3 }, { "id": "s9n1zcvaye", "quantity": 3 }, { "id": "n7v9rh2glz", "quantity": 2 }, { "id": "1ohdt8lgwl", "quantity": 2 }, { "id": "b5kr4f778m", "quantity": 1 }, { "id": "bqu62ywru4", "quantity": 2 }, { "id": "94z35nyyi6", "quantity": 2 }, { "id": "44o1puw9nl", "quantity": 3 }, { "id": "1b2k63rxtj", "quantity": 2 }, { "id": "s4ig92p1s9", "quantity": 3 }, { "id": "bjblxogq8n", "quantity": 2 }, { "id": "h1mgl3haw5", "quantity": 3 }, { "id": "wzisheahdg", "quantity": 2 }],
     }];
