@@ -10,6 +10,7 @@ const getSetLogo = (setPrefix) => {
             return 'ALC.png';
         case 'MRC':
         case 'MRC 1st':
+        case 'MRC Alter':
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'MRC.png';
@@ -47,6 +48,7 @@ const getSetCategory = (setPrefix) => {
         case 'ALCSD':
         case 'MRC':
         case 'MRC 1st':
+        case 'MRC Alter':
         case 'ReC-SHD':
         case 'ReC-SLM':
             return 'Alchemical Revolution';
@@ -98,6 +100,7 @@ const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
         case 'HVN':
         case 'HVN 1st':
+        case 'MRC Alter':
             return {
                 type: [SetType.Standard],
                 year: 2025,
