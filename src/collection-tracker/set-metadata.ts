@@ -19,12 +19,6 @@ export const getSetLogo = (setPrefix) => {
     case 'AMBDP':
       return 'AMB.png';
 
-    case 'HVN':
-    case 'HVN 1st':
-    case 'ReC-HVF':
-    case 'ReC-IDY':
-      return 'HVN.png';
-
     case 'DOA 1st':
     case 'DOA Alter':
     case 'DOASD':
@@ -32,9 +26,19 @@ export const getSetLogo = (setPrefix) => {
     case 'DOApSP':
       return 'DOA.png';
 
+    case 'DTR':
+    case 'DTRSD':
+      return 'DTR.png';
+
     case 'FTC':
     case 'FTCA':
       return 'FTC.png';
+
+    case 'HVN':
+    case 'HVN 1st':
+    case 'ReC-HVF':
+    case 'ReC-IDY':
+      return 'HVN.png';
 
     case 'SLC':
       return 'SLC.png';
@@ -72,6 +76,14 @@ export const getSetCategory = (setPrefix) => {
     case 'DOASD':
     case 'DOAp':
     case 'DOApSP':
+    case 'FTC':
+    case 'FTCA':
+      return 'Dawn of Ashes';
+
+    case 'DTR':
+    case 'DTRSD':
+      return 'Distorted Reflections';
+
     case 'FTC':
     case 'FTCA':
       return 'Dawn of Ashes';
@@ -119,6 +131,7 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2025,
       }
 
+    case 'DTRSD':
     case 'ReC-HVF':
     case 'ReC-IDY':
       return {
@@ -146,6 +159,7 @@ export const getSetInfo: (setPrefix: string) => {
         type: [SetType.Deck],
         year: 2024,
       }
+
 
     case 'DEMO22':
       return {
@@ -238,6 +252,12 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Special],
         year: 2024,
+      }
+
+    case 'SP3':
+      return {
+        type: [SetType.Special],
+        year: 2025,
       }
 
     default:

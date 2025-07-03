@@ -19,20 +19,23 @@ const getSetLogo = (setPrefix) => {
         case 'AMBSD':
         case 'AMBDP':
             return 'AMB.png';
-        case 'HVN':
-        case 'HVN 1st':
-        case 'ReC-HVF':
-        case 'ReC-IDY':
-            return 'HVN.png';
         case 'DOA 1st':
         case 'DOA Alter':
         case 'DOASD':
         case 'DOAp':
         case 'DOApSP':
             return 'DOA.png';
+        case 'DTR':
+        case 'DTRSD':
+            return 'DTR.png';
         case 'FTC':
         case 'FTCA':
             return 'FTC.png';
+        case 'HVN':
+        case 'HVN 1st':
+        case 'ReC-HVF':
+        case 'ReC-IDY':
+            return 'HVN.png';
         case 'SLC':
             return 'SLC.png';
         default:
@@ -66,6 +69,12 @@ const getSetCategory = (setPrefix) => {
         case 'DOASD':
         case 'DOAp':
         case 'DOApSP':
+        case 'FTC':
+        case 'FTCA':
+            return 'Dawn of Ashes';
+        case 'DTR':
+        case 'DTRSD':
+            return 'Distorted Reflections';
         case 'FTC':
         case 'FTCA':
             return 'Dawn of Ashes';
@@ -105,6 +114,7 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Standard],
                 year: 2025,
             };
+        case 'DTRSD':
         case 'ReC-HVF':
         case 'ReC-IDY':
             return {
@@ -208,6 +218,11 @@ const getSetInfo = (setPrefix) => {
             return {
                 type: [SetType.Special],
                 year: 2024,
+            };
+        case 'SP3':
+            return {
+                type: [SetType.Special],
+                year: 2025,
             };
         default:
             throw new Error(`No set info specified for ${setPrefix}`);
