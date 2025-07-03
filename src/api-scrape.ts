@@ -77,6 +77,11 @@ const apiScrape = async () => {
 
   const processSet = async (cardSet) => {
     const cardData = await getAllCards(cardSet);
+
+    console.log('  ...updating sets list...');
+    updatedSetsOutput[cardSet] = cardData[0].editions.find(edition => edition.set.prefix === cardSet).set;
+    fs.writeFileSync('./src/api-data/sets.json', JSON.stringify(updatedSetsOutput), 'utf8');
+    
     let existingSetData: undefined | {
       editions: {
         other_orientations?: any[];
@@ -96,6 +101,7 @@ const apiScrape = async () => {
       const card = cardData[i];
       const cardEditionsInSet = card.editions.filter(edition => edition.set.prefix === cardSet);
       const existingCardData = existingSetData?.find((entry: any) => entry.uuid === card.uuid);
+
       for (let j = 0; j < cardEditionsInSet.length; j++) {
         const cardEdition = cardEditionsInSet[j];
         const existingEditionMatch = existingCardData?.editions?.find((edition: any) => edition.uuid === cardEdition.uuid);
@@ -125,9 +131,6 @@ const apiScrape = async () => {
         }
       }
     }
-
-    updatedSetsOutput[cardSet] = cardData[0].editions.find(edition => edition.set.prefix === cardSet).set;
-    fs.writeFileSync('./src/api-data/sets.json', JSON.stringify(updatedSetsOutput), 'utf8');
   }
 
   await processOptions();
