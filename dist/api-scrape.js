@@ -57,21 +57,41 @@ const apiScrape = async () => {
     };
     const processSet = async (cardSet) => {
         const cardData = await getAllCards(cardSet);
+        let existingSetData;
+        if (fs.existsSync(`./src/api-data/${cardSet}.json`)) {
+            existingSetData = JSON.parse(fs.readFileSync(`./src/api-data/${cardSet}.json`, 'utf8'));
+        }
         fs.writeFileSync(`./src/api-data/${cardSet}.json`, JSON.stringify(cardData), 'utf8');
         console.log('  ...getting card images...');
         for (let i = 0; i < cardData.length; i++) {
             console.log(`    ...card ${i + 1}/${cardData.length}...`);
             const card = cardData[i];
             const cardEditionsInSet = card.editions.filter(edition => edition.set.prefix === cardSet);
+            const existingCardData = existingSetData?.find((entry) => entry.uuid === card.uuid);
             for (let j = 0; j < cardEditionsInSet.length; j++) {
-                console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
                 const cardEdition = cardEditionsInSet[j];
-                await getCardImage(cardEdition.image, cardEdition.uuid);
+                const existingEditionMatch = existingCardData?.editions?.find((edition) => edition.uuid === cardEdition.uuid);
+                if (existingEditionMatch && existingEditionMatch.last_update === cardEdition.last_update) {
+                    // If the edition exists and is up-to-date, we can skip it
+                    console.log(`      ...skipping ${j + 1}/${cardEditionsInSet.length} (not updated)...`);
+                }
+                else {
+                    console.log(`      ...image ${j + 1}/${cardEditionsInSet.length}...`);
+                    await getCardImage(cardEdition.image, cardEdition.uuid);
+                }
                 const cardOrientationsInEdition = cardEdition.other_orientations ?? [];
+                const existingCardOrientationsInEdition = existingEditionMatch?.other_orientations ?? [];
                 for (let k = 0; k < cardOrientationsInEdition.length; k++) {
-                    console.log(`        ...orientation image ${k + 1}/${cardOrientationsInEdition.length}...`);
                     const editionOrientation = cardOrientationsInEdition[k];
-                    await getCardImage(editionOrientation.edition.image, editionOrientation.edition.uuid);
+                    const existingOrientationMatch = existingCardOrientationsInEdition.find(orientation => orientation.edition.uuid === editionOrientation.edition.uuid);
+                    if (existingOrientationMatch && existingOrientationMatch.edition.last_update === editionOrientation.edition.last_update) {
+                        // If the other orientation edition exists and is up-to-date, we can skip it
+                        console.log(`        ...skipping orientation ${k + 1}/${cardOrientationsInEdition.length} (not updated)...`);
+                    }
+                    else {
+                        console.log(`        ...orientation image ${k + 1}/${cardOrientationsInEdition.length}...`);
+                        await getCardImage(editionOrientation.edition.image, editionOrientation.edition.uuid);
+                    }
                 }
             }
         }
