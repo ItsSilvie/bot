@@ -13,6 +13,7 @@ var CardSearchFilterKeys;
 (function (CardSearchFilterKeys) {
     CardSearchFilterKeys["Classes"] = "c";
     CardSearchFilterKeys["Element"] = "e";
+    CardSearchFilterKeys["Elements"] = "x";
     CardSearchFilterKeys["SubTypes"] = "s";
     CardSearchFilterKeys["Types"] = "t";
 })(CardSearchFilterKeys = exports.CardSearchFilterKeys || (exports.CardSearchFilterKeys = {}));

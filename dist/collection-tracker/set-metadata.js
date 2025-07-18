@@ -26,6 +26,7 @@ const getSetLogo = (setPrefix) => {
         case 'DOApSP':
             return 'DOA.png';
         case 'DTR':
+        case 'DTR 1st':
         case 'DTRSD':
             return 'DTR.png';
         case 'FTC':
@@ -73,6 +74,7 @@ const getSetCategory = (setPrefix) => {
         case 'FTCA':
             return 'Dawn of Ashes';
         case 'DTR':
+        case 'DTR 1st':
         case 'DTRSD':
             return 'Distorted Reflections';
         case 'FTC':
@@ -110,6 +112,8 @@ const getSetInfo = (setPrefix) => {
         case 'HVN':
         case 'HVN 1st':
         case 'MRC Alter':
+        case 'DTR':
+        case 'DTR 1st':
             return {
                 type: [SetType.Standard],
                 year: 2025,

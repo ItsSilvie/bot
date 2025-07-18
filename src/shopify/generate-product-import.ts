@@ -70,6 +70,7 @@ const generateProductImport = async () => {
         const setCardDataObj = {
           id: cardEdition.uuid,
           element: card.element,
+          elements: card.elements,
           name: card.name,
           number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
           rarity: getRarityCodeFromRarityId(cardEdition.rarity),

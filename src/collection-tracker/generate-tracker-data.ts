@@ -111,6 +111,7 @@ const generateTrackerData = async () => {
           const setCardDataObj = {
             anchor: `${cardEditionSet.prefix}--${cardEditionSet.language}-${cardEdition.collector_number}-${getRarityCodeFromRarityId(cardEdition.rarity)}`.toLowerCase(),
             element: card.element,
+            elements: card.elements,
             image: card.nonIndexImage ?? `https://img.silvie.org/api-data/${cardEdition.uuid}.jpg`,
             name: card.name,
             number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,

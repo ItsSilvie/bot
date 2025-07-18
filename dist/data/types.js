@@ -82,4 +82,5 @@ var IndexCardElement;
     IndexCardElement["UMBRA"] = "Umbra";
     IndexCardElement["WATER"] = "Water";
     IndexCardElement["WIND"] = "Wind";
+    IndexCardElement["EXALTED"] = "Exalted";
 })(IndexCardElement = exports.IndexCardElement || (exports.IndexCardElement = {}));

@@ -46,6 +46,7 @@ const generateDeckBuilderData = async () => {
                 [types_1.CardSearchDataKeys.Filter]: {
                     [types_1.CardSearchFilterKeys.Classes]: card.classes ?? undefined,
                     [types_1.CardSearchFilterKeys.Element]: card.element,
+                    [types_1.CardSearchFilterKeys.Elements]: card.elements,
                     [types_1.CardSearchFilterKeys.SubTypes]: card.subtypes ?? undefined,
                     [types_1.CardSearchFilterKeys.Types]: card.types ?? undefined,
                 },

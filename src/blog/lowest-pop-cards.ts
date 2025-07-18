@@ -121,6 +121,7 @@ const generateLowestPopCardsTemplate = async () => {
       cost: typeof card.cost_memory === 'number' ? card.cost_memory : card.cost_reserve,
       costType: typeof card.cost_memory === 'number' ? 'memory' : 'reserve',
       element: card.element,
+      elements: card.elements,
       lastUpdated: card.last_update ?? new Date(0).toISOString(),
       name: card.name,
       number: '',

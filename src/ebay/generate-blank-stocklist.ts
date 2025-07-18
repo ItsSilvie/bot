@@ -52,6 +52,7 @@ const generateBlankStocklist = () => {
 
         const setCardDataObj = {
           element: card.element,
+          elements: card.elements,
           name: card.name,
           number: cardEdition.formattedCollectorNumber ?? `${cardEditionSet.language}-${cardEdition.collector_number}`,
           rarity: getRarityCodeFromRarityId(cardEdition.rarity),
@@ -89,8 +90,8 @@ const generateBlankStocklist = () => {
       return;
     }
 
-    const output = cards.map(({ element, name, number, rarity, nonFoil, foil }, index) => (
-      [element, rarity, number, name, nonFoil ? 0 : 'N/A', foil ? 0 : 'N/A'].join(cellSeparator)
+    const output = cards.map(({ elements, name, number, rarity, nonFoil, foil }, index) => (
+      [elements.join(', '), rarity, number, name, nonFoil ? 0 : 'N/A', foil ? 0 : 'N/A'].join(cellSeparator)
     )).join('\n');
   
 

@@ -1,5 +1,5 @@
 import { ColorResolvable } from "discord.js";
-import { Card, CardEffect, CardEffectBody, CardEffects, CardElement, CardType, IndexCardElement } from "../data/types";
+import { Card, CardEffect, CardEffectBody, CardElement, IndexCardElement } from "../data/types";
 
 export const getCardBody: (card: Card) => string = (card) => {
   const {

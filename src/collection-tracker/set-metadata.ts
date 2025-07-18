@@ -27,6 +27,7 @@ export const getSetLogo = (setPrefix) => {
       return 'DOA.png';
 
     case 'DTR':
+    case 'DTR 1st':
     case 'DTRSD':
       return 'DTR.png';
 
@@ -81,6 +82,7 @@ export const getSetCategory = (setPrefix) => {
       return 'Dawn of Ashes';
 
     case 'DTR':
+    case 'DTR 1st':
     case 'DTRSD':
       return 'Distorted Reflections';
 
@@ -126,6 +128,8 @@ export const getSetInfo: (setPrefix: string) => {
     case 'HVN':
     case 'HVN 1st':
     case 'MRC Alter':
+    case 'DTR':
+    case 'DTR 1st':
       return {
         type: [SetType.Standard],
         year: 2025,

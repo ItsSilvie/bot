@@ -18,7 +18,7 @@ const cardEmbed = (card, set) => {
     }
     const costSymbol = card.costType === types_1.CardCost.Memory ? '🔵' : '🟡';
     embed.addField(`Cost ${costSymbol}`, `${card.cost === -1 ? 'X' : `${card.cost}x`} ${card.costType.toLowerCase()}`, true);
-    embed.addField('Element', card.element, true);
+    embed.addField('Element(s)', card.elements.join(' '), true);
     embed.addField('Speed', "speed" in card && typeof card.speed === 'boolean' ? (card.speed ? 'Fast' : 'Slow') : (card.speed ?? '-'), true);
     embed.addField('Type', card.type, true);
     embed.addField('Supertype', card.supertype ?? '-', true);

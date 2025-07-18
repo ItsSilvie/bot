@@ -200,6 +200,7 @@ const generateBlogTemplates = async () => {
           cost: typeof cardMatch.cost_memory === 'number' ? cardMatch.cost_memory : cardMatch.cost_reserve,
           costType: typeof cardMatch.cost_memory === 'number' ? 'memory' : 'reserve',
           element: cardMatch.element,
+          elements: cardMatch.elements,
           name: cardMatch.name,
           number: '',
           rarity: '',

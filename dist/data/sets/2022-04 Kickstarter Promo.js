@@ -12,6 +12,7 @@ exports.default = [
                 }],
         ],
         element: types_1.CardElement.Normal,
+        elements: [types_1.CardElement.Normal],
         name: 'Clarent, Sword of Peace',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 001',
@@ -35,6 +36,7 @@ exports.default = [
                 }]
         ],
         element: types_1.CardElement.Normal,
+        elements: [types_1.CardElement.Normal],
         name: 'Endura, Sceptre of Ignition',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 002',
@@ -54,6 +56,7 @@ exports.default = [
                 }]
         ],
         element: types_1.CardElement.Crux,
+        elements: [types_1.CardElement.Crux],
         name: 'Prismatic Edge',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 003',
@@ -73,6 +76,7 @@ exports.default = [
             [undefined, 'At the beginning of your recollection phase, put all cards from your memory on the bottom of your deck in any order. Then, draw that many cards.']
         ],
         element: types_1.CardElement.Arcane,
+        elements: [types_1.CardElement.Arcane],
         name: 'Arcanist\'s Prism',
         notes: 'Given to all Kickstarter backers receiving a shipment',
         number: 'KS PROMO 004',
@@ -90,6 +94,7 @@ exports.default = [
             [undefined, 'Lorraine\'s attacks gain +1 attack for each Regalia weapon card in your banishment.']
         ],
         element: types_1.CardElement.Crux,
+        elements: [types_1.CardElement.Crux],
         level: 3,
         lineage: 'Lorraine',
         name: 'Lorraine, Crux Knight',
@@ -112,6 +117,7 @@ exports.default = [
             [undefined, 'Rai gets +1 level for each Arcane element mage card in your banishment.']
         ],
         element: types_1.CardElement.Arcane,
+        elements: [types_1.CardElement.Arcane],
         level: 3,
         lineage: 'Rai',
         name: 'Rai, Storm Seer',

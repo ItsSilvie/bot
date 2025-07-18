@@ -8,6 +8,7 @@ export default [
       [CardEffect.Enter, 'You may give each opponent a gift. If you do, all players win the game.']
     ],
     element: CardElement.Normal,
+    elements: [CardElement.Normal],
     level: 3,
     lineage: 'Lorraine',
     name: 'Lorraine, Festive Night',
@@ -31,6 +32,7 @@ export default [
       [CardEffect.Enter, 'You may give each opponent a gift. If you do, all players win the game.']
     ],
     element: CardElement.Normal,
+    elements: [CardElement.Normal],
     level: 3,
     lineage: 'Lorraine',
     name: 'Lorraine, Festive Night',

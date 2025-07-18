@@ -11,6 +11,7 @@ export default [
       }],
     ],
     element: CardElement.Normal,
+    elements: [CardElement.Normal],
     name: 'Clarent, Sword of Peace',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 001',
@@ -34,6 +35,7 @@ export default [
       }]
     ],
     element: CardElement.Normal,
+    elements: [CardElement.Normal],
     name: 'Endura, Sceptre of Ignition',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 002',
@@ -53,6 +55,7 @@ export default [
       }]
     ],
     element: CardElement.Crux,
+    elements: [CardElement.Crux],
     name: 'Prismatic Edge',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 003',
@@ -72,6 +75,7 @@ export default [
       [undefined, 'At the beginning of your recollection phase, put all cards from your memory on the bottom of your deck in any order. Then, draw that many cards.']
     ],
     element: CardElement.Arcane,
+    elements: [CardElement.Arcane],
     name: 'Arcanist\'s Prism',
     notes: 'Given to all Kickstarter backers receiving a shipment',
     number: 'KS PROMO 004',
@@ -89,6 +93,7 @@ export default [
       [undefined, 'Lorraine\'s attacks gain +1 attack for each Regalia weapon card in your banishment.']
     ],
     element: CardElement.Crux,
+    elements: [CardElement.Crux],
     level: 3,
     lineage: 'Lorraine',
     name: 'Lorraine, Crux Knight',
@@ -111,6 +116,7 @@ export default [
       [undefined, 'Rai gets +1 level for each Arcane element mage card in your banishment.']
     ],
     element: CardElement.Arcane,
+    elements: [CardElement.Arcane],
     level: 3,
     lineage: 'Rai',
     name: 'Rai, Storm Seer',

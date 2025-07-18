@@ -205,6 +205,7 @@ nonIndexSets.push([
                     "SPIRIT"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Lost Spirit",
                 "slug": "lost-spirit",
                 "effect": "<span class=\"effect__label\">On Enter:</span> Draw seven cards.",
@@ -257,6 +258,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Lorraine, Wandering Warrior",
                 "slug": "lorraine-wandering-warrior",
                 "effect": "<span class=\"effect__label\">On Enter:</span> Materialize a weapon card with a memory cost of 0 from your material deck.",
@@ -315,6 +317,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Lorraine, Blademaster",
                 "slug": "lorraine-blademaster",
                 "effect": "<span class=\"effect__label\">Lorraine Lineage</span> <span class=\"effect__reminder\">(Lorraine, Blademaster must be leveled from a previous level \"Lorraine\" champion.)</span>\\r\\n<span class=\"effect__label\">On Enter:</span> Until end of turn, Lorraine's attacks get +2<span class=\"effect__icon effect__icon--sword\"></span> and gains \"<span class=\"effect__label\">On Kill:</span> Draw a card.\"",
@@ -374,6 +377,7 @@ nonIndexSets.push([
                     "BAUBLE"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Bauble of Abundance",
                 "slug": "bauble-of-abundance",
                 "effect": "<span class=\"effect__label\">Banish Bauble of Abundance:</span> Each player draws a card.",
@@ -427,6 +431,7 @@ nonIndexSets.push([
                     "BAUBLE"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Life Essence Amulet",
                 "slug": "life-essence-amulet",
                 "effect": "Whenever an ally you control dies while it is not your turn, you may banish Life Essence Amulet. If you do, draw a card.",
@@ -482,6 +487,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Ornamental Greatsword",
                 "slug": "ornamental-greatsword",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__label\">On Enter:</span> Up to one target ally you control gets +1<span class=\"effect__icon effect__icon--sword\"></span> until end of turn. <span class=\"effect__reminder\">(Apply this effect only if your champion's class matches this card's class.)</span>",
@@ -535,6 +541,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Seer's Sword",
                 "slug": "seers-sword",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__label\">On Attack: Glimpse 2</span>. <span class=\"effect__reminder\">(To <span class=\"effect__label\">glimpse</span>, look at that many cards from the top of your deck. Put those cards back on the top or on the bottom of your deck in any order.)</span>",
@@ -588,6 +595,7 @@ nonIndexSets.push([
                     "ACCESSORY"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Sharpening Stone",
                 "slug": "sharpening-stone",
                 "effect": "<span class=\"effect__label\">Banish Sharpening Stone:</span> Up to one target Dagger or Sword weapon you control gets +1<span class=\"effect__icon effect__icon--sword\"></span> until end of turn. Draw a card.",
@@ -641,6 +649,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Warrior's Longsword",
                 "slug": "warriors-longsword",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span>Warrior's Longsword gets +1<span class=\"effect__icon effect__icon--sword\"></span>. <span class=\"effect__reminder\">(Apply this effect only if your champion's class matches this card's class.)</span>",
@@ -693,6 +702,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Banner Knight",
                 "slug": "banner-knight",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__bubble\">Level 2+</span>Other allies and weapons you control get +1<span class=\"effect__icon effect__icon--sword\"></span>. <span class=\"effect__reminder\">(Apply this effect only if your champion's class matches this card's class, and only if your champion is level 2 or higher.)</span>",
@@ -745,6 +755,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Crusader of Aesa",
                 "slug": "crusader-of-aesa",
                 "effect": "Crusader of Aesa enters the field rested.\r\n<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__label\">Intercept</span> <span class=\"effect__reminder\">(When your champion is attacked while this ally is awake, you may redirect that attack to this ally. Apply this effect only if your champion's class matches this card's class.)</span> ",
@@ -797,6 +808,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Esteemed Knight",
                 "slug": "esteemed-knight",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__label\">Intercept</span> <span class=\"effect__reminder\">(When your champion is attacked while this ally is awake, you may redirect that attack to this ally. Apply this effect only if your champion's class matches this card's class.)</span>",
@@ -849,6 +861,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Honorable Vanguard",
                 "slug": "honorable-vanguard",
                 "effect": "<span class=\"effect__label\">Floating Memory</span> <span class=\"effect__reminder\">(While paying for a memory cost, you may banish this card from your graveyard to pay for 1 of that cost.)</span> ",
@@ -901,6 +914,7 @@ nonIndexSets.push([
                     "SKILL"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Inspiring Call",
                 "slug": "inspiring-call",
                 "effect": "This card costs 2 less to activate if your champion has attacked this turn.\r\nAllies you control get +1<span class=\"effect__icon effect__icon--sword\"></span> until end of turn. Put the top card of your deck into your memory.",
@@ -953,6 +967,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Opening Cut",
                 "slug": "opening-cut",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span>While you have exactly one card in your memory, Opening Cut gets +2<span class=\"effect__icon effect__icon--sword\"></span>￰. <span class=\"effect__reminder\">(Apply this effect only if your champion's class matches this card's class.)</span>",
@@ -1005,6 +1020,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Reckless Slash",
                 "slug": "reckless-slash",
                 "effect": null,
@@ -1057,6 +1073,7 @@ nonIndexSets.push([
                     "SWORD"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Sudden Steel",
                 "slug": "sudden-steel",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span><span class=\"effect__label\">Efficiency</span> <span class=\"effect__reminder\">(This card costs <span class=\"effect__label\">LV</span> less to activate. <span class=\"effect__label\">LV</span> refers to your champion's level. Apply this effect only if your champion's class matches this card's class.)</span>",
@@ -1110,6 +1127,7 @@ nonIndexSets.push([
                     "HORSE"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Trusty Steed",
                 "slug": "trusty-steed",
                 "effect": "<span class=\"effect__label\">On Enter:</span> Another target ally you control gets +2<span class=\"effect__icon effect__icon--sword\"></span> until end of turn.",
@@ -1162,6 +1180,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Veteran Soldier",
                 "slug": "veteran-soldier",
                 "effect": "<span class=\"effect__label\">Floating Memory</span> <span class=\"effect__reminder\">(While paying for a memory cost, you may banish this card from your graveyard to pay for 1 of that cost.)</span>",
@@ -1214,6 +1233,7 @@ nonIndexSets.push([
                     "HUMAN"
                 ],
                 "element": "NORM",
+                "elements": ["NORM"],
                 "name": "Weaponsmith",
                 "slug": "weaponsmith",
                 "effect": "<span class=\"effect__bubble\">Class Bonus</span>At the beginning of your recollection phase, put a <span class=\"effect__label\">durability</span> counter on target weapon you control. <span class=\"effect__reminder\">(Apply this effect only if your champion's class matches this card's class.)</span>",

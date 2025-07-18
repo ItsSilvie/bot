@@ -88,6 +88,7 @@ export type Card = {
   cost: number
   costType: CardCost
   element: CardElement
+  elements: CardElement[]
   effects?: CardEffects
   image?: boolean | string
   name: string
@@ -193,6 +194,7 @@ export enum IndexCardElement {
   UMBRA = 'Umbra',
   WATER = 'Water',
   WIND = 'Wind',
+  EXALTED = 'Exalted',
 }
 
 export type IndexCard = {
@@ -206,6 +208,7 @@ export type IndexCard = {
   effect: string
   effect_raw: string
   element: keyof IndexCardElement
+  elements: (keyof IndexCardElement)[]
   flavor: string
   last_update: string | null
   level: number | null

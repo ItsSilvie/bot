@@ -9,6 +9,7 @@ export enum CardSearchDataKeys {
 export enum CardSearchFilterKeys {
   Classes = "c",
   Element = "e",
+  Elements = "x",
   SubTypes = "s",
   Types = "t",
 }
@@ -23,6 +24,7 @@ export interface CardSearchData {
   [CardSearchDataKeys.Filter]: {
     [CardSearchFilterKeys.Classes]?: string[];
     [CardSearchFilterKeys.Element]: string;
+    [CardSearchFilterKeys.Elements]: string[];
     [CardSearchFilterKeys.SubTypes]?: string[];
     [CardSearchFilterKeys.Types]?: string[];
   },
