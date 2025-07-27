@@ -29,7 +29,7 @@ const generateBlankStocklist = () => {
                 const cardEdition = cardEditions[k];
                 const cardEditionSet = cardEdition.set;
                 const cardCirculations = [...cardEdition.circulationTemplates, ...cardEdition.circulations];
-                const setCardDataObj = {
+                const basicData = {
                     element: card.element,
                     elements: card.elements,
                     name: card.name,
@@ -37,10 +37,48 @@ const generateBlankStocklist = () => {
                     rarity: (0, rarity_1.getRarityCodeFromRarityId)(cardEdition.rarity),
                     slug: cardEdition.slug,
                     set: cardEdition.set.prefix,
-                    nonFoil: !!cardCirculations.find(entry => entry.foil !== true),
-                    foil: !!cardCirculations.find(entry => entry.foil === true),
                 };
-                setCardData.push(setCardDataObj);
+                const variants = cardCirculations.reduce((output, circulation) => {
+                    if (!circulation.variants?.length) {
+                        return output;
+                    }
+                    return {
+                        ...output,
+                        ...circulation.variants.reduce((variantOutput, variant) => ({
+                            ...variantOutput,
+                            [variant.image]: {
+                                nonFoil: false,
+                                foil: false,
+                                description: variant.description,
+                                image: variant.image,
+                                ...variantOutput[variant.image],
+                                ...(variant.kind === 'NONFOIL' ? { nonFoil: true } : { foil: true }),
+                            }
+                        }), {}),
+                    };
+                }, {});
+                const baseCirculationNonFoilPopulation = cardCirculations.find(entry => entry.foil !== true);
+                const baseCirculationFoilPopulation = cardCirculations.find(entry => entry.foil === true);
+                const variantNonFoilPopulation = cardCirculations.filter(entry => entry.foil !== true).reduce((n, circulation) => {
+                    return n + (circulation.variants?.reduce((n2, variant) => n2 + variant.population, 0) ?? 0);
+                }, 0);
+                const variantFoilPopulation = cardCirculations.filter(entry => entry.foil === true).reduce((n, circulation) => {
+                    return n + (circulation.variants?.reduce((n2, variant) => n2 + variant.population, 0) ?? 0);
+                }, 0);
+                if (!variants[cardEdition.image]) {
+                    variants[cardEdition.image] = {
+                        nonFoil: !!baseCirculationNonFoilPopulation && (variantNonFoilPopulation === 0 || baseCirculationNonFoilPopulation - variantNonFoilPopulation > 0),
+                        foil: !!baseCirculationFoilPopulation && (variantFoilPopulation === 0 || baseCirculationFoilPopulation - variantFoilPopulation > 0),
+                    };
+                }
+                Object.values(variants).forEach(variant => {
+                    setCardData.push({
+                        ...basicData,
+                        name: variant.description ? `${basicData.name} (${variant.description})` : basicData.name,
+                        nonFoil: variant.nonFoil,
+                        foil: variant.foil,
+                    });
+                });
             }
         }
     };
@@ -61,7 +99,7 @@ const generateBlankStocklist = () => {
         if (!cards.length) {
             return;
         }
-        const output = cards.map(({ elements, name, number, rarity, nonFoil, foil }, index) => ([elements.join(', '), rarity, number, name, nonFoil ? 0 : 'N/A', foil ? 0 : 'N/A'].join(cellSeparator))).join('\n');
+        const output = cards.map(({ elements, slug, name, number, rarity, nonFoil, foil }) => ([elements.join(', '), rarity, number, name, nonFoil ? 0 : 'N/A', foil ? 0 : 'N/A', `=HYPERLINK("https://index.gatcg.com/edition/${slug}", "View on Index")`].join(cellSeparator))).join('\n');
         fs.writeFileSync(`${stocklistDataPath}/stocklist/${prefix}.txt`, output, 'utf-8');
     }
 };

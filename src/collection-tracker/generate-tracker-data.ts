@@ -205,6 +205,7 @@ const generateTrackerData = async () => {
           .replace('linked: ', 'linked?: ')
           .replace('Card', 'GeneratedCard')
           .replace('element: string', 'element: GeneratedElement')
+          .replace('elements: string[]', 'elements: GeneratedElement[]')
           .replace('rarity: string', 'rarity: GeneratedRarity')
           .replace('variant: string', 'variant: GeneratedVariant');
       }).join('\n\n')
