@@ -37,6 +37,12 @@ const getSetLogo = (setPrefix) => {
         case 'ReC-HVF':
         case 'ReC-IDY':
             return 'HVN.png';
+        case 'PTM':
+        case 'PTM 1st':
+        case 'PTMEVP':
+        case 'PTM-LGS':
+        case 'ReC-BRV':
+            return 'PTM.png';
         case 'SLC':
             return 'SLC.png';
         default:
@@ -80,6 +86,12 @@ const getSetCategory = (setPrefix) => {
         case 'FTC':
         case 'FTCA':
             return 'Dawn of Ashes';
+        case 'PTM':
+        case 'PTM 1st':
+        case 'PTM-LGS':
+        case 'PTMEVP':
+        case 'ReC-BRV':
+            return 'Phantom Monarchs';
         case 'GSC':
         case 'EVP':
         case 'KSP':
@@ -114,6 +126,9 @@ const getSetInfo = (setPrefix) => {
         case 'MRC Alter':
         case 'DTR':
         case 'DTR 1st':
+        case 'PTM':
+        case 'PTM 1st':
+        case 'PTMLGS':
             return {
                 type: [SetType.Standard],
                 year: 2025,
@@ -121,6 +136,7 @@ const getSetInfo = (setPrefix) => {
         case 'DTRSD':
         case 'ReC-HVF':
         case 'ReC-IDY':
+        case 'ReC-BRV':
             return {
                 type: [SetType.Deck],
                 year: 2025,
@@ -213,6 +229,7 @@ const getSetInfo = (setPrefix) => {
                 year: 2024,
             };
         case 'P25':
+        case 'PTMEVP':
             return {
                 type: [SetType.Promo],
                 year: 2025,

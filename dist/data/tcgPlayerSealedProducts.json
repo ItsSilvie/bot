@@ -12,15 +12,15 @@
         "productId": 494986
     },
     {
-        "name": "Dawn of Ashes Starter Deck - Lorraine",
+        "name": "Dawn of Ashes Starter Deck Lorraine",
         "productId": 495016
     },
     {
-        "name": "Dawn of Ashes Starter Deck - Silvie",
+        "name": "Dawn of Ashes Starter Deck Silvie",
         "productId": 495021
     },
     {
-        "name": "Dawn of Ashes Starter Deck - Rai",
+        "name": "Dawn of Ashes Starter Deck Rai",
         "productId": 495023
     },
     {
@@ -52,15 +52,15 @@
         "productId": 500829
     },
     {
-        "name": "Fractured Crown - Booster Box Case",
+        "name": "Fractured Crown Booster Box Case",
         "productId": 512621
     },
     {
-        "name": "Dawn of Ashes 1st Edition - Booster Box Case",
+        "name": "Dawn of Ashes 1st Edition Booster Box Case",
         "productId": 514307
     },
     {
-        "name": "Dawn of Ashes Alter Edition - Booster Box Case",
+        "name": "Dawn of Ashes Alter Edition Booster Box Case",
         "productId": 514308
     },
     {
@@ -80,15 +80,15 @@
         "productId": 528767
     },
     {
-        "name": "Alchemical Revolution Starter Deck - Arisanna",
+        "name": "Alchemical Revolution Starter Deck Arisanna",
         "productId": 531497
     },
     {
-        "name": "Alchemical Revolution Starter Deck - Diana",
+        "name": "Alchemical Revolution Starter Deck Diana",
         "productId": 531498
     },
     {
-        "name": "Alchemical Revolution Starter Deck - Tonoris",
+        "name": "Alchemical Revolution Starter Deck Tonoris",
         "productId": 531499
     },
     {
@@ -108,23 +108,199 @@
         "productId": 542353
     },
     {
-        "name": "Silvie Re:Collection, Slime Sovereign Box",
+        "name": "Silvie ReCollection Slime Sovereign Box",
         "productId": 544997
     },
     {
-        "name": "Silvie Re:Collection, Slime Sovereign Case",
+        "name": "Silvie ReCollection Slime Sovereign Case",
         "productId": 544998
     },
     {
-        "name": "Tristan Re:Collection, Shadowdancer Case",
+        "name": "Tristan ReCollection Shadowdancer Case",
         "productId": 544999
     },
     {
-        "name": "Tristan Re:Collection, Shadowdancer Box",
+        "name": "Tristan ReCollection Shadowdancer Box",
         "productId": 545000
     },
     {
-        "name": "Re:Collection Mercurial Heart Booster Pack",
+        "name": "ReCollection Mercurial Heart Booster Pack",
         "productId": 545001
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Kongming",
+        "productId": 557714
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Display Jin",
+        "productId": 557715
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Display Case Jin",
+        "productId": 559096
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Jin",
+        "productId": 559097
+    },
+    {
+        "name": "Mortal Ambition 1st Edition Booster Box",
+        "productId": 559098
+    },
+    {
+        "name": "Mortal Ambition 1st Edition Booster Box Case",
+        "productId": 559099
+    },
+    {
+        "name": "Mortal Ambition 1st Edition Booster Pack",
+        "productId": 559100
+    },
+    {
+        "name": "Supporter Pack 2",
+        "productId": 559295
+    },
+    {
+        "name": "Supporter Pack 2 Box",
+        "productId": 559318
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Display Kongming",
+        "productId": 581077
+    },
+    {
+        "name": "Mortal Ambition Starter Deck Display Case Kongming",
+        "productId": 581078
+    },
+    {
+        "name": "Alchemical Revolution Alter Edition Booster Pack",
+        "productId": 606716
+    },
+    {
+        "name": "Alchemical Revolution Alter Edition Booster Box",
+        "productId": 606717
+    },
+    {
+        "name": "Alchemical Revolution Alter Edition Booster Box Case",
+        "productId": 606721
+    },
+    {
+        "name": "Abyssal Heaven 1st Edition Booster Pack",
+        "productId": 610738
+    },
+    {
+        "name": "Abyssal Heaven 1st Edition Booster Box",
+        "productId": 610739
+    },
+    {
+        "name": "Abyssal Heaven 1st Edition Booster Box Case",
+        "productId": 610740
+    },
+    {
+        "name": "Diao Chan Re Collection Idyll Corsage Box",
+        "productId": 610944
+    },
+    {
+        "name": "Diao Chan Re Collection Idyll Corsage Case",
+        "productId": 610945
+    },
+    {
+        "name": "Guo Jia Re Collection Heavens Favored Box",
+        "productId": 610946
+    },
+    {
+        "name": "Guo Jia Re Collection Heavens Favored Case",
+        "productId": 610947
+    },
+    {
+        "name": "Mercurial Heart Alter Edition Booster Pack",
+        "productId": 627726
+    },
+    {
+        "name": "Mercurial Heart Alter Edition Booster Box",
+        "productId": 627727
+    },
+    {
+        "name": "Mercurial Heart Alter Edition Booster Box Case",
+        "productId": 627728
+    },
+    {
+        "name": "Silvie ReCollection Slime Sovereign Lite Deck",
+        "productId": 627733
+    },
+    {
+        "name": "Silvie ReCollection Slime Sovereign Lite Case",
+        "productId": 627734
+    },
+    {
+        "name": "Tristan Shadowdancer ReCollection Lite Case",
+        "productId": 627735
+    },
+    {
+        "name": "Tristan Shadowdancer ReCollection Lite Deck",
+        "productId": 627736
+    },
+    {
+        "name": "Distorted Reflections 1st Edition Booster Pack",
+        "productId": 639655
+    },
+    {
+        "name": "Distorted Reflections 1st Edition Booster Box",
+        "productId": 639656
+    },
+    {
+        "name": "Distorted Reflections 1st Edition Booster Box Case",
+        "productId": 639657
+    },
+    {
+        "name": "Ciel Mirages Grave Starter Deck",
+        "productId": 639664
+    },
+    {
+        "name": "Ciel Mirages Grave Starter Deck Display Case",
+        "productId": 639665
+    },
+    {
+        "name": "Diana Moonpiercer Starter Deck Display Case",
+        "productId": 639667
+    },
+    {
+        "name": "Diana Moonpiercer Starter Deck Display",
+        "productId": 639669
+    },
+    {
+        "name": "Diana Moonpiercer Starter Deck",
+        "productId": 639670
+    },
+    {
+        "name": "Ciel Mirages Grave Starter Deck Display",
+        "productId": 639672
+    },
+    {
+        "name": "Supporter Pack 3",
+        "productId": 641231
+    },
+    {
+        "name": "Supporter Pack 3 Box",
+        "productId": 641233
+    },
+    {
+        "name": "Phantom Monarchs 1st Edition Booster Pack",
+        "productId": 655544
+    },
+    {
+        "name": "Phantom Monarchs 1st Edition Booster Box",
+        "productId": 655545
+    },
+    {
+        "name": "Phantom Monarchs 1st Edition Booster Box Case",
+        "productId": 655546
+    },
+    {
+        "name": "Merlin ReCollection Brilliant Vestige",
+        "productId": 655737
+    },
+    {
+        "name": "Merlin ReCollection Brilliant Vestige Case",
+        "productId": 655738
     }
 ]
