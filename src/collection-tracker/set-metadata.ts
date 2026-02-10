@@ -15,6 +15,7 @@ export const getSetLogo = (setPrefix) => {
 
     case 'AMB':
     case 'AMB 1st':
+    case 'AMB Alter':
     case 'AMBSD':
     case 'AMBDP':
       return 'AMB.png';
@@ -71,6 +72,7 @@ export const getSetCategory = (setPrefix) => {
 
     case 'AMB':
     case 'AMB 1st':
+    case 'AMB Alter':
     case 'AMBSD':
     case 'AMBDP':
     case 'HVN':
@@ -139,6 +141,12 @@ export const getSetInfo: (setPrefix: string) => {
   year: number;
 } = (setPrefix) => {
   switch (setPrefix) {
+    case 'AMB Alter':
+      return {
+        type: [SetType.Standard],
+        year: 2024,
+      }
+
     case 'HVN':
     case 'HVN 1st':
     case 'MRC Alter':

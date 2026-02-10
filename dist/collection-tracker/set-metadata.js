@@ -16,6 +16,7 @@ const getSetLogo = (setPrefix) => {
             return 'MRC.png';
         case 'AMB':
         case 'AMB 1st':
+        case 'AMB Alter':
         case 'AMBSD':
         case 'AMBDP':
             return 'AMB.png';
@@ -64,6 +65,7 @@ const getSetCategory = (setPrefix) => {
             return 'Alchemical Revolution';
         case 'AMB':
         case 'AMB 1st':
+        case 'AMB Alter':
         case 'AMBSD':
         case 'AMBDP':
         case 'HVN':
@@ -121,6 +123,11 @@ var SetType;
 })(SetType || (SetType = {}));
 const getSetInfo = (setPrefix) => {
     switch (setPrefix) {
+        case 'AMB Alter':
+            return {
+                type: [SetType.Standard],
+                year: 2024,
+            };
         case 'HVN':
         case 'HVN 1st':
         case 'MRC Alter':
