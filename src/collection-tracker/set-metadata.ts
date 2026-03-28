@@ -128,6 +128,8 @@ export const getSetCategory = (setPrefix) => {
     case 'P22':
     case 'P23':
     case 'P24':
+    case 'P25':
+    case 'P26':
     case 'SLC':
       return 'Promotional';
 
@@ -314,6 +316,12 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Promo],
         year: 2025,
+      }
+
+    case 'P26':
+      return {
+        type: [SetType.Promo],
+        year: 2026,
       }
 
     case 'SP2':
