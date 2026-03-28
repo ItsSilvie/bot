@@ -44,6 +44,13 @@ const getSetLogo = (setPrefix) => {
         case 'PTM-LGS':
         case 'ReC-BRV':
             return 'PTM.png';
+        case 'RDO':
+        case 'RDO 1st':
+        case 'RDOA':
+        case 'RDOP':
+        case 'RDOPD':
+        case 'ReC-AUR':
+            return 'RDO.png';
         case 'SLC':
             return 'SLC.png';
         default:
@@ -94,6 +101,13 @@ const getSetCategory = (setPrefix) => {
         case 'PTMEVP':
         case 'ReC-BRV':
             return 'Phantom Monarchs';
+        case 'RDO':
+        case 'RDO 1st':
+        case 'RDOA':
+        case 'RDOP':
+        case 'RDOPD':
+        case 'ReC-AUR':
+            return 'Radiant Origins';
         case 'GSC':
         case 'EVP':
         case 'KSP':
@@ -116,6 +130,7 @@ exports.getSetCategory = getSetCategory;
 var SetType;
 (function (SetType) {
     SetType["Deck"] = "deck";
+    SetType["Pantheon"] = "pantheon";
     SetType["Promo"] = "promo";
     SetType["Sample"] = "sample";
     SetType["Special"] = "special";
@@ -140,6 +155,19 @@ const getSetInfo = (setPrefix) => {
                 type: [SetType.Standard],
                 year: 2025,
             };
+        case 'RDO':
+        case 'RDO 1st':
+        case 'RDOA':
+            return {
+                type: [SetType.Standard],
+                year: 2026,
+            };
+        case 'RDOP':
+        case 'RDOPD':
+            return {
+                type: [SetType.Pantheon],
+                year: 2026,
+            };
         case 'DTRSD':
         case 'ReC-HVF':
         case 'ReC-IDY':
@@ -147,6 +175,11 @@ const getSetInfo = (setPrefix) => {
             return {
                 type: [SetType.Deck],
                 year: 2025,
+            };
+        case 'ReC-AUR':
+            return {
+                type: [SetType.Deck],
+                year: 2026,
             };
         case 'ALC':
         case 'ALC 1st':
