@@ -49,6 +49,14 @@ export const getSetLogo = (setPrefix) => {
     case 'ReC-BRV':
       return 'PTM.png';
 
+    case 'RDO':
+    case 'RDO 1st':
+    case 'RDOA':
+    case 'RDOP':
+    case 'RDOPD':
+    case 'ReC-AUR':
+      return 'RDO.png';
+
     case 'SLC':
       return 'SLC.png';
 
@@ -106,6 +114,14 @@ export const getSetCategory = (setPrefix) => {
     case 'ReC-BRV':
       return 'Phantom Monarchs';
 
+    case 'RDO':
+    case 'RDO 1st':
+    case 'RDOA':
+    case 'RDOP':
+    case 'RDOPD':
+    case 'ReC-AUR':
+      return 'Radiant Origins';
+
     case 'GSC':
     case 'EVP':
     case 'KSP':
@@ -130,6 +146,7 @@ export const getSetCategory = (setPrefix) => {
 
 enum SetType {
   Deck = 'deck',
+  Pantheon = 'pantheon',
   Promo = 'promo',
   Sample = 'sample',
   Special = 'special',
@@ -160,6 +177,21 @@ export const getSetInfo: (setPrefix: string) => {
         year: 2025,
       }
 
+    case 'RDO':
+    case 'RDO 1st':
+    case 'RDOA':
+      return {
+        type: [SetType.Standard],
+        year: 2026,
+      }
+
+    case 'RDOP':
+    case 'RDOPD':
+      return {
+        type: [SetType.Pantheon],
+        year: 2026,
+      }
+
     case 'DTRSD':
     case 'ReC-HVF':
     case 'ReC-IDY':
@@ -167,6 +199,12 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Deck],
         year: 2025,
+      }
+
+    case 'ReC-AUR':
+      return {
+        type: [SetType.Deck],
+        year: 2026,
       }
 
     case 'ALC':
