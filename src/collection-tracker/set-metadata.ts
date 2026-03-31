@@ -133,6 +133,9 @@ export const getSetCategory = (setPrefix) => {
     case 'SLC':
       return 'Promotional';
 
+    case 'PP1':
+      return 'Pantheon';
+
     case 'DEMO22':
     case 'DEMO23':
       return 'Demo decks';
@@ -189,6 +192,7 @@ export const getSetInfo: (setPrefix: string) => {
 
     case 'RDOP':
     case 'RDOPD':
+    case 'PP1':
       return {
         type: [SetType.Pantheon],
         year: 2026,
