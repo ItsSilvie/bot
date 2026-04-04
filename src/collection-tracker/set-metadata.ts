@@ -54,6 +54,7 @@ export const getSetLogo = (setPrefix) => {
     case 'RDOA':
     case 'RDOP':
     case 'RDOPD':
+    case 'RDOEVP':
     case 'ReC-AUR':
       return 'RDO.png';
 
@@ -119,6 +120,7 @@ export const getSetCategory = (setPrefix) => {
     case 'RDOA':
     case 'RDOP':
     case 'RDOPD':
+    case 'RDOEVP':
     case 'ReC-AUR':
       return 'Radiant Origins';
 
@@ -323,6 +325,7 @@ export const getSetInfo: (setPrefix: string) => {
       }
 
     case 'P26':
+    case 'RDOEVP':
       return {
         type: [SetType.Promo],
         year: 2026,
