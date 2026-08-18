@@ -1,5 +1,14 @@
 export const getSetLogo = (setPrefix) => {
   switch (setPrefix) {
+    case 'PRD':
+    case 'PRD 1st':
+    case 'PRDDP':
+    case 'PRDG':
+    case 'PRDSD':
+    case 'PRDP':
+    case 'PRDEVP':
+      return 'PRD.png'
+
     case 'ALC':
     case 'ALC 1st':
     case 'ALC Alter':
@@ -68,6 +77,15 @@ export const getSetLogo = (setPrefix) => {
 
 export const getSetCategory = (setPrefix) => {
   switch (setPrefix) {
+    case 'PRD':
+    case 'PRD 1st':
+    case 'PRDDP':
+    case 'PRDG':
+    case 'PRDSD':
+    case 'PRDP':
+    case 'PRDEVP':
+      return '.asphodel/paradise'
+
     case 'ALC':
     case 'ALC 1st':
     case 'ALC Alter':
@@ -133,6 +151,10 @@ export const getSetCategory = (setPrefix) => {
     case 'P25':
     case 'P26':
     case 'SLC':
+    case 'SP1':
+    case 'SP2':
+    case 'SP3':
+    case 'SP4':
       return 'Promotional';
 
     case 'PP1':
@@ -326,6 +348,7 @@ export const getSetInfo: (setPrefix: string) => {
 
     case 'P26':
     case 'RDOEVP':
+    case 'PRDEVP':
       return {
         type: [SetType.Promo],
         year: 2026,
@@ -342,6 +365,33 @@ export const getSetInfo: (setPrefix: string) => {
       return {
         type: [SetType.Special],
         year: 2025,
+      }
+
+    case 'PRD':
+    case 'PRD 1st':
+    case 'PRDG':
+      return {
+        type: [SetType.Standard],
+        year: 2026,
+      }
+
+    case 'PRDSD':
+      return {
+        type: [SetType.Deck],
+        year: 2026,
+      }
+
+    case 'PRDP':
+      return {
+        type: [SetType.Pantheon],
+        year: 2026,
+      }
+
+    case 'SP4':
+    case 'PRDDP':
+      return {
+        type: [SetType.Special],
+        year: 2024,
       }
 
     default:
