@@ -32,7 +32,7 @@ var CustomType;
     CustomType["Item"] = "Items";
     CustomType["Phantasia"] = "Phantasia";
 })(CustomType || (CustomType = {}));
-const getCustomTypeFromType = (type) => {
+const getCustomTypeFromType = (type, cardName) => {
     switch (type) {
         case 'ALLY':
             return CustomType.Ally;
@@ -43,9 +43,13 @@ const getCustomTypeFromType = (type) => {
         case 'REGALIA':
         case 'ACTION':
         case 'ATTACK':
+        case 'ITEM':
+        case 'WEAPON':
             return CustomType.Item;
         case 'PHANTASIA':
             return CustomType.Phantasia;
+        default:
+            throw new Error(`Unhandled named card type: ${type ?? 'undefined'} for ${cardName}`);
     }
 };
 const generateNamedCardsTemplate = async () => {
@@ -55,7 +59,7 @@ const generateNamedCardsTemplate = async () => {
     const cards = await allCards();
     const cardsWithUniqueNames = cards.filter(entry => entry.name.includes(',')).reduce((cardsArr, card) => {
         const name = card.name.replace(/,.*/, '');
-        const type = getCustomTypeFromType(card.types.filter(entry => entry !== 'UNIQUE')[0]);
+        const type = getCustomTypeFromType(card.types.filter(entry => entry !== 'UNIQUE')[0], card.name);
         const namedCardMatchIndex = cardsArr.findIndex(entry => entry.name === name && entry.type === type);
         const previewEdition = card.editions.filter(entry => entry.rarity >= 7)?.[0] ?? card.editions[0];
         const previewImage = `https://img.silvie.org/cdn/cards/${previewEdition.set.prefix}/${(0, rarity_1.getRarityCodeFromRarityId)(previewEdition.rarity)}/${previewEdition.set.language}-${previewEdition.collector_number}.jpg`;

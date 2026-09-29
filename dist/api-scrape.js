@@ -4,6 +4,7 @@ const node_fetch_1 = require("node-fetch");
 const fs = require("fs");
 const https = require("https");
 const constants_1 = require("./utils/constants");
+const featured_sets_1 = require("./featured-sets");
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
 });
@@ -12,8 +13,11 @@ const apiScrape = async () => {
     const getOptions = async () => {
         const response = await (0, node_fetch_1.default)(`${constants_1.API_BASE}/option/search`, {
             agent: httpsAgent,
-        }).then(response => response.json());
-        return response;
+        });
+        if (!response.ok) {
+            throw new Error(`Unable to fetch API options (${response.status})`);
+        }
+        return response.json();
     };
     const options = await getOptions();
     const cardSets = options.set.map(({ value }) => value);
@@ -21,30 +25,37 @@ const apiScrape = async () => {
         throw new Error(`${cardSetArg} is not a known set. Does the hardcoded set list need updating?`);
     }
     const getAllPaginatedResults = async (url, output, currentPage, size) => {
-        const { data, page, total_pages: totalPages, } = await (0, node_fetch_1.default)(`${url}&page=${currentPage || 1}`, {
+        const pageResponse = await (0, node_fetch_1.default)(`${url}&page=${currentPage || 1}`, {
             agent: httpsAgent,
-        }).then(response => response.json());
+        });
+        if (!pageResponse.ok) {
+            throw new Error(`Unable to fetch ${url} (${pageResponse.status})`);
+        }
+        const { data, page, total_pages: totalPages, } = await pageResponse.json();
         if (!Array.isArray(output) || !currentPage || !size) {
             if (totalPages === 1) {
                 return data;
             }
             return getAllPaginatedResults(url, data, 2, totalPages);
         }
-        const response = [
+        const combined = [
             ...output,
             ...data
         ];
         if (currentPage === size) {
-            return response;
+            return combined;
         }
-        return getAllPaginatedResults(url, response, page + 1, totalPages);
+        return getAllPaginatedResults(url, combined, page + 1, totalPages);
     };
     const getCardImage = async (imagePath, uuid) => {
-        await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
+        const response = await (0, node_fetch_1.default)(`${constants_1.API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
             agent: httpsAgent,
-        }).then(response => response.body.pipe(fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
-            flags: 'w',
-        }))).catch((e) => console.error(e));
+        });
+        if (!response.ok) {
+            throw new Error(`Unable to fetch card image ${imagePath} (${response.status})`);
+        }
+        const buffer = await response.buffer();
+        fs.writeFileSync(`../img.silvie.org/docs/api-data/${uuid}.jpg`, buffer, { flag: 'w' });
     };
     const getAllCards = async (cardSet) => {
         console.log('  ...getting cards...');
@@ -100,6 +111,9 @@ const apiScrape = async () => {
         }
     };
     await processOptions();
+    // Featured sets contain the authoritative group/logo relationship used by
+    // the collection tracker and blog metadata generators.
+    await (0, featured_sets_1.downloadFeaturedSetLogos)();
     if (!cardSetArg) {
         for (let i = 0; i < cardSets.length; i++) {
             const cardSet = cardSets[i];
@@ -111,4 +125,7 @@ const apiScrape = async () => {
     await processSet(cardSetArg);
     await processOptions();
 };
-apiScrape();
+apiScrape().catch(error => {
+    console.error(error);
+    process.exitCode = 1;
+});

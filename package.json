@@ -7,13 +7,13 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "26.x"
   },
   "dependencies": {
     "@discordjs/rest": "^0.2.0-canary.0",
     "canvas": "^3.0.0-rc2",
     "chart.js": "3.9.1",
-    "chartjs-node-canvas": "^4.1.6",
+    "chartjs-node-canvas": "5.0.0",
     "dayjs": "^1.11.10",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.1",
@@ -28,23 +28,23 @@
   },
   "scripts": {
     "build": "echo \"Silvie is pre-built using build-local.\"",
-    "build-local": "yarn clean & yarn tsc --outDir ./dist & yarn build-api-data & shx cp ./src/deck-builder/types.ts ./dist/deck-builder/types.ts",
-    "build-all": "yarn build-local & yarn deployCommands",
-    "build-api-data": "shx cp -r ./src/api-data/ ./dist/ & shx cp -r ./src/api-data/ ../silvie-monorepo/apps/api.silvie.org/src/",
+    "build-local": "yarn clean && yarn tsc --outDir ./dist && yarn build-api-data && shx cp ./src/deck-builder/types.ts ./dist/deck-builder/types.ts",
+    "build-all": "yarn build-local && yarn deployCommands",
+    "build-api-data": "shx cp -r ./src/api-data/ ./dist/ && shx cp -r ./src/api-data/ ../silvie-monorepo/apps/api.silvie.org/src/",
     "clean": "shx rm -rf ./dist",
     "deployCommands": "node ./dist/deploy-commands.js",
     "scrape": "node ./dist/api-scrape.js",
-    "parse": "yarn update-static-files & yarn update-stocklist-files & yarn update-misc-files & yarn build-local",
+    "parse": "yarn update-static-files && yarn update-stocklist-files && yarn update-misc-files && yarn build-local",
     "start": "node .",
     "deploy": "git push heroku main",
-    "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" & node ./dist/blog/generate-blog-templates.js --trace-warnings & node ./dist/blog/lowest-pop-cards.js --trace-warnings & node ./dist/blog/named-cards.js --trace-warnings & node ./dist/blog/cards-by-illustrator.js --trace-warnings & node ./dist/blog/cards-by-misc.js --trace-warnings",
+    "generate-blog-templates": "echo \"Blog templates will be built in blog.silvie.org.\" && node ./dist/blog/generate-blog-templates.js --trace-warnings && node ./dist/blog/lowest-pop-cards.js --trace-warnings && node ./dist/blog/named-cards.js --trace-warnings && node ./dist/blog/cards-by-illustrator.js --trace-warnings && node ./dist/blog/cards-by-misc.js --trace-warnings",
     "generate-deck-builder-data": "node ./dist/deck-builder/generate-deck-builder-data.js --trace-warnings",
-    "generate-tracker-data": "echo \"Tracker data will be built in silvie-monorepo.\" & node ./dist/collection-tracker/generate-tracker-data.js --trace-warnings",
+    "generate-tracker-data": "echo \"Tracker data will be built in silvie-monorepo.\" && node ./dist/collection-tracker/generate-tracker-data.js --trace-warnings",
     "ebay-images": "node ./dist/ebay/generate-ebay-images.js --trace-warnings",
     "create-shopify-import": "node ./dist/shopify/generate-product-import.js --trace-warnings",
     "create-stocklists": "node ./dist/ebay/generate-blank-stocklist.js --trace-warnings",
-    "update-static-files": "yarn generate-deck-builder-data & yarn generate-tracker-data & yarn generate-blog-templates",
-    "update-stocklist-files": "yarn create-stocklists & yarn create-shopify-import",
+    "update-static-files": "yarn generate-deck-builder-data && yarn generate-tracker-data && yarn generate-blog-templates",
+    "update-stocklist-files": "yarn create-stocklists && yarn create-shopify-import",
     "update-misc-files": "node ./dist/misc/shortener-words.js --trace-warnings"
   },
   "bugs": {

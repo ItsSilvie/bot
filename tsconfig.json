@@ -2,6 +2,8 @@
   "compilerOptions": {
     "module": "CommonJS",
     "resolveJsonModule": true,
+    "rootDir": "./src",
     "target": "ES2021"
-  }
+  },
+  "exclude": ["dist", "dist-temp", "node_modules"]
 }

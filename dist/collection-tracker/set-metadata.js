@@ -1,6 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSetMetadata = exports.getSetInfo = exports.getSetCategory = exports.getSetLogo = void 0;
+const fs = require("fs");
+const path = require("path");
+const getFeaturedSets = () => {
+    try {
+        return JSON.parse(fs.readFileSync(path.resolve(__dirname, '../api-data/featured-sets.json'), 'utf8'));
+    }
+    catch {
+        return [];
+    }
+};
+const getFeaturedSet = (setPrefix) => getFeaturedSets().find(featuredSet => featuredSet.sets.some(set => set.prefix === setPrefix));
 const getSetLogo = (setPrefix) => {
     switch (setPrefix) {
         case 'PRD':
@@ -63,7 +74,7 @@ const getSetLogo = (setPrefix) => {
         case 'SLC':
             return 'SLC.png';
         default:
-            return 'GA.png';
+            return getFeaturedSet(setPrefix)?.image?.split('/').pop() ?? 'GA.png';
     }
 };
 exports.getSetLogo = getSetLogo;
@@ -149,7 +160,7 @@ const getSetCategory = (setPrefix) => {
         case 'DEMO22-SAMPLE':
             return 'Samples';
         default:
-            return 'Miscellaneous';
+            return getFeaturedSet(setPrefix)?.name ?? 'Miscellaneous';
     }
 };
 exports.getSetCategory = getSetCategory;
@@ -343,7 +354,33 @@ const getSetInfo = (setPrefix) => {
                 year: 2024,
             };
         default:
-            throw new Error(`No set info specified for ${setPrefix}`);
+            const set = getFeaturedSets().flatMap(featuredSet => featuredSet.sets).find(entry => entry.prefix === setPrefix);
+            if (!set) {
+                throw new Error(`No set info specified for ${setPrefix}`);
+            }
+            const date = new Date(set.release_date);
+            const year = date.getFullYear();
+            const name = set.name.toLowerCase();
+            let type = SetType.Standard;
+            if (name.includes('starter deck') || name.includes('demo') || name.includes('deck')) {
+                type = SetType.Deck;
+            }
+            else if (name.includes('pantheon')) {
+                type = SetType.Pantheon;
+            }
+            else if (name.includes('promo') || name.includes('event pack')) {
+                type = SetType.Promo;
+            }
+            else if (name.includes('sample')) {
+                type = SetType.Sample;
+            }
+            else if (name.includes('supporter') || name.includes('special')) {
+                type = SetType.Special;
+            }
+            if (!Number.isFinite(year) || year < 2000) {
+                throw new Error(`No valid release year specified for ${setPrefix}`);
+            }
+            return { type: [type], year };
     }
 };
 exports.getSetInfo = getSetInfo;

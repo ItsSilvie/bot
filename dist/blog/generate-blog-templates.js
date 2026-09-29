@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+const path = require("path");
 const rarity_1 = require("../utils/rarity");
 const card_obtain_methods_1 = require("./card-obtain-methods");
 const custom_sets_card_edition_uuids_1 = require("./custom-sets-card-edition-uuids");
+const set_metadata_1 = require("../collection-tracker/set-metadata");
 const BLOG_REPO_LOCAL_PATH = '../blog.silvie.org';
 const blogTemplatesPath = `${BLOG_REPO_LOCAL_PATH}/_includes/templates`;
+const blogSetsPath = `${BLOG_REPO_LOCAL_PATH}/sets`;
 const themaTypes = [
     'charm',
     'ferocity',
@@ -35,12 +38,246 @@ const getThemaScoreHTMLFromTemplate = (templateData) => {
   ${nonFoil && foil ? `${nonFoil}${foil}` : (nonFoil || foil)}
 </div>`;
 };
+const slugifySetName = (name) => name
+    .replace(/re:collection/gi, 'recollection')
+    .replace(/&/g, 'and')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['’]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase();
+const getSetYear = (set) => {
+    const releaseDate = new Date(set.release_date);
+    if (releaseDate.getFullYear() >= 2000) {
+        return releaseDate.getFullYear();
+    }
+    return new Date(set.created_at).getFullYear();
+};
+const getDateOrdinal = (day) => {
+    const suffix = day % 10 === 1 && day % 100 !== 11 ? 'st' : day % 10 === 2 && day % 100 !== 12 ? 'nd' : day % 10 === 3 && day % 100 !== 13 ? 'rd' : 'th';
+    return `${day}${suffix}`;
+};
+const getOldestEditionTimestamp = (set, cardData) => {
+    const editionTimestamps = cardData
+        .flatMap(card => card.editions ?? [])
+        .filter(edition => edition.set?.prefix === set.prefix)
+        .map(edition => new Date(edition.created_at).getTime())
+        .filter(timestamp => Number.isFinite(timestamp));
+    return editionTimestamps.length ? Math.min(...editionTimestamps) : undefined;
+};
+const formatReleaseDate = (set, cardData = readSetCardData(set)) => {
+    const timestamp = hasPublishedReleaseDate(set)
+        ? new Date(set.release_date).getTime()
+        : getOldestEditionTimestamp(set, cardData);
+    if (!Number.isFinite(timestamp)) {
+        return 'Release date currently unavailable';
+    }
+    const date = new Date(timestamp);
+    return `${date.toLocaleString('en-GB', { month: 'long', timeZone: 'UTC' })} ${getDateOrdinal(date.getUTCDate())} ${date.getUTCFullYear()}`;
+};
+const getSetPagePath = (set) => {
+    const year = getSetYear(set);
+    if (/^Promotional \d{4}$/i.test(set.name)) {
+        return `${year}-promotional.markdown`;
+    }
+    return `${year}-${slugifySetName(set.name)}.markdown`;
+};
+const getExistingSetPagePath = (set) => {
+    const year = getSetYear(set);
+    const canonicalPath = `${blogSetsPath}/${getSetPagePath(set)}`;
+    const slug = slugifySetName(set.name);
+    const legacySlug = slug.replace(new RegExp(`-${year}$`), '');
+    const legacyPath = `${blogSetsPath}/${year}-${legacySlug}.markdown`;
+    if (fs.existsSync(legacyPath)) {
+        return legacyPath;
+    }
+    if (fs.existsSync(canonicalPath)) {
+        return canonicalPath;
+    }
+    return undefined;
+};
+const formatRelatedSets = (set, allSets) => {
+    const related = allSets.filter(other => other.prefix !== set.prefix && other.release_date === set.release_date);
+    if (!related.length) {
+        return '';
+    }
+    const links = related.map(other => `[${other.name}](/${other.prefix.replace(/ /g, '-')}_(set))`);
+    const linkedSets = links.length === 1 ? links[0] : `${links.slice(0, -1).join(', ')} and ${links[links.length - 1]}`;
+    return ` alongside ${linkedSets}`;
+};
+const hasPublishedReleaseDate = (set) => {
+    const date = new Date(set.release_date);
+    return Number.isFinite(date.getTime()) && date.getUTCFullYear() >= 2000;
+};
+const readSetCardData = (set) => {
+    const cardPath = `./src/api-data/${set.prefix}.json`;
+    if (!fs.existsSync(cardPath)) {
+        return [];
+    }
+    return JSON.parse(fs.readFileSync(cardPath, 'utf8'));
+};
+const getSetSortTimestamp = (set, cardData) => {
+    if (hasPublishedReleaseDate(set)) {
+        return new Date(set.release_date).getTime();
+    }
+    const oldestEditionTimestamp = getOldestEditionTimestamp(set, cardData);
+    if (oldestEditionTimestamp !== undefined) {
+        return oldestEditionTimestamp;
+    }
+    const setTimestamp = new Date(set.created_at).getTime();
+    return Number.isFinite(setTimestamp) ? setTimestamp : 0;
+};
+const getSetElements = (set, cardData) => {
+    const elements = new Set();
+    for (const card of cardData) {
+        const belongsToSet = (card.editions ?? []).some(edition => edition.set?.prefix === set.prefix);
+        if (!belongsToSet)
+            continue;
+        const cardElements = Array.isArray(card.elements) && card.elements.length
+            ? card.elements
+            : (card.element ? [card.element] : []);
+        cardElements.forEach(element => elements.add(String(element).toUpperCase()));
+    }
+    return [...elements].sort((a, b) => {
+        const basicOrder = ['NORM', 'FIRE', 'WATER', 'WIND'];
+        const aIndex = basicOrder.indexOf(a);
+        const bIndex = basicOrder.indexOf(b);
+        if (aIndex !== -1 || bIndex !== -1) {
+            return (aIndex === -1 ? basicOrder.length : aIndex) - (bIndex === -1 ? basicOrder.length : bIndex);
+        }
+        return a.localeCompare(b);
+    });
+};
+const getElementImageHTML = (set, elements) => elements.map(element => {
+    const filename = `${element.toLowerCase()}.png`;
+    const imagePath = path.resolve(`../img.silvie.org/docs/misc/elements/${filename}`);
+    if (!fs.existsSync(imagePath)) {
+        throw new Error(`Missing element image for ${element} in set ${set.prefix}: ${imagePath}`);
+    }
+    return `<img class="image-element" src="https://img.silvie.org/misc/elements/${filename}" alt="${element} element" />`;
+}).join('');
+const getSetSection = (set) => {
+    if (/pantheon/i.test(set.name)) {
+        return 'Pantheon';
+    }
+    try {
+        const types = (0, set_metadata_1.getSetInfo)(set.prefix).type.map(type => String(type));
+        if (types.includes('pantheon'))
+            return 'Pantheon';
+        if (types.includes('deck'))
+            return 'Decks';
+        if (types.includes('promo'))
+            return 'Promo sets';
+        if (types.includes('special'))
+            return 'Special sets';
+    }
+    catch {
+        const name = set.name.toLowerCase();
+        if (name.includes('deck'))
+            return 'Decks';
+        if (name.includes('promo'))
+            return 'Promo sets';
+        if (name.includes('supporter') || name.includes('special'))
+            return 'Special sets';
+    }
+    return 'Main sets';
+};
+const getSetIndexRow = (set, cardData) => {
+    const elements = getSetSection(set) === 'Decks'
+        ? getElementImageHTML(set, getSetElements(set, cardData))
+        : '';
+    const name = elements ? `${elements}<br>${set.name}` : set.name;
+    return `${set.prefix} | [${name}](/${set.prefix.replace(/ /g, '-')}_(set)) | ${formatReleaseDate(set, cardData)}`;
+};
+const getIndexRowPrefix = (row) => row.match(/^([^|\n]+)\s*\|/)?.[1].trim();
+const addElementsToDeckIndexRow = (row, set, cardData) => {
+    const elements = getElementImageHTML(set, getSetElements(set, cardData));
+    if (row.includes('image-element')) {
+        return row;
+    }
+    return elements ? row.replace('| [', `| [${elements}<br>`) : row;
+};
+const generateSetPagesAndIndex = (allSets) => {
+    fs.mkdirSync(blogSetsPath, { recursive: true });
+    for (const set of allSets) {
+        const existingPagePath = getExistingSetPagePath(set);
+        if (existingPagePath) {
+            continue;
+        }
+        const pagePath = `${blogSetsPath}/${getSetPagePath(set)}`;
+        const frontmatterDate = new Date(hasPublishedReleaseDate(set) ? set.release_date : getSetSortTimestamp(set, readSetCardData(set)));
+        const frontmatterDateString = `${frontmatterDate.toISOString().slice(0, 10)} 00:00:00 +0000`;
+        const releaseSentence = `${set.name} released on ${formatReleaseDate(set, readSetCardData(set))}${formatRelatedSets(set, allSets)}.`;
+        fs.writeFileSync(pagePath, `---
+layout: set
+title: "${set.name.replace(/"/g, '\\"')} (${set.prefix})"
+date: ${frontmatterDateString}
+categories: sets
+permalink: ${set.prefix.replace(/ /g, '-')}_(set)
+# image: /assets/images/sets/${set.prefix}/box.png
+---
+<!-- {% include image.html url="/assets/images/sets/${set.prefix}/box.png" description="${set.name.replace(/"/g, '\\"')} product image." max-width="600px" %} -->
+
+${releaseSentence}
+
+## Set list
+
+Cards in this set are prefixed \`${set.prefix}\`.
+
+{% include templates/${set.prefix.replace(/ /g, '-')}.html %}
+`, 'utf8');
+        console.log(`Generated blog set page ${pagePath}`);
+    }
+    const indexPath = `${blogSetsPath}/0000-all-sets.markdown`;
+    if (!fs.existsSync(indexPath))
+        return;
+    let index = fs.readFileSync(indexPath, 'utf8');
+    if (!index.includes('## Pantheon')) {
+        index = index.replace(/\r?\n## Special sets/, `\n\n## Pantheon\n\nPrefix | Name | Release\n:-- | :-- | :--\n\n## Special sets`);
+    }
+    const cardDataByPrefix = new Map(allSets.map(set => [set.prefix, readSetCardData(set)]));
+    const setByPrefix = new Map(allSets.map(set => [set.prefix, set]));
+    const sectionPattern = /(## (Main sets|Pantheon|Special sets|Promo sets|Decks)\r?\n\r?\nPrefix \| Name \| Release\r?\n:-- \| :-- \| :--\r?\n)([\s\S]*?)(?=\r?\n## |\r?\n\*|$)/g;
+    index = index.replace(sectionPattern, (match, header, section, body) => {
+        const existingRows = body.split(/\r?\n/).filter(row => row.includes('|') && getIndexRowPrefix(row));
+        const sectionSets = allSets.filter(set => getSetSection(set) === section);
+        const generatedRows = sectionSets.map(set => getSetIndexRow(set, cardDataByPrefix.get(set.prefix)));
+        let rows;
+        if (section === 'Decks') {
+            const existingPrefixes = new Set(existingRows.map(getIndexRowPrefix));
+            rows = [
+                ...existingRows.map(row => {
+                    const set = setByPrefix.get(getIndexRowPrefix(row));
+                    return set ? addElementsToDeckIndexRow(row, set, cardDataByPrefix.get(set.prefix)) : row;
+                }),
+                ...generatedRows.filter(row => !existingPrefixes.has(getIndexRowPrefix(row))),
+            ];
+        }
+        else {
+            const knownPrefixes = new Set(sectionSets.map(set => set.prefix));
+            const unknownRows = existingRows.filter(row => !knownPrefixes.has(getIndexRowPrefix(row)) && !setByPrefix.has(getIndexRowPrefix(row)));
+            rows = [...unknownRows, ...generatedRows];
+        }
+        rows.sort((a, b) => {
+            const aSet = setByPrefix.get(getIndexRowPrefix(a));
+            const bSet = setByPrefix.get(getIndexRowPrefix(b));
+            const aTime = aSet ? getSetSortTimestamp(aSet, cardDataByPrefix.get(aSet.prefix)) : 0;
+            const bTime = bSet ? getSetSortTimestamp(bSet, cardDataByPrefix.get(bSet.prefix)) : 0;
+            return bTime - aTime || a.localeCompare(b);
+        });
+        return `${header}${rows.join('\n')}\n`;
+    });
+    fs.writeFileSync(indexPath, index, 'utf8');
+};
 const generateBlogTemplates = async () => {
     fs.readdirSync(blogTemplatesPath).forEach(file => fs.rmSync(`${blogTemplatesPath}/${file}`));
     const allSets = Object.keys(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
+    const allSetData = Object.values(JSON.parse(fs.readFileSync('./src/api-data/sets.json', 'utf8')));
     if (!fs.existsSync(blogTemplatesPath)) {
         fs.mkdirSync(blogTemplatesPath);
     }
+    generateSetPagesAndIndex(allSetData);
     for (let i = 0; i < allSets.length; i++) {
         const setCode = allSets[i];
         console.log(`Parsing set ${setCode}`);

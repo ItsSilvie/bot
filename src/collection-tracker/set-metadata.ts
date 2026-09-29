@@ -1,3 +1,18 @@
+import * as fs from 'fs';
+import * as path from 'path';
+
+const getFeaturedSets = (): any[] => {
+  try {
+    return JSON.parse(fs.readFileSync(path.resolve(__dirname, '../api-data/featured-sets.json'), 'utf8'));
+  } catch {
+    return [];
+  }
+};
+
+const getFeaturedSet = (setPrefix: string) => getFeaturedSets().find(featuredSet =>
+  featuredSet.sets.some(set => set.prefix === setPrefix)
+);
+
 export const getSetLogo = (setPrefix) => {
   switch (setPrefix) {
     case 'PRD':
@@ -71,7 +86,7 @@ export const getSetLogo = (setPrefix) => {
       return 'SLC.png';
 
     default:
-      return 'GA.png';
+      return getFeaturedSet(setPrefix)?.image?.split('/').pop() ?? 'GA.png';
   }
 }
 
@@ -169,7 +184,7 @@ export const getSetCategory = (setPrefix) => {
       return 'Samples';
 
     default:
-      return 'Miscellaneous';
+      return getFeaturedSet(setPrefix)?.name ?? 'Miscellaneous';
   }
 }
 
@@ -395,7 +410,33 @@ export const getSetInfo: (setPrefix: string) => {
       }
 
     default:
-      throw new Error(`No set info specified for ${setPrefix}`);
+      const set = getFeaturedSets().flatMap(featuredSet => featuredSet.sets).find(entry => entry.prefix === setPrefix);
+      if (!set) {
+        throw new Error(`No set info specified for ${setPrefix}`);
+      }
+
+      const date = new Date(set.release_date);
+      const year = date.getFullYear();
+      const name = set.name.toLowerCase();
+      let type = SetType.Standard;
+
+      if (name.includes('starter deck') || name.includes('demo') || name.includes('deck')) {
+        type = SetType.Deck;
+      } else if (name.includes('pantheon')) {
+        type = SetType.Pantheon;
+      } else if (name.includes('promo') || name.includes('event pack')) {
+        type = SetType.Promo;
+      } else if (name.includes('sample')) {
+        type = SetType.Sample;
+      } else if (name.includes('supporter') || name.includes('special')) {
+        type = SetType.Special;
+      }
+
+      if (!Number.isFinite(year) || year < 2000) {
+        throw new Error(`No valid release year specified for ${setPrefix}`);
+      }
+
+      return { type: [type], year };
   }
 }
 

@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import * as fs from 'fs';
 import * as https from 'https';
 import { API_BASE } from './utils/constants';
+import { downloadFeaturedSetLogos } from './featured-sets';
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
@@ -13,8 +14,12 @@ const apiScrape = async () => {
   const getOptions = async () => {
     const response = await fetch(`${API_BASE}/option/search`, {
       agent: httpsAgent,
-    }).then(response => response.json())
-    return response;
+    });
+    if (!response.ok) {
+      throw new Error(`Unable to fetch API options (${response.status})`);
+    }
+
+    return response.json();
   }
 
   const options = await getOptions();
@@ -25,13 +30,18 @@ const apiScrape = async () => {
   }
 
   const getAllPaginatedResults = async (url: string, output?: any[], currentPage?: number, size?: number) => {
+    const pageResponse = await fetch(`${url}&page=${currentPage || 1}`, {
+      agent: httpsAgent,
+    });
+    if (!pageResponse.ok) {
+      throw new Error(`Unable to fetch ${url} (${pageResponse.status})`);
+    }
+
     const {
       data,
       page,
       total_pages: totalPages,
-    } = await fetch(`${url}&page=${currentPage || 1}`, {
-      agent: httpsAgent,
-    }).then(response => response.json());
+    } = await pageResponse.json();
     
     if (!Array.isArray(output) || !currentPage || !size) {
       if (totalPages === 1) {
@@ -41,26 +51,28 @@ const apiScrape = async () => {
       return getAllPaginatedResults(url, data, 2, totalPages);
     }
 
-    const response = [
+    const combined = [
       ...output,
       ...data
     ];
 
     if (currentPage === size) {
-      return response;
+      return combined;
     }
 
-    return getAllPaginatedResults(url, response, page + 1, totalPages);
+    return getAllPaginatedResults(url, combined, page + 1, totalPages);
   }
 
   const getCardImage = async (imagePath: string, uuid: string) => {
-    await fetch(`${API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
+    const response = await fetch(`${API_BASE}${imagePath}?cache-bust=${Date.now()}`, {
       agent: httpsAgent,
-    }).then(response => response.body.pipe(
-      fs.createWriteStream(`../img.silvie.org/docs/api-data/${uuid}.jpg`, {
-        flags: 'w',
-      })
-    )).catch((e) => console.error(e));
+    });
+    if (!response.ok) {
+      throw new Error(`Unable to fetch card image ${imagePath} (${response.status})`);
+    }
+
+    const buffer = await response.buffer();
+    fs.writeFileSync(`../img.silvie.org/docs/api-data/${uuid}.jpg`, buffer, { flag: 'w' });
   }
 
   const getAllCards = async (cardSet) => {
@@ -135,6 +147,10 @@ const apiScrape = async () => {
 
   await processOptions();
 
+  // Featured sets contain the authoritative group/logo relationship used by
+  // the collection tracker and blog metadata generators.
+  await downloadFeaturedSetLogos();
+
   if (!cardSetArg) {
     for (let i = 0; i < cardSets.length; i++) {
       const cardSet = cardSets[i];
@@ -149,4 +165,7 @@ const apiScrape = async () => {
   await processOptions();
 }
 
-apiScrape();
+apiScrape().catch(error => {
+  console.error(error);
+  process.exitCode = 1;
+});
