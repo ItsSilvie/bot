@@ -47,6 +47,7 @@ const getSetLogo = (setPrefix) => {
             return 'DOA.png';
         case 'DTR':
         case 'DTR 1st':
+        case 'DTR Alter':
         case 'DTRSD':
             return 'DTR.png';
         case 'FTC':
@@ -118,6 +119,7 @@ const getSetCategory = (setPrefix) => {
             return 'Dawn of Ashes';
         case 'DTR':
         case 'DTR 1st':
+        case 'DTR Alter':
         case 'DTRSD':
             return 'Distorted Reflections';
         case 'FTC':
@@ -195,6 +197,7 @@ const getSetInfo = (setPrefix) => {
         case 'RDO':
         case 'RDO 1st':
         case 'RDOA':
+        case 'DTR Alter':
             return {
                 type: [SetType.Standard],
                 year: 2026,

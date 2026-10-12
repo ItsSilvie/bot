@@ -53,6 +53,7 @@ export const getSetLogo = (setPrefix) => {
 
     case 'DTR':
     case 'DTR 1st':
+    case 'DTR Alter':
     case 'DTRSD':
       return 'DTR.png';
 
@@ -134,6 +135,7 @@ export const getSetCategory = (setPrefix) => {
 
     case 'DTR':
     case 'DTR 1st':
+    case 'DTR Alter':
     case 'DTRSD':
       return 'Distorted Reflections';
 
@@ -224,6 +226,7 @@ export const getSetInfo: (setPrefix: string) => {
     case 'RDO':
     case 'RDO 1st':
     case 'RDOA':
+    case 'DTR Alter':
       return {
         type: [SetType.Standard],
         year: 2026,
